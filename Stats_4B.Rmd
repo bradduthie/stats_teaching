@@ -1,0 +1,535 @@
+---
+title: "The Central Limit Theorem (CLT)"
+output:
+  beamer_presentation:
+    theme: "default"
+    colortheme: "default"
+    fonttheme: "default"
+  ioslides_presentation: default
+  slidy_presentation: default
+header-includes:
+- \usepackage{enumerate}
+- \usepackage{hyperref}
+- \usepackage{caption}
+- \usepackage[normalem]{ulem}
+- \definecolor{links}{HTML}{2A1B81}
+- \hypersetup{colorlinks,linkcolor=,urlcolor=links}
+colorlinks: true
+linkcolor: blue
+urlcolor: blue
+---
+
+```{r, echo = FALSE}
+library(knitr);
+opts_chunk$set(echo = FALSE);
+set.seed(20260210);
+```
+
+
+
+
+## Normal distribution 
+
+```{r, echo = FALSE, fig.alt = "A plot of a bell curve, shaded in blue and centered at the x-axis on a value of 7 is shown.", fig.cap = "", out.width="100%"}
+par(mar = c(6, 6, 2, 2));
+xx       <- seq(from = -5, to = 15, by = 0.001);
+pr_norm  <- dnorm(x = xx, mean = 7, sd = 1);
+plot(x = xx, y = pr_norm, type = "l", ylim = c(0, 0.48), 
+     ylab = "Probability density",  xlab = "x", lwd = 3, xlim = c(4, 10),
+     cex.lab = 2, cex.axis = 2, yaxs = "i");
+polygon(c(xx, max(xx)), c(pr_norm, 0), col="blue");
+```
+
+
+
+## Sampling from a population (distribution)
+
+```{r, echo = FALSE, fig.alt = "30+ bird silhouettes in a dotted box called 'population'. Within this, four birds are in a grey box called 'sample'.", fig.cap = "", out.width="100%"}
+knitr::include_graphics("img/population_sample_1.png")
+```
+
+
+
+## Consider the distribution of a sample of N = 40
+
+
+```{r, echo = FALSE, fig.alt = "40 bird silhouettes in a grey box called 'sample'.", fig.cap = "", out.width="100%"}
+knitr::include_graphics("img/just_sample.png")
+```
+
+
+
+## Consider the distribution of a sample of N = 40
+
+```{r, echo = FALSE, fig.alt = "A uniform distribution is shown, which appears as a blue rectangle in the middle of a plot with 'wing length (cm)' on the x-axis and 'Probability' on the y-axis", fig.cap = "Distribution of a sample of bird wing length (cm)", out.width="100%"}
+NN          <- 40;
+wing_length <- runif(n = NN, min = 5, max = 9);
+for(i in 1:NN){
+  if(wing_length[i] < 7 & wing_length[i] > 6){
+    wing_length[i] <- wing_length[i] + runif(n = 1, min = -1, max = 0);
+  }
+  if(wing_length[i] < 8 & wing_length[i] > 7){
+    wing_length[i] <- wing_length[i] + runif(n = 1, min = 0, max = 1);
+  }
+}
+par(mar = c(6, 6, 2, 2));
+hist(x = wing_length, col = "blue", cex.axis = 2, cex.lab = 2, main = "",
+     xlab = "Wing length (cm)");
+```
+
+
+
+## Sample means always distributed normally around true mean
+
+```{r, echo = FALSE, fig.alt = "Grey boxes each with 4 birds representing samples with different average heights.", fig.cap = "", out.width="95%"}
+knitr::include_graphics("img/samples_wing_40.png")
+```
+
+
+
+
+
+## Sample means always distributed normally around true mean
+
+```{r, echo = FALSE, fig.alt = "Grey boxes each with 4 birds representing samples with different average heights.", fig.cap = "", out.width="100%"}
+knitr::include_graphics("img/samples_wing.png")
+```
+
+\LARGE
+
+
+What if we had 1000 sample means?
+
+
+## Sample means always distributed normally around true mean
+
+
+```{r, echo = FALSE, fig.alt = "A histogram showing normally distributed data centered at 7.", fig.cap = "Distribution of the mean of bird wing length (cm) samples (N = 40), with sampling repeated 1000 times.", out.width="90%"}
+iters    <- 1000;
+NN       <- 40;
+the_mean <- NULL;
+for(j in 1:iters){
+  wing_length <- runif(n = NN, min = 5, max = 9);
+  for(i in 1:NN){
+    if(wing_length[i] < 7 & wing_length[i] > 6){
+      wing_length[i] <- wing_length[i] + runif(n = 1, min = -1, max = 0);
+    }
+    if(wing_length[i] < 8 & wing_length[i] > 7){
+      wing_length[i] <- wing_length[i] + runif(n = 1, min = 0, max = 1);
+    }
+  }
+  the_mean[[j]] <- mean(wing_length);
+}
+all_means <- unlist(the_mean);
+par(mar = c(6, 6, 2, 2));
+hist(x = all_means, col = "blue", cex.axis = 2, cex.lab = 2, main = "",
+     xlab = "Sample mean of Wing length (cm)", breaks = 20,
+     xlim = c(6.25, 7.75), ylim = c(0, 140));
+mean_height <- 7;
+arrows(x0 = mean_height, x1 = mean_height,
+       y0 = 20, y1 = 1, lwd = 5, col = "red");
+mbox <- function(x0, x1, y0, y1){
+    xx <- seq(from=x0, to=x1, length.out = 100);
+    yy <- seq(from=y0, to=y1, length.out = 100);
+    xd <- c(rep(x0, 100), xx, rep(x1,100), rev(xx));
+    yd <- c(yy, rep(y1,100), rev(yy), rep(y0, 100));
+    return(list(x=xd, y=yd));
+}
+tbox <- mbox(x0 = mean_height - 0.2, 
+             x1 = mean_height + 0.2, y0 = 20, y1 = 40);
+polygon(x=tbox$x, y=tbox$y, lwd=3, border="red", col="white");
+text(x = mean_height, y = 34, cex = 2, labels = "Population");
+text(x = mean_height, y = 26, cex = 2, labels = "Mean");
+```
+
+
+
+## Sample means always distributed normally around true mean
+
+
+```{r, echo = FALSE, fig.alt = "A histogram showing normally distributed data centered at 7.", fig.cap = "Distribution of the mean of bird wing length (cm) samples (N = 40), with sampling repeated 1000 times.", out.width="90%"}
+par(mar = c(6, 6, 2, 2));
+hist(x = all_means, col = "blue", cex.axis = 2, cex.lab = 2, main = "",
+     xlab = "Sample mean of Wing length (cm)", breaks = 20,
+     xlim = c(6.25, 7.75), ylim = c(0, 2.5), freq = FALSE);
+mean_height <- 7;
+arrows(x0 = mean_height, x1 = mean_height,
+       y0 = 0.25, y1 = 0, lwd = 6, col = "red");
+mbox <- function(x0, x1, y0, y1){
+    xx <- seq(from=x0, to=x1, length.out = 100);
+    yy <- seq(from=y0, to=y1, length.out = 100);
+    xd <- c(rep(x0, 100), xx, rep(x1,100), rev(xx));
+    yd <- c(yy, rep(y1,100), rev(yy), rep(y0, 100));
+    return(list(x=xd, y=yd));
+}
+tbox <- mbox(x0 = mean_height - 0.2, 
+             x1 = mean_height + 0.2, y0 = 0.25, y1 = 0.75);
+polygon(x=tbox$x, y=tbox$y, lwd=3, border="red", col="white");
+text(x = mean_height, y = 0.6, cex = 2, labels = "Population");
+text(x = mean_height, y = 0.4, cex = 2, labels = "Mean");
+```
+
+
+
+## Sample means always distributed normally around true mean
+
+
+```{r, echo = FALSE, fig.alt = "A histogram showing normally distributed data centered at 7.", fig.cap = "Distribution of the mean of bird wing length (cm) samples (N = 40), with sampling repeated 1000 times.", out.width="90%"}
+par(mar = c(6, 6, 2, 2));
+hist(x = all_means, col = "blue", cex.axis = 2, cex.lab = 2, main = "",
+     xlab = "Sample mean of Wing length (cm)", breaks = 20,
+     xlim = c(6.25, 7.75), ylim = c(0, 2.5), freq = FALSE);
+mean_height <- 7;
+arrows(x0 = mean_height, x1 = mean_height,
+       y0 = 0.25, y1 = 0, lwd = 6, col = "red");
+mbox <- function(x0, x1, y0, y1){
+    xx <- seq(from=x0, to=x1, length.out = 100);
+    yy <- seq(from=y0, to=y1, length.out = 100);
+    xd <- c(rep(x0, 100), xx, rep(x1,100), rev(xx));
+    yd <- c(yy, rep(y1,100), rev(yy), rep(y0, 100));
+    return(list(x=xd, y=yd));
+}
+tbox <- mbox(x0 = mean_height - 0.2, 
+             x1 = mean_height + 0.2, y0 = 0.25, y1 = 0.75);
+polygon(x=tbox$x, y=tbox$y, lwd=3, border="red", col="white");
+text(x = mean_height, y = 0.6, cex = 2, labels = "Population");
+text(x = mean_height, y = 0.4, cex = 2, labels = "Mean");
+
+xx       <- seq(from = 5, to = 10, by = 0.001);
+pr_norm  <- dnorm(x = xx, mean = 7, sd = sd(all_means));
+points(x = xx, y = pr_norm, type = "l", lwd = 6, col = "red");
+```
+
+
+
+
+## Sample means always distributed normally around true mean
+
+
+\Huge
+
+- Distribution of sample means gets closer to the population mean with increasing $N$ \vspace{3mm}
+- Can demonstrate this ourselves with simulated data
+
+
+
+## Sample means always distributed normally around true mean
+
+
+```{r, echo = FALSE, fig.alt = "A two panel figure, the first shows a barplot is shown with 11 bars corresponding to the probability of sampling 0-10 from a Poisson distribution with a rate parameter of 1. The second panel shows a normal distribution with data comprised of means sampled from the first panel.", fig.cap = "", out.width="100%"}
+par(mfrow = c(1, 2), mar = c(6, 6, 2, 2));
+lambda1pt0 <- dpois(x = 0:10, lambda = 1.0);
+plot(x = 0, y = 0, xlim = c(0.5, 11.5), type = "n", ylim = c(0, 0.4), 
+     xaxt = "n", ylab = "Probability", xlab = "Event (x)", 
+     cex.lab = 2, cex.axis = 2, yaxs = "i");
+axis(side = 1, at = 1:11, labels = 0:10, cex.axis = 2);
+for(i in 1:11){
+  yy <- seq(from = 0, to = lambda1pt0[i], length = 100);
+  points(x = rep(i, times = 100), y = yy, type = "l", lwd = 6);  
+}
+lambda <- expression(paste(lambda, "= 1.0"));
+text(x = 9, y = 0.37, cex = 2.5, labels = lambda);
+clt_dat <- sample(x = 0:10, size = 1000 * 1000, replace = TRUE, 
+                  prob = lambda1pt0);
+clt_mat <- matrix(data = clt_dat, nrow = 1000, ncol = 1000);
+clt_mns <- apply(X = clt_mat, MARGIN = 1, FUN = mean);
+hist(x = clt_mns, xlab = expression(paste("Sample mean (",bar(x),")")), 
+     main = "", cex.lab = 2, cex.axis = 2, breaks = 20, ylim = c(0, 145),
+     xlim = c(0.82, 1.18), col = "blue");
+```
+
+
+
+## Sample means always distributed normally around true mean
+
+
+```{r, echo = FALSE, fig.alt = "A two panel figure, the first shows a uniform probability distribution with a minimum of 1 and a maximum of 2.5. The second panel shows a normal distribution with data comprised of means sampled from the first panel.", fig.cap = "", out.width="100%"}
+par(mfrow = c(1, 2), mar = c(6, 6, 2, 2));
+alpha <- 1;
+beta  <- 2.5;
+yvals <- 1 / (2.5 - 1);
+mbox <- function(x0, x1, y0, y1){
+  xx <- seq(from=x0, to=x1, length.out = 100);
+  yy <- seq(from=y0, to=y1, length.out = 100);
+  xd <- c(rep(x0, 100), xx, rep(x1,100), rev(xx));
+  yd <- c(yy, rep(y1,100), rev(yy), rep(y0, 100));
+  return(list(x=xd, y=yd));
+}
+tbox <- mbox(x0 = alpha, x1 = beta, y0 = 0, y1 = yvals);
+plot(x = 0, y = 0, type = "n", xlim = c(0, 3.5), ylim = c(0, 1),
+     xlab = "Sample (x)", ylab = "Probability density",
+     cex.lab = 2, cex.axis = 2, yaxs = "i");
+polygon(x=tbox$x, y=tbox$y, lwd=3, border="black", col="blue");
+clt_dat <- runif(n = 10000 * 1000, min = 1, max = 2.5);
+clt_mat <- matrix(data = clt_dat, nrow = 1000, ncol = 10000);
+clt_mns <- apply(X = clt_mat, MARGIN = 1, FUN = mean);
+hist(x = clt_mns, xlab = expression(paste("Sample mean (",bar(x),")")), 
+     main = "", cex.lab = 2, cex.axis = 2, breaks = 20, ylim = c(0, 120),
+     xlim = c(1.73, 1.77), col = "blue");
+```
+
+
+## Probability density and the normal distribution
+
+```{r, echo = FALSE, fig.alt = "A plot of a bell curve, with a range of the curve shaded in grey between negative sigma and positive sigma, symmetrical around the peak of the curve", fig.cap = "", out.width="100%"}
+par(mar = c(6, 6, 2, 2));
+xx       <- seq(from = -5, to = 5, by = 0.0001);
+pr_norm  <- dnorm(x = xx, mean = 0, sd = 1);
+plot(x = xx, y = pr_norm, type = "l", ylim = c(0, 0.48), xaxt = "n",
+     ylab = "Probability density",  xlab = "x", lwd = 3, xlim = c(-3, 3),
+     cex.lab = 2, cex.axis = 2, yaxs = "i");
+xx_vals <- 40001:60001;
+polygon(c(xx[xx_vals], xx[60001], xx[40001]), 
+        c(pr_norm[xx_vals], 0, 0), col="blue");
+yy_mean1 <- seq(from = 0, to = 0.15, length = 1000);
+xx_mean1 <- rep(0, times = 1000);
+yy_mean2 <- seq(from = 0.25, to = max(pr_norm), length = 1000);
+xx_mean2 <- rep(0, times = 1000);
+points(x = xx_mean1, y = yy_mean1, type = "l", lwd = 2, lty = "dotted");
+points(x = xx_mean2, y = yy_mean2, type = "l", lwd = 2, lty = "dotted");
+distr_lab <- c(expression(mu-sigma), expression(mu), expression(mu+sigma));
+axis(side = 1, at = c(-1, 0, 1), labels = distr_lab, cex.axis = 2);
+text(x = 0,  y = 0.2, labels = "68.2%", cex = 2);
+```
+
+
+## Probability density and the normal distribution
+
+
+```{r, echo = FALSE, fig.alt = "A plot of a bell curve, with a range of the curve shaded in grey below an indicated value of 1.5 times sigma", fig.cap = "", out.width="100%"}
+par(mar = c(6, 6, 2, 2));
+xx       <- seq(from = -5, to = 5, by = 0.0001);
+pr_norm  <- dnorm(x = xx, mean = 0, sd = 1);
+plot(x = xx, y = pr_norm, type = "l", ylim = c(0, 0.48), xaxt = "n",
+     ylab = "Probability density",  xlab = "x", lwd = 3, xlim = c(-3, 3),
+     cex.lab = 2, cex.axis = 2, yaxs = "i");
+xx_vals <- 1:65001;
+polygon(c(xx[xx_vals], xx[65001], xx[1]), 
+        c(pr_norm[xx_vals], 0, 0), col="blue");
+yy_mean1 <- seq(from = 0, to = 0.15, length = 1000);
+xx_mean1 <- rep(0, times = 1000);
+yy_mean2 <- seq(from = 0.25, to = max(pr_norm), length = 1000);
+xx_mean2 <- rep(0, times = 1000);
+points(x = xx_mean1, y = yy_mean1, type = "l", lwd = 2, lty = "dotted");
+points(x = xx_mean2, y = yy_mean2, type = "l", lwd = 2, lty = "dotted");
+distr_lab <- c(expression(mu), expression(paste(mu, " + 1.5", sigma)));
+axis(side = 1, at = c(0, 1.5), labels = distr_lab, cex.axis = 2);
+text(x = 0,  y = 0.2, labels = "93.3%", cex = 2);
+```
+
+
+
+## Standard normal distribution
+
+\Huge
+
+
+\begin{itemize}
+\item Need some standard values of $x$ to work out probability
+\item Standard normal distribution
+\begin{itemize} \Huge
+\item Mean ($\bar{x}$) = 0
+\item Standard deviation ($s$) = 1
+\end{itemize}
+\item Baseline for comparison
+\end{itemize}
+
+
+## Standard normal distribution
+
+```{r, echo = FALSE, fig.alt = "A plot of a bell curve, shaded in grey and centered at the x-axis on a value of zero is shown. The x axis is labelled 'z-score'.", fig.cap = "", out.width="100%"}
+par(mar = c(6, 6, 2, 2));
+xx       <- seq(from = -5, to = 5, by = 0.001);
+pr_norm  <- dnorm(x = xx, mean = 0, sd = 1);
+plot(x = xx, y = pr_norm, type = "l", ylim = c(0, 0.48), 
+     ylab = "Probability density",  xlab = "z-score", lwd = 3, xlim = c(-3, 3),
+     cex.lab = 2, cex.axis = 2, yaxs = "i");
+polygon(c(xx, max(xx)), c(pr_norm, 0), col="blue");
+```
+
+
+\footnotetext[1]{\href{https://bradduthie.github.io/stats/app/zandp/}{https://bradduthie.github.io/stats/app/zandp/}}
+
+
+
+## Standard normal distribution
+
+\Huge
+\begin{itemize}
+\item \textbf{z-score}: deviation from 0
+\item Work out probability density
+\item Basis for confidence intervals
+\item Critical for hypothesis testing
+\end{itemize}
+
+
+
+## Translating a variable into a standard normal distribution
+
+\Huge
+
+- Subtract mean
+- Divide by standard deviation
+
+$$z = \frac{x - \bar{x}}{s}$$
+
+\vspace{6mm}
+
+Can turn x-values into z-scores
+
+
+
+## Turning a value into z-score
+
+
+```{r, echo = FALSE, fig.alt = "A histogram with normally distributed data.", out.width="90%"}
+xvals <- c(7.53, 7.05, 8.11, 7.69, 7.81, 7.69, 7.33, 8, 8.20, 8.11, 8.08, 
+           8.22, 8.18, 7.66, 7.82, 6.54, 8.04, 7.31, 7.51, 8.45, 7.58, 7.82, 
+           8.03, 7.79, 7.95, 8.02); # Scotland temp 1995-2020 (degrees C)
+par(mar = c(6, 6, 2, 2));
+hist(x = xvals, col = "blue", cex.axis = 2, cex.lab = 2, main = "",
+     xlab = "Annual mean temperature in Scotland (degrees C)", breaks = 20,
+     xlim = c(6.4, 8.6), ylim = c(0, 1.9), freq = FALSE);
+```
+
+\Large
+
+$N = 26$ \hspace{6mm} $\bar{x} = 7.789$ \hspace{6mm} $s = 0.4124844$
+
+\footnotetext[1]{Met Office. (July 1, 2021). Annual mean temperature in Scotland from 1995 to 2020. In Statista. Retrieved February 10, 2026, from \href{https://www.statista.com/statistics/367853/scotland-average-temperature/}{https://www.statista.com/statistics/367853/scotland-average-temperature/}}
+
+
+
+
+## Turning a value into z-score
+
+
+```{r, echo = FALSE, fig.alt = "A histogram with normally distributed data.", out.width="90%"}
+xvals <- c(7.53, 7.05, 8.11, 7.69, 7.81, 7.69, 7.33, 8, 8.20, 8.11, 8.08, 
+           8.22, 8.18, 7.66, 7.82, 6.54, 8.04, 7.31, 7.51, 8.45, 7.58, 7.82, 
+           8.03, 7.79, 7.95, 8.02); # Scotland temp 1995-2020 (degrees C)
+par(mar = c(6, 6, 2, 2));
+hist(x = xvals, col = "blue", cex.axis = 2, cex.lab = 2, main = "",
+     xlab = "Annual mean temperature in Scotland (degrees C)", breaks = 20,
+     xlim = c(6.4, 8.6), ylim = c(0, 1.9), freq = FALSE);
+
+arrows(x0 = 6.540, x1 = 6.540, y0 = 0.6, y1 = 1/26*11, lwd = 5, col = "black");
+mbox <- function(x0, x1, y0, y1){
+    xx <- seq(from=x0, to=x1, length.out = 100);
+    yy <- seq(from=y0, to=y1, length.out = 100);
+    xd <- c(rep(x0, 100), xx, rep(x1,100), rev(xx));
+    yd <- c(yy, rep(y1,100), rev(yy), rep(y0, 100));
+    return(list(x=xd, y=yd));
+}
+tbox <- mbox(x0 = 6.540 - 0.1, 
+             x1 = 6.540 + 0.15, y0 = 0.6, y1 = 0.9);
+polygon(x=tbox$x, y=tbox$y, lwd=3, border="black", col="white");
+text(x = 6.540 + 0.02, y = 0.75, cex = 2, labels = "6.54");
+```
+
+\Large
+
+$N = 26$ \hspace{6mm} $\bar{x} = 7.789$ \hspace{6mm} $s = 0.4124844$
+
+\footnotetext[1]{Met Office. (July 1, 2021). Annual mean temperature in Scotland from 1995 to 2020. In Statista. Retrieved February 10, 2026, from \href{https://www.statista.com/statistics/367853/scotland-average-temperature/}{https://www.statista.com/statistics/367853/scotland-average-temperature/}}
+
+
+
+
+## Turning a value into z-score
+
+\Huge
+
+- Subtract mean
+- Divide by standard deviation
+
+$$z = \frac{6.54 - 7.789}{0.4124844} = -3.03$$
+
+\vspace{6mm}
+
+Over 3 standard deviations below the mean
+
+## Turning a value into z-score
+
+
+```{r, echo = FALSE, fig.alt = "A two panel figure, the first shows a curve of the standard normal distribution, to the right of which there is a histogram of data centred at a mean of 5 with a relatively high standard deviation. In the second figure, the histogram data fit nicely within the normal distribution", fig.cap = "", out.width="100%"}
+par(mar = c(6, 6, 2, 2));
+xx       <- seq(from = -5, to = 5, by = 0.001);
+pr_norm  <- dnorm(x = xx, mean = 0, sd = 1);
+hist(x = xvals, col = "blue", cex.axis = 2, cex.lab = 2, main = "",
+     xlab = "Annual mean temperature in Scotland (degrees C)", breaks = 20,
+     xlim = c(-4, 8.6), ylim = c(0, 1.9), freq = FALSE);
+points(x = xx, y = pr_norm, type = "l", lty = "solid", lwd = 3);
+arrows(x0 = 6, x1 = 1, y0 = 0.9, y1 = 0.3, lwd = 5, col = "black");
+```
+
+
+
+
+
+## Turning a value into z-score
+
+
+```{r, echo = FALSE, fig.alt = "A two panel figure, the first shows a curve of the standard normal distribution, to the right of which there is a histogram of data centred at a mean of 5 with a relatively high standard deviation. In the second figure, the histogram data fit nicely within the normal distribution", fig.cap = "", out.width="100%"}
+par(mar = c(6, 6, 2, 2));
+zz   <- (xvals - 7.789)/0.4124844;
+hist(x = zz, col = "blue", cex.axis = 2, cex.lab = 2, main = "",
+     xlab = "Annual mean temperature in Scotland (degrees C)", breaks = 20,
+     xlim = c(-4, 4), ylim = c(0, 1.9), freq = FALSE);
+points(x = xx, y = pr_norm, type = "l", lty = "solid", lwd = 3);
+
+arrows(x0 = -3.12, x1 = -3.12, y0 = 0.6, y1 = 0.225, lwd = 5, col = "black");
+mbox <- function(x0, x1, y0, y1){
+    xx <- seq(from=x0, to=x1, length.out = 100);
+    yy <- seq(from=y0, to=y1, length.out = 100);
+    xd <- c(rep(x0, 100), xx, rep(x1,100), rev(xx));
+    yd <- c(yy, rep(y1,100), rev(yy), rep(y0, 100));
+    return(list(x=xd, y=yd));
+}
+tbox <- mbox(x0 = -3.12 - 0.6, 
+             x1 = -3.12 + 0.6, y0 = 0.6, y1 = 0.8);
+polygon(x=tbox$x, y=tbox$y, lwd=3, border="black", col="white");
+text(x = -3.12, y = 0.7, cex = 2, labels = "-3.03");
+```
+
+
+
+## Turning a value into z-score
+
+```{r, echo = FALSE, fig.alt = "A two panel figure, the first shows a curve of the standard normal distribution, to the right of which there is a histogram of data centred at a mean of 5 with a relatively high standard deviation. In the second figure, the histogram data fit nicely within the normal distribution", fig.cap = "", out.width="100%"}
+par(mfrow = c(1, 2), mar = c(6, 6, 2, 2));
+xx       <- seq(from = -5, to = 5, by = 0.001);
+pr_norm  <- dnorm(x = xx, mean = 0, sd = 1);
+xvals    <- rnorm(n = 10000, mean = 5, sd = 2)
+hist(xvals, main = "", freq = FALSE, breaks = 40, col = "blue", yaxs = "i",
+     xlab = "x", xlim = c(-4, 12), ylim = c(0, 0.49), 
+     ylab = "Probability density", cex.axis = 2, cex.lab = 2);
+points(x = xx, y = pr_norm, type = "l", lty = "dotted", lwd = 3);
+xstd <- (xvals - mean(xvals))/sd(xvals);
+hist(xstd, main = "", freq = FALSE, breaks = 40, col = "blue", yaxs = "i",
+     xlab = "x", xlim = c(-4, 12), ylim = c(0, 0.49), 
+     ylab = "Probability density", cex.axis = 2, cex.lab = 2);
+points(x = xx, y = pr_norm, type = "l", lty = "dotted", lwd = 3);
+```
+
+
+
+
+
+## Exploring distributions in jamovi with distrACTION module
+
+```{r, echo = FALSE, fig.alt = "Screenshot of jamovi.", fig.cap = "", out.width="100%"}
+knitr::include_graphics("img/distraction.png")
+```
+
+
+
+
+
+
+
+
+
+
+
+

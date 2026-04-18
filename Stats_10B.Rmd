@@ -1,0 +1,395 @@
+---
+title: "Reporting statistical analyses"
+output:
+  beamer_presentation:
+    theme: "default"
+    colortheme: "default"
+    fonttheme: "default"
+  ioslides_presentation: default
+  slidy_presentation: default
+header-includes:
+- \usepackage{hyperref}
+- \usepackage{caption}
+- \definecolor{links}{HTML}{2A1B81}
+- \hypersetup{colorlinks,linkcolor=,urlcolor=links}
+colorlinks: true
+linkcolor: blue
+urlcolor: blue
+---
+
+```{r, echo = FALSE}
+library(knitr);
+opts_chunk$set(echo = FALSE);
+```
+
+
+
+# Describing and reporting statistics
+
+\Large
+
+Have focused on how to analyse and present graphics and statistics
+
+- Important to present statistics clearly in scientific writing \pause
+- Need to plan ahead when setting up experiments and collecting data
+- Without a plan, might collect the wrong data for scientific hypothesis 
+- Consult a statistician early in the process if possible
+
+
+# Presenting hypotheses
+
+Important to recognise the difference between scientific and statistical hypotheses
+
+- **Statistical hypotheses** simply state whether or not a pattern or trend exists in the data
+- **Scientific hypotheses** attempt to explain a set of observations in the world \pause
+
+<!--- Temptation to talk about statistics after you learn them -- they're difficult, so want to include  --->
+
+When writing a scientific report, the scientific hypotheses should usually be the central focus of the writing. 
+
+- Usually best placed at the end of an introduction
+- Generally good to briefly explain how hypothesis will be tested 
+
+There are always exceptions in the scientific literature, but clear hypotheses (sometimes expressed as questions) are usually presented toward the end of the introduction.
+
+# Presenting hypotheses
+
+"The purpose of this study was to address the critical lack of knowledge regarding the potential value of forest strips in the tropics by examining 30-year-old terra firme and riparian forest strips in the north-east Brazilian Amazon. [...] To do this we examined patterns of abundance and occupancy of bird species already identified as characteristic of continuous primary forest [...]. Specifically, we test the *a priori* hypotheses that (1) bird species richness and community structure in remnant forest strips will be clearly distinct from bird assemblages in continuous primary forest, (2) bird species richness and community structure will become more similar to the matrix avifauna with increasing distance from adjoining areas of continuous forest" [1].
+
+\footnotetext[1]{Hawes, J et al. 2008. \textit{Biol. Conserv.}  \href{https://www.sciencedirect.com/science/article/pii/S0006320708002255?casa_token=SClIcK7Mu04AAAAA:D-X4Rhf1bh8UlGZkFKqCJJ2dpqEzpolJHhIsi2J-DwvWrmFRa303XUjyTI6HJoNHvdtU-5wwCM8}{141:2262-2278}.}
+
+
+# Presenting hypotheses
+
+"In the present study we examine which abiotic factor(s) (light, nutrient, and/or water availability) are most important in determining species habitat associations at [Sepilok Forest Reserve] and test the importance of differential resource-use efficiency in predicting these associations. Specific hypotheses are as follows: (1) sandstone species are more conservative in their water use than alluvial specialists [...] and (5) although species may show acclimation responses when grown on their nonnative soil type, alluvial specialists are genetically constrained such that they do not perform as sandstone specialists when grown on sandstone soils, and vice versa" [1].
+
+\footnotetext[1]{Baltzer, JL et al. 2005. \textit{Ecology} \href{https://doi.org/10.1890/04-0598}{86:3063-3077}.}
+
+
+# Presenting Methods
+
+Important to explain statistical analyses in sufficient detail so that the reader could replicate them.
+
+- Statistical analyses often explained in its own paragraph or sub-section toward the end of the Methods \pause
+- If necessary, supporting information can be used when a lot of analyses need to be explained \pause
+- Ideally, data and code for replicating the analyses would be included with the report or paper
+
+Not all papers in the literature meet the standards listed above, but there is a general move towards more open science.
+
+
+# Presenting Methods
+
+\Large
+
+"Because stigmatic pollen counts were not normally distributed, they were analysed using non-parametric statistics (Mann-Whitney U test) for pairwise comparisons among four times of collection at the 0.05 level of significance. All data analysis was conducted in SPSS, version 17.0. All means are presented with standard errors ($\pm$ SE)" [1].
+
+\footnotetext[1]{Xiong, Y-Z et al. 2013. \textit{AoB PLANTS} \href{https://doi.org/10.1093/aobpla/plt037}{5:plt037}.}
+
+
+# Presenting Methods
+
+\Large
+
+"All statistical analyses were carried out using R 3.1.0 (R Core Team 2012). [...] ANOVAs were carried out to test whether the three soil-conditioning treatments affected plant biomass and trait and soil N availability, and whether there was an effect of drought, with a two-way interaction term between soil conditioning and drought. Non-constancy of variances was evaluated using Levene's test in the car package of R (Levene 1960), and normality was ascertained and corrected for where necessary using Box–Cox transformations in the MASS package (Box and Cox 1964)" [1].
+
+\footnotetext[1]{Fry, EL et al. 2018. \textit{Oecologia} \href{https://doi.org/10.1007/s00442-018-4082-x}{186:1113-1125}.}
+
+
+# Presenting Results
+
+\Large
+
+Primary focus should be on the biological or environmental patterns
+
+- Inferences about patterns should be supported by statistical analyses \pause
+- Figures and tables can also illustrate patterns in the data
+- Figure and table legends should stand alone for interpetation
+
+
+# Presenting Results
+
+"The pollen grain counts on the stigma increased significantly during two different periods of anthesis. Pollen deposition was low in flowers on the first day of opening (18.9 $\pm$ 7.5 grains), but it increased significantly after flowers had experienced one night's closure (247.1 $\pm$ 79.1, Mann-Whitney U test, Z = -3.16, P < 0.001). The same situation ofa rapid increase in pollen loads occurred during flower closure on the second evening of anthesis (Z = -2.96, P < 0.001; Fig. 4). In the second-day flowers, pollen loads were not significantly different between
+stigmas collected in the morning and late afternoon (Z = -0.415, P = 0.678)" [1].
+
+\footnotetext[1]{Xiong, Y-Z et al. 2013. \textit{AoB PLANTS} \href{https://doi.org/10.1093/aobpla/plt037}{5:plt037}.}
+
+# Presenting Results
+
+\Large
+
+"For soil planted with *S. minor*, microbial community composition was affected by drought (Fig. 1c; stress: 0.032, k = 2, $R^{2}$ = 0.39, P < 0.001), although no impacts of conditioning were detected ($R^{2}$ = 0.04, P = 0.66). Total PLFA, a measure of active microbial biomass, was significantly greater in droughted soil (Table S2: $F_{1,22}$ = 10.71, P = 0.004), as was bacterial PLFA ($F_{1,22}$ = 17.58, P < 0.001)" [1].
+
+\footnotetext[1]{Fry, EL et al. 2018. \textit{Oecologia} \href{https://doi.org/10.1007/s00442-018-4082-x}{186:1113-1125}.}
+
+
+# Presenting Results for t-tests
+
+\Large
+
+Report degrees of freedom (df), the t value, and the p-value.
+
+\vspace{15mm}
+
+> The two groups differed significantly from each other ($t_{(14)} = 9.56$, $P = 0.02$).
+
+
+# Presenting Results for ANOVA
+
+
+Report F value, p-value, and degrees of freedom for the effect and error terms. 
+
+\vspace{5mm}
+
+> Plant height different significantly as a function of soil type ($F_{(2, 25)}$ = 11.37, P < 0.001).
+
+A two-way ANOVA reports the same values, but includes main effects and interactions.
+
+\vspace{5mm}
+
+> The main effect of soil type was significant ($F_{(2, 25)}$ = 7.91, P = 0.002), as was the main effect of plant species ($F_{(3, 25)}$ = 12.70, P < 0.001). The interaction of these two factors was not significant ($F_{(6, 25)}$ = 1.71, P = 0.160).
+
+
+# Presenting Results for Mann-Whitney test
+
+\Large
+
+Include the W statistic and the p-value. 
+
+\vspace{15mm}
+
+> The total length of sparrows differed significantly with the survival status of sparrows (W = 1596.5, P = 0.002).
+
+
+# Presenting Results for Wilcoxon signed-rank test
+
+\Large
+
+Include the W statistic and p-value as with the Mann-Whitney test. 
+
+\vspace{15mm}
+
+> Photosynthetic rate significantly in plants before and after frost (W = 14.01, P = 0.007).
+
+
+# Presenting Results for Correlation coefficient test
+
+\Large
+
+Report the correlation coefficient and the corresponding p-value. 
+
+\vspace{15mm}
+
+> Egg production was positively correlated with body mass (r = 0.8977, P = 0.0379).
+
+
+# Presenting Results for Regression
+
+Report the R-squared value, regression coefficients, and p-values of model or regression coefficients.
+
+\vspace{5mm}
+
+> Sparrow body mass (g) increased significantly with sparrow total length (mm; R-squared = 0.341, b = 0.2419, P < 0.001) according to the model, mass = -13.07 + 0.2419(length).
+
+\vspace{5mm}
+
+- Multiple ways to present information clearly 
+- For multiple regression use $\beta$ coefficients
+- Often helps to present results in a table format
+
+
+# Everyday use of statistics
+
+\LARGE
+
+**Be sceptical about statistical claims**
+
+![](img/toothpaste.jpg){height=50%}
+
+"80\% of dentists recommend our brand!"
+
+\footnotetext[1]{Image: Steve Buissinne; \href{https://commons.wikimedia.org/wiki/File:Toothbrush,_Toothpaste,_Dental_Care_(571741)_(cropped).jpg}{Public Domain}}
+
+
+# Everyday use of statistics
+
+```{r, echo = FALSE}
+library(jmv);
+sample_5   <- c("Recommend", "Recommend", "Recommend", "Recommend", "Not");
+sample_500 <- c(rep("Recommend", 400), rep("Not", 100));
+s5_dat     <- data.frame(sample_5);
+s500_dat   <- data.frame(sample_500);
+s5         <- propTest2(vars = vars(sample_5), areCounts = FALSE, 
+                        data = s5_dat, ci = TRUE);
+s500       <- propTest2(vars = vars(sample_500), areCounts = FALSE, 
+                        data = s500_dat, ci = TRUE);
+s5LCI      <- s5$table$asDF[2, 7];
+s5UCI      <- s5$table$asDF[2, 8];
+s500LCI    <- s500$table$asDF[2, 7];
+s500UCI    <- s500$table$asDF[2, 8];
+barplot(height = c(0.8, 0.8), ylim = c(0, 1), names = c("N = 5", "N = 500"),
+        cex.names = 1.5, cex.axis = 1.25, ylab = "Per cent recommend",
+        cex.lab = 1.5);
+arrows(x0 = 0.7, y0 = 0.8, y1 = s5LCI, angle = 90, lwd = 2);
+arrows(x0 = 0.7, y0 = 0.8, y1 = s5UCI, angle = 90, lwd = 2);
+arrows(x0 = 1.9, y0 = 0.8, y1 = s500LCI, angle = 90, lwd = 2);
+arrows(x0 = 1.9, y0 = 0.8, y1 = s500UCI, angle = 90, lwd = 2);
+```
+
+
+
+# Everyday use of statistics
+
+\LARGE
+
+**Be sceptical about statistical claims**
+
+![](img/graduation.jpg){height=50%}
+
+"Average graduate salary is 80k GBP!"
+
+
+\footnotetext[1]{Image:  \href{https://commons.wikimedia.org/wiki/File:Graduation-1449488_1920.jpg}{Public Domain}}
+
+
+# Everyday use of statistics
+
+```{r, echo = FALSE}
+dd <- rexp(n = 1000, rate = 1/60000) + 20000 + rnorm(n = 10000, mean = 0, sd = 8000);
+dd[dd < 0] <- 0;
+hist(dd/1000, breaks = 100, main = "", xlab = "Graduate salary (in thousands)", 
+     xlim = c(0, 400), col = "blue", cex.axis = 1.25, cex.lab = 1.5);
+arrows(x0 = 58, y0 = 100, y1 = 0, lwd = 4, col = "white");
+arrows(x0 = 80, y0 = 100, y1 = 0, lwd = 4, col = "red");
+arrows(x0 = 37, y0 = 100, y1 = 0, lwd = 4, col = "orange");
+text(x = 250, y = 600, cex = 2, labels = "Mean = 80k");
+text(x = 250, y = 500, cex = 2, labels = "Median = 60");
+text(x = 250, y = 400, cex = 2, labels = "First quartile = 37k");
+```
+
+
+
+# Everyday use of statistics
+
+\LARGE
+
+**Be sceptical about statistical claims**
+
+![](img/exercise.jpg){height=50%}
+
+"Grey ball is scientifically proven to significantly increase your sleep!"
+
+\footnotetext[1]{Image:  \href{https://commons.wikimedia.org/wiki/File:Indoor_physical_exercise.jpg}{Public Domain}}
+
+
+# Everyday use of statistics
+
+```{r, echo = FALSE}
+p_test   <- FALSE;
+while(p_test == FALSE){
+  ball     <- rnorm(n = 2000, mean = 8);
+  group    <- sample(x = c("Control", "Grey_ball"), size = 2000, 
+                     replace = TRUE);
+  pvl_res  <- t.test(ball ~ group)$p.value;
+  mn_vals  <- tapply(X = ball, INDEX = group, FUN = mean);
+  gb       <- which(names(mn_vals) == "Grey_ball");
+  co       <- which(names(mn_vals) == "Control");
+  diff_mn  <- as.numeric(mn_vals[gb]) - as.numeric(mn_vals[co]);
+  if(pvl_res < 0.05 & pvl_res > 0.04 & diff_mn < 0.2 & diff_mn > 0){
+    p_test <- TRUE;
+  }else{
+    p_test <- FALSE;
+  }
+  diff_minutes <- round(diff_mn * 60, digits = 0);
+}
+Control   <- ball[group == "Control"];
+Grey_ball <- ball[group == "Grey_ball"];
+barplot(height = c(mean(Control), mean(Grey_ball)), ylab = "Hours sleep",
+        cex.names = 1.25, names.arg = c("Control", "Grey ball"), 
+        cex.lab = 1.25, ylim = c(0, 10));
+CLCI <- mean(Control) - (1.96 * sd(Control)/sqrt(length(Control)));
+CUCI <- mean(Control) + (1.96 * sd(Control)/sqrt(length(Control)));
+GLCI <- mean(Grey_ball) - (1.96 * sd(Grey_ball)/sqrt(length(Grey_ball)));
+GUCI <- mean(Grey_ball) + (1.96 * sd(Grey_ball)/sqrt(length(Grey_ball)));
+arrows(x0 = 0.7, y0 = mean(Control), y1 = CLCI, angle = 90, lwd = 2);
+arrows(x0 = 0.7, y0 = mean(Control), y1 = CUCI, angle = 90, lwd = 2);
+arrows(x0 = 1.9, y0 = mean(Grey_ball), y1 = GLCI, angle = 90, lwd = 2);
+arrows(x0 = 1.9, y0 = mean(Grey_ball), y1 = GUCI, angle = 90, lwd = 2);
+mess <- paste("P = ", round(pvl_res, digits = 4));
+text(x = 1.3, y = 9.75, labels = mess, cex = 1.5);
+text(x = 0.7, y = 8.75, labels = paste("Mean = ", round(mean(Control), digits = 2)),
+     cex = 1.25);
+text(x = 1.9, y = 8.75, labels = paste("Mean = ", round(mean(Grey_ball), digits = 2)),
+     cex = 1.25);
+text(x = 0.4, y = 9.75, cex = 1.5, labels = "N = 2000");
+```
+
+
+
+# Statistical errors in science
+
+\LARGE
+\pause
+
+"[W]e continuously increased [our sample size] until statistical significance was reached to support our conclusions." \pause
+
+- Paper in *Nature Communications*
+
+
+
+# Statistical errors in science
+
+\large
+
+```{r, echo = TRUE}
+set.seed(202549);
+N       <- 20;
+Group_A <- rnorm(n = N, mean = 100, sd = 10);
+Group_B <- rnorm(n = N, mean = 100, sd = 10);
+pvals   <- NULL;
+max_N   <- 10000;
+while(N < max_N){
+  new_p   <- t.test(Group_A, Group_B)$p.value;
+  pvals   <- c(pvals, new_p);
+  new_A   <- rnorm(n = 1, mean = 100, sd = 10);
+  new_B   <- rnorm(n = 1, mean = 100, sd = 10);
+  Group_A <- c(Group_A, new_A);
+  Group_B <- c(Group_B, new_B);
+  N       <- N + 1;
+}
+```
+
+
+
+
+# Statistical errors in science
+
+
+```{r, echo = FALSE}
+plot(x = 21:max_N, y = pvals, type = "l", lwd = 2, ylim = c(0, 1),
+     cex.lab = 1.25, cex.axis = 1.25, xlab = c("N (sample size)"),
+     ylab = "t-test p-value between groups");
+abline(h = 0.05, col = "red", lty = "dotted");
+```
+
+
+
+
+# What's next? The R module
+
+\Large
+
+**Learn to code in R and more stats**
+
+- Coding and data wrangling
+- Data visualisation in R
+- Linear regression
+- Multiple regression
+- ANOVA, ANCOVA, interactions
+- Generalised linear models
+- Mixed models, GAMs
+
+Understand [equivalence](https://stirlingcodingclub.github.io/linear_modelling/) of t-tests, ANOVA, regression
+
+
+
+

@@ -1,0 +1,243 @@
+---
+title: "Introduction to statistics"
+output:
+  beamer_presentation:
+    theme: "default"
+    colortheme: "default"
+    fonttheme: "default"
+  ioslides_presentation: default
+  slidy_presentation: default
+header-includes:
+- \usepackage{hyperref}
+- \usepackage{caption}
+- \usepackage[normalem]{ulem}
+- \definecolor{links}{HTML}{2A1B81}
+- \hypersetup{colorlinks,linkcolor=,urlcolor=links}
+colorlinks: true
+linkcolor: blue
+urlcolor: blue
+---
+
+```{r, echo = FALSE}
+library(knitr);
+opts_chunk$set(echo = FALSE);
+```
+
+
+## Importance of statistical literacy in society
+
+\Large
+
+- World increasingly reliant on data and statistics \pause
+- Statistical analysis is critical in science
+- Statistical literacy is important in modern life  \pause
+- Misuse and misunderstandings of statistics can have serious consequences  \pause
+
+\vspace{6mm}
+
+This course will give you the understanding and skills you need to be statistically literate and do and understand fundamental statistical analyses.
+
+
+
+## Importance of statistical literacy in society
+
+\LARGE
+
+"Good statistics are like a telescope for an astronomer, a microscope for a bacteriologist, or an X-ray for a radiologist. If we are willing to let them, good statistics help us see things about the world around us and about ourselves -- both large and small -- that we would not be able to see in any other way" (Hartford 2020)
+
+\footnotetext[1]{Harford, T. 2020. How to make the world add up: ten rules for thinking differently about numbers. Hachette UK.}
+
+
+
+## Importance of statistical literacy as professionals
+
+\Large
+
+**Journal of Animal Ecology** 
+
+Bentlage et al. (2025). **Results**:
+
+"At the population level, total rainfall from February to August had a significant quadratic effect on the annual divorce rate, which increased in years with low and high rainfall (GLM, estimate = $0.335 \pm 0.091$, p-value = $0.003$; Figure S1b). Rainfall effects explained 46.7\% of the annual divorce rate's variance ($r^{2}=0.467$)."
+
+\footnotetext[1]{Bentlage, AA, et al. 2025. Rainfall is associated with divorce in the socially monogamous Seychelles warbler. Journal of Animal Ecology. \href{10.1111/1365-2656.14216}{94:85-98}.}
+
+## Importance of statistical literacy as professionals
+
+\Large
+
+**Marine Biology** 
+
+Liu et al. (2025). **Materials and Methods**:
+
+"Experimental data were presented as the mean $\pm$ standard deviation of results obtained from three parallel samples [...]. A one-way analysis of variance (ANOVA) combined with the least significant difference (LSD) method was employed to assess the variance and significance of nutrient content in algal detritus under different environmental conditions (Table 1) ($p < 0.05$)."
+
+\footnotetext[1]{Liu, Z, et al. 2025. The impact of dissolved oxygen and sediments on the decomposition of \textit{Sargassum thunbergii}. Marine Biology, \href{https://link.springer.com/article/10.1007/s00227-024-04587-z}{172:28.}}
+
+
+
+## Importance of statistical literacy as professionals
+
+\Large
+
+**Journal of Environmental Sciences**
+
+Tava et al. (2025). **Results**:
+
+"Soil microbial biomass was highly significantly ($P < 0.01$) and positively correlated with alkaline phosphomonoesterase activity in untreated soils (D0, $r_{T03} = 0.92$ and $r_{T14} = 0.77$) and at D01 rate ($r_{T03} = 0.86$ and $r_{T14} = 0.71$) at both time points T03 and T14."
+
+\footnotetext[1]{Tava, A, et al. 2025. Saponins in soil, their degradation and effect on soil enzymatic activities. Journal of Environmental Sciences, \href{https://www.sciencedirect.com/science/article/pii/S100107422400439X}{154:378-389.}}
+
+
+## Importance of statistical literacy as professionals
+
+\Large
+
+**Cell**
+
+Nishijima et al. (2025). **Methods**:
+
+
+"To investigate correlations between the microbiome profile (i.e. species-level taxonomic and functional compositions) and the experimentally measured microbial load, Pearson correlation coefficients were calculated between the $log_{10}$ transformed relative abundance of each microbial species/functions and the microbial load in each cohort separately."
+
+
+\footnotetext[1]{Nishijima, S, et al. 2025. Fecal microbial load is a major determinant of gut microbiome variation and a confounder for disease associations. Cell. \href{https://www.cell.com/cell/fulltext/S0092-8674(24)01204-2}{188:222-236}}
+
+
+
+## Importance of statistical literacy as professionals
+
+\Large
+
+**Journal of Environmental Geography**
+
+Ziti et al. (2025). **Results**:
+
+"The Mann-Kendall trend test shows an increasing, statistically significant ($p = 0.031$, $\alpha =  0.05$) trend  in annual mean temperatures between 1969 and 2021 in the sub-catchment, a condition that may contribute to the proliferation of dry conditions in the catchment."
+
+
+\footnotetext[1]{Ziti, C et al. 2025. Climate Change Response Strategies and Implications on Sustainable Development Goals in Mutirikwi River Sub-Catchment of Zimbabwe. Journal of Environmental Geography, \href{https://ojs.bibl.u-szeged.hu/index.php/jengeo/article/view/44881}{17:1-14}.}
+
+
+## Importance of statistical literacy as professionals
+
+\Large
+
+**Frontiers in Education**
+
+Naim et al. (2025). **Methods**:
+
+"The study uses multiple linear regression analysis to examine the relationship between independent variables (socioeconomic status, funding per student, teacher-student ratio, availability of advanced coursework, tuition fees, scholarship availability, and diversity of the student body) and dependent variables (test scores, graduation rates, enrolment statistics, and post-graduation employment rates)."
+
+
+\footnotetext[1]{Naim, A. 2025. Equity Across the Educational Spectrum: Innovations in Educational Access Crosswise all Levels. Frontiers in Education \href{https://www.frontiersin.org/journals/education/articles/10.3389/feduc.2024.1499642/full}{9:1499642}}
+
+
+
+## Statistical literacy is important
+
+<!--- ALT:  "A linear line chart with years as the X-axis and two variables on the Y-axis. The first variable is Popularity of the first name Gerard and the second variable is Air pollution in Anchorage. The chart goes from 1980 to 2022, and the two variables track closely in value over that time." ---> 
+
+![](img/spurious_correlation.png)
+
+\footnotetext[1]{Vigen, Tyler. 2025. Spurious correlations: Accessed 19 JAN 2025 (\href{https://tylervigen.com/permission}{CC-BY-4.0})  https://www.tylervigen.com/spurious-correlations}
+
+
+
+## Statistical literacy is important
+
+
+<!--- "A linear line chart with years as the X-axis and two variables on the Y-axis. The first variable is Disney movies released and the second variable is motor vehicle thefts.  The chart goes from 2000 to 2021, and the two variables track closely in value over that time."  --->
+
+![](img/disney.png)
+
+\footnotetext[1]{Vigen, Tyler. 2026. Spurious correlations: Accessed 06 JAN 2026 (\href{https://tylervigen.com/permission}{CC-BY-4.0})  https://www.tylervigen.com/spurious-correlations}
+
+## Statistical literacy is important
+
+\Large
+
+**ChatGPT Explanation:**
+
+\vspace{4mm}
+
+*As Disney downshifted its movie production, there were fewer car-related films and spin-off merchandise, leading to a reduced interest in automobiles. This eventually put the brakes on the demand for stolen cars, steering would-be thieves towards other, non-automotive pursuits.*
+
+\footnotetext[1]{Vigen, Tyler. 2026. Spurious correlations: Accessed 6 JAN 2026 (\href{https://tylervigen.com/permission}{CC-BY-4.0})  https://www.tylervigen.com/spurious-correlations}
+
+
+## Statistical literacy is important
+
+<!--- A fake academic paper is shown titled 'The Lion Car King', typeset as a journal article would be but completely full of AI nonsense. --->
+
+
+![](img/disney_paper.png)
+
+\footnotetext[1]{Vigen, Tyler. 2026. Spurious correlations: Accessed 6 JAN 2026 (\href{https://tylervigen.com/permission}{CC-BY-4.0})  https://www.tylervigen.com/spurious-correlations}
+
+## Intended Learning Outcomes (ILOS)
+
+\Huge
+
+
+(1) Manipulate datasets and characterise their statistical properties.
+
+## Intended Learning Outcomes (ILOS)
+
+\Huge
+
+
+(2) Demonstrate an understanding of null hypothesis testing.
+
+
+## Intended Learning Outcomes (ILOS)
+
+\Huge
+
+
+(3) Choose and apply the correct statistical test to unseen data using statistical software.
+
+## Intended Learning Outcomes (ILOS)
+
+\Huge
+
+(4) Interpret the results of statistical tests in order to generate conclusive statements on scientific problems.
+
+
+## Teaching materials
+
+\Huge
+
+- Book chapters
+- Audiobook chapters
+- Lecture material
+- Practicals
+- Interactive apps
+- Quizzes
+
+## Statistical software
+
+\LARGE
+
+
+\begin{itemize}
+\item Spreadsheets (any)
+\begin{itemize}
+\LARGE
+\item MS Excel
+\item LibreOffice Calc
+\item Google Sheets
+\end{itemize}
+\vspace{2mm}\pause
+\item jamovi
+\begin{itemize}
+\LARGE
+\item Free and open-source
+\item Windows, Mac, Linux, Chrome
+\item Easy transition to R
+\end{itemize}
+\end{itemize}
+
+
+
+
+

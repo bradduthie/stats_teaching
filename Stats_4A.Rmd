@@ -1,0 +1,566 @@
+---
+title: "Probability and distributions"
+output:
+  beamer_presentation:
+    theme: "default"
+    colortheme: "default"
+    fonttheme: "default"
+  ioslides_presentation: default
+  slidy_presentation: default
+header-includes:
+- \usepackage{enumerate}
+- \usepackage{hyperref}
+- \usepackage{caption}
+- \usepackage[normalem]{ulem}
+- \definecolor{links}{HTML}{2A1B81}
+- \hypersetup{colorlinks,linkcolor=,urlcolor=links}
+colorlinks: true
+linkcolor: blue
+urlcolor: blue
+---
+
+```{r, echo = FALSE}
+library(knitr);
+opts_chunk$set(echo = FALSE);
+```
+
+
+
+## Probability: How likely is something to happen?
+
+
+```{r, echo = FALSE, fig.alt = "Image of a bus.", fig.cap = "", out.width="100%"}
+knitr::include_graphics("img/bus.jpg")
+```
+
+\footnotetext[1]{\textbf{Image:} Smith, C. 2013. (\href{https://commons.wikimedia.org/wiki/File:R177_HHK_enters_Dunfermline,_05_April_2013.JPG}{Public domain}).}
+
+
+
+## Frequentist interpretion of probability {.t}
+
+\LARGE
+
+How frequently was the bus late after 120 morning rides?
+
+- Late: 24 times
+- Not late: 96 times
+
+Given these observation frequencies, predict the probability that it will be late on any given morning
+
+## Frequentist interpretion of probability {.t}
+
+\LARGE
+
+How frequently was the bus late after 120 morning rides?
+
+- Late: 24 times
+- Not late: 96 times
+
+**Probability is the long-term *relative* frequency**
+
+$$Pr(Late) = \frac{24}{24 + 96} = \frac{24}{120} = 0.2$$
+
+
+## Frequentist interpretion of probability
+
+
+```{r, echo = FALSE}
+bus_late <- c(24, 96)
+names(bus_late) <- c("Yes", "No");
+par(mar = c(6, 6, 2, 2));
+barplot(height = bus_late, xlab = "Was the bus late? (N = 120)", 
+        ylab = "Frequency",
+        col = "blue", cex.lab = 2, cex.axis = 2, ylim = c(0, 100),
+        cex.names = 2);
+```
+
+
+
+
+
+## Frequentist interpretion of probability
+
+
+```{r, echo = FALSE}
+bus_late <- c(24, 96)/(24+96)
+names(bus_late) <- c("Yes", "No");
+par(mar = c(6, 6, 2, 2));
+barplot(height = bus_late, xlab = "Was the bus late? (N = 120)", 
+        ylab = "Probability",
+        col = "blue", cex.lab = 2, cex.axis = 2, ylim = c(0, 1),
+        cex.names = 2);
+```
+
+
+
+
+## Frequentist interpretion of probability {.t}
+
+\LARGE
+
+How frequently was the bus late after 120 morning rides?
+
+- Late: 24 times $\:\:\:\:\:\:\to \: Pr(Late) = 0.2$
+- Not late: 96 times $\to \: Pr(Not\:late) = 0.8$
+
+\vspace{6mm}
+
+Values **must** sum to 1:
+
+- Pr(Event) = 0: An event *never* occurs
+- Pr(Event) = 1: An event *always* occurs
+
+
+## Frequentist interpretion of probability {.t}
+
+\LARGE
+
+How frequently was the bus late after 120 morning rides?
+
+- Late: 24 times $\:\:\:\:\:\:\to \: Pr(Late) = 0.2$
+- Not late: 96 times $\to \: Pr(Not\:late) = 0.8$
+
+\vspace{6mm}
+
+$$\Pr\left(outcome\right) = \frac{Times\:outcome\:occurs}{Number\:of\:trials}$$
+
+
+## Importance in life and environmental sciences
+
+\Huge
+
+**What can we predict?**
+
+- Extreme climate events
+- Genotypes of offspring
+- Risk of disease spread
+- Population extinction
+- Outcomes in games
+
+
+
+
+## Games of chance: Probability is a key component
+
+
+```{r, echo = FALSE, fig.alt = "Six dice side by side.", fig.cap = "", out.width="100%"}
+knitr::include_graphics("img/all_dice.jpg")
+```
+
+\footnotetext[1]{\textbf{Image:} Korsalka, Z. 2021. (\href{https://commons.wikimedia.org/wiki/File:Dice-faces_Seiten_eines_Augenw\%C3\%BCrfels_(51704426326).jpg}{Public domain}).}
+
+
+## Rolling two dice; what can happen?
+
+```{r, echo = FALSE, fig.alt = "Lattice of all possible combinations of rolling two six sided dice.", fig.cap = "", out.width="65%", fig.align='left'}
+knitr::include_graphics("img/two_dice.png")
+```
+
+
+
+
+\footnotetext[1]{\textbf{Image:} All dice images are public domain.}
+
+
+
+
+## Probability of rolling two 1s  {.t}
+
+```{r, echo = FALSE, fig.alt = "Lattice of all possible combinations of rolling two six sided dice; two ones is highlighted.", fig.cap = "", out.width="55%", fig.align='left'}
+knitr::include_graphics("img/two_dice_two_ones.png")
+```
+
+
+
+$$\Pr\left(Dice_{1} = 1\:\&\:Dice_{2} = 1\right) = \frac{1}{36} = 0.0278$$
+
+\footnotetext[1]{\textbf{Image:} All dice images are public domain.}
+
+
+
+
+## Probability of rolling at least one 4  {.t}
+
+```{r, echo = FALSE, fig.alt = "Lattice of all possible combinations of rolling two six sided dice; combinations of 1 and 2 are highlighted.", fig.cap = "", out.width="55%", fig.align='left'}
+knitr::include_graphics("img/two_dice_any4.png")
+```
+
+
+
+$$\Pr\left(a\:four\right) =\frac{11}{36} = 0.3056$$
+
+\footnotetext[1]{\textbf{Image:} All dice images are public domain.}
+
+
+
+## Probability of rolling **exactly** one 4  {.t}
+
+```{r, echo = FALSE, fig.alt = "Lattice of all possible combinations of rolling two six sided dice; combinations of 1 and 2 are highlighted.", fig.cap = "", out.width="55%", fig.align='left'}
+knitr::include_graphics("img/two_dice_one4.png")
+```
+
+
+
+$$\Pr\left(exactly \:one\:four\right) =\frac{10}{36} = 0.2778$$
+
+\footnotetext[1]{\textbf{Image:} All dice images are public domain.}
+
+
+## Adding or multiplying probabilities
+
+\LARGE
+
+**Mutually exclusive:** Events cannot happen simultaneously
+
+- Cannot roll 2 values with one dice
+- You can roll a 1 **or** a 2, not both
+
+**Not mutually exclusive:** Events can happen simultaneously
+
+- Can roll 2 values with two dice
+- You can roll a 1 **and** another 1
+
+
+## Adding or multiplying probabilities
+
+\LARGE
+
+**Mutually exclusive:** Events cannot happen simultaneously
+
+- Roll a 1 **or** a 2 with one dice
+- $\Pr(Roll = 1\:or\:Roll=2)$ 
+- $\Pr(Roll = 1) + \Pr(Roll=2)$
+
+$$\Pr(one\:or\:two) = \frac{1}{6} + \frac{1}{6} = \frac{2}{6} = 0.3333$$
+
+
+## Adding or multiplying probabilities
+
+
+```{r, echo = FALSE, fig.alt = "All six dice shown with 1 and 2 dice circled", fig.cap = "", out.width="100%", fig.align='center'}
+knitr::include_graphics("img/dice_6_oneortwo.png")
+```
+
+
+## Adding or multiplying probabilities
+
+\Huge
+
+- Add probabilities when events are mutually exclusive
+- Multiply probabilities when events are **not** mutually exclusive
+
+
+## Adding or multiplying probabilities
+
+\LARGE
+
+**Not mutually exclusive:** Events can happen simultaneously
+
+- Can roll 2 values with two dice
+- You can roll a 1 **and** another 1
+- $\Pr(Roll_{1} = 1\:and\:Roll_{2}=1)$ 
+- $\Pr(Roll_{1} = 1) \times \Pr(Roll_{2}=1)$
+
+
+$$\Pr\left(one\:and\:one\right) = \frac{1}{6} \times \frac{1}{6} = \frac{1}{36} = 0.0278 $$
+
+## Probability of rolling a 1 and another 1  {.t}
+
+```{r, echo = FALSE, fig.alt = "Lattice of all possible combinations of rolling two six sided dice; two ones rolled is highlighted.", fig.cap = "", out.width="55%", fig.align='left'}
+knitr::include_graphics("img/two_dice_two_ones.png")
+```
+
+
+
+$$\Pr\left(one\:and\:one\right) = \frac{1}{6} \times \frac{1}{6} = \frac{1}{36} = 0.0278 $$
+
+\footnotetext[1]{\textbf{Image:} All dice images are public domain.}
+
+
+
+
+## Probability of rolling two 1s **or** two 6s  {.t}
+
+```{r, echo = FALSE, fig.alt = "Lattice of all possible combinations of rolling two six sided dice; two ones and two sixes are highlighted.", fig.cap = "", out.width="55%", fig.align='left'}
+knitr::include_graphics("img/two_dice_extreme.png")
+```
+
+
+
+$$\Pr\left(two\:1s \: | \:two\:6s\right) = \frac{1}{36} + \frac{1}{36} = \frac{2}{36} = 0.0556$$
+
+\footnotetext[1]{\textbf{Image:} All dice images are public domain.}
+
+
+## Probability of rolling a 1 and a 2  {.t}
+
+```{r, echo = FALSE, fig.alt = "Lattice of all possible combinations of rolling two six sided dice; combinations of 1 and 2 are highlighted.", fig.cap = "", out.width="55%", fig.align='left'}
+knitr::include_graphics("img/two_dice_1and2.png")
+```
+
+
+
+$$\Pr\left(one\:\&\:two\right) = \left(\frac{1}{6}\times\frac{1}{6}\right) + \left(\frac{1}{6} \times \frac{1}{6}\right)=\frac{1}{36}+\frac{1}{36}=\frac{2}{36} = 0.0556$$
+
+\footnotetext[1]{\textbf{Image:} All dice images are public domain.}
+
+
+
+## Sum of rolls: what's the distribution?
+
+```{r, echo = FALSE, fig.alt = "Lattice of all possible combinations of rolling two six sided dice.", fig.cap = "", out.width="65%", fig.align='left'}
+knitr::include_graphics("img/dice_sum.png")
+```
+
+
+
+
+\footnotetext[1]{\textbf{Image:} All dice images are public domain.}
+
+
+
+## Sum of rolls: what's the distribution?
+
+
+```{r, echo = FALSE}
+bus_late <- c(1, 2, 3, 4, 5, 6, 5, 4, 3, 2, 1)/11;
+names(bus_late) <- c("2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12");
+par(mar = c(6, 6, 2, 2));
+barplot(height = bus_late, xlab = "What will be the sum of rolls?", 
+        ylab = "Probability",
+        col = "blue", cex.lab = 2, cex.axis = 2, ylim = c(0, 1),
+        cex.names = 2);
+```
+
+
+## Sampling with and without replacement
+
+\Huge
+
+- **With replacement**: Whatever is sampled gets put back before sampling again
+- **Without replacement**: Whatever is sampled doesn't get put back before sampling again
+
+
+
+
+## Sampling with and without replacement
+
+
+```{r, echo = FALSE, fig.alt = "Twelve playing cards are shown, including hearts from 5 to ace, then spades from 5 to ace.", fig.cap = "", out.width="100%", fig.align='center'}
+knitr::include_graphics("img/cards.jpg")
+```
+
+
+\LARGE
+
+Pick two cards: probability you sample 2 aces with versus without replacement?
+
+
+
+## Sampling with and without replacement
+
+\Huge
+
+**With replacement:**
+
+\vspace{-4mm}
+
+$$\frac{2}{10} \times \frac{2}{10} = 0.04$$
+
+\vspace{4mm}
+
+**Without replacement**
+
+\vspace{-4mm}
+
+$$\frac{2}{10} \times \frac{1}{9} = 0.0222$$
+
+
+
+
+## Probability distributions: Binomial distribution
+
+\Huge
+
+Event is an individual **trial**
+
+- Successful: $\Pr(X)$
+- Unsuccessful: $1 - \Pr(X)$
+
+Successes over N trials
+
+- Binomial distribution
+- Coin flips heads
+
+
+## Probability distributions: Binomial distribution
+
+
+```{r, echo = FALSE, fig.alt = "A barplot is shown with 11 bars, which correspond to the number of times a coin flip lands on heads; the distribution takes a humped shape", fig.cap = "Probability of times a coin flips heads in 10 trials."}
+par(mar = c(5, 5, 1.5, 1.5));
+pr_binom <- dbinom(x = 0:10, size = 10, prob = 0.5);
+par(mar = c(6, 6, 2, 2))
+plot(x = 0, y = 0, xlim = c(0.5, 11.5), type = "n", ylim = c(0, 0.3), 
+     xaxt = "n", ylab = "Probability", xlab = "Times a coin flip is heads", 
+     cex.lab = 2, cex.axis = 2, yaxs = "i", col = "blue");
+axis(side = 1, at = 1:11, labels = 0:10, cex.axis = 2);
+for(i in 1:11){
+  yy <- seq(from = 0, to = pr_binom[i], length = 100);
+  points(x = rep(i, times = 100), y = yy, type = "l", lwd = 10);  
+}
+```
+
+
+## Probability distributions: Poisson distribution  {.t}
+
+
+\LARGE
+
+How many observations over a period of time?
+
+```{r, echo = FALSE, fig.alt = "Close up of a heron.", fig.cap = "", out.width="100%"}
+knitr::include_graphics("img/heron.jpg")
+```
+
+\vspace{-3mm}
+
+Also applies to a period of space
+
+\footnotetext[1]{\textbf{Image:} \href{https://commons.wikimedia.org/wiki/File:Grue_en_vol.jpg}{Public domain}.}
+
+
+## Probability distributions: Poisson distribution {.t}
+
+
+\LARGE
+
+How many observations over a period of time?
+
+- Suppose 2.5 herons pass per hour on average
+- Distribution of herons seen in one hour?
+- Sometimes will be more or fewer
+- Distribution has one parameter (rate = $\lambda$)
+- If expected to see 2.5 herons, $\lambda = 2.5$
+
+**Poisson distribution applies to counts, so observations natural numbers**
+
+
+## Probability distributions: Poisson distribution {.t}
+
+
+```{r, echo = FALSE, fig.alt = "Poisson distribution with a rate parameter of 2.5.", fig.cap = ""}
+lambda2pt5 <- dpois(x = 0:10, lambda = 2.5);
+par(mar = c(6, 6, 2, 2));
+plot(x = 0, y = 0, xlim = c(0.5, 11.5), type = "n", ylim = c(0, 0.3), 
+     xaxt = "n", ylab = "Probability", xlab = "Herons seen in 1 hour", 
+     cex.lab = 2, cex.axis = 2, yaxs = "i");
+axis(side = 1, at = 1:11, labels = 0:10, cex.axis = 2);
+for(i in 1:11){
+  yy <- seq(from = 0, to = lambda2pt5[i], length = 100);
+  points(x = rep(i, times = 100), y = yy, type = "l", lwd = 10);  
+}
+lambda <- expression(paste(lambda, "= 2.5"));
+text(x = 10, y = 0.25, cex = 4, labels = lambda);
+```
+
+
+## Probabilities for discrete values
+
+\Huge
+
+**Count successes or observations**
+
+- Binomial: Yes or No
+- Poisson: Natural number
+
+Describe distribution with a **probability mass function**
+
+
+## Probability for continuous values
+
+\LARGE
+
+**What if an observation can take any real number?**
+
+```{r, echo = FALSE, fig.alt = "Drawing of a bird wing being measured by a ruler.", fig.cap = "", out.width="90%"}
+knitr::include_graphics("img/measurement.jpg")
+```
+
+What is the probability of measuring a wing length of 7.28 cm?
+
+\footnotetext[1]{\textbf{Image:} Reichenow, A. 1913. (\href{https://commons.wikimedia.org/wiki/File:BirdMorphometrics_(wing_measurement).jpg}{Public domain}).}
+
+
+
+## Probability for continuous values
+
+\Huge
+
+- If values are continuous, need to consider a *range* of values
+- Probability wing length between 7 and 8 cm?
+- Describe with a **probability density function**
+
+
+## Uniform distribution (note area sums to 1)
+
+```{r, echo = FALSE, fig.alt = "A uniform distribution is shown, which appears as a blue rectangle in the middle of a plot with 'wing length (cm)' on the x-axis and 'Probability' on the y-axis", fig.cap = ""}
+alpha <- 6;
+beta  <- 10;
+yvals <- 1 / (10 - 6);
+mbox <- function(x0, x1, y0, y1){
+  xx <- seq(from=x0, to=x1, length.out = 100);
+  yy <- seq(from=y0, to=y1, length.out = 100);
+  xd <- c(rep(x0, 100), xx, rep(x1,100), rev(xx));
+  yd <- c(yy, rep(y1,100), rev(yy), rep(y0, 100));
+  return(list(x=xd, y=yd));
+}
+tbox <- mbox(x0 = alpha, x1 = beta, y0 = 0, y1 = yvals);
+par(mar = c(6, 6, 2, 2));
+plot(x = 0, y = 0, type = "n", xlim = c(5, 11), ylim = c(0, 0.3),
+     xlab = "Wing length (cm)", ylab = "Probability density",
+     cex.lab = 2, cex.axis = 2, yaxs = "i")
+polygon(x=tbox$x, y=tbox$y, lwd=3, border="black", col="blue");
+```
+
+
+## Uniform distribution (note area sums to 1)
+
+```{r, echo = FALSE, fig.alt = "A uniform distribution is shown, which appears as a blue rectangle in the middle of a plot with 'wing length (cm)' on the x-axis and 'Probability' on the y-axis", fig.cap = ""}
+alpha <- 6;
+beta  <- 10;
+yvals <- 1 / (10 - 6);
+mbox <- function(x0, x1, y0, y1){
+  xx <- seq(from=x0, to=x1, length.out = 100);
+  yy <- seq(from=y0, to=y1, length.out = 100);
+  xd <- c(rep(x0, 100), xx, rep(x1,100), rev(xx));
+  yd <- c(yy, rep(y1,100), rev(yy), rep(y0, 100));
+  return(list(x=xd, y=yd));
+}
+tbox  <- mbox(x0 = alpha, x1 = beta, y0 = 0, y1 = yvals);
+tbox2 <- mbox(x0 = 7, x1 = 8, y0 = 0, y1 = yvals);
+par(mar = c(6, 6, 2, 2));
+plot(x = 0, y = 0, type = "n", xlim = c(5, 11), ylim = c(0, 0.3),
+     xlab = "Wing length (cm)", ylab = "Probability density",
+     cex.lab = 2, cex.axis = 2, yaxs = "i")
+polygon(x=tbox$x, y=tbox$y, lwd=3, border="black", col="blue");
+polygon(x=tbox2$x, y=tbox2$y, lwd=3, border="black", col="black");
+```
+
+
+## Normal distribution (area also sums to 1)
+
+```{r, echo = FALSE, fig.alt = "A plot of a bell curve, shaded in blue and centered at the x-axis on a value of zero is shown.", fig.cap = ""}
+par(mar = c(6, 6, 2, 2));
+xx       <- seq(from = -5, to = 15, by = 0.001);
+pr_norm  <- dnorm(x = xx, mean = 7, sd = 1);
+plot(x = xx, y = pr_norm, type = "l", ylim = c(0, 0.48), 
+     ylab = "Probability density",  xlab = "x", lwd = 3, xlim = c(4, 10),
+     cex.lab = 2, cex.axis = 2, yaxs = "i");
+polygon(c(xx, max(xx)), c(pr_norm, 0), col="blue");
+```
+
+
+
+
+

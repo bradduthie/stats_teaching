@@ -1,0 +1,485 @@
+---
+title: "Randomisation"
+output:
+  beamer_presentation:
+    theme: "default"
+    colortheme: "default"
+    fonttheme: "default"
+  ioslides_presentation: default
+  slidy_presentation: default
+header-includes:
+- \usepackage{hyperref}
+- \usepackage{caption}
+- \definecolor{links}{HTML}{2A1B81}
+- \hypersetup{colorlinks,linkcolor=,urlcolor=links}
+colorlinks: true
+linkcolor: blue
+urlcolor: blue
+---
+
+```{r, echo = FALSE}
+library(knitr);
+opts_chunk$set(echo = FALSE);
+```
+
+
+# Introduction to the randomisation approach
+
+\LARGE
+
+Throughout this module, we have conducted hypothesis tests in a similar way:
+
+- Calculate test statistic (e.g., t, F, Chi-square)
+- Compare our calculated statistic to the theoretical null distribution \pause
+
+P-value: Assuming the null hypothesis is true, what is the probability of getting the actual test statistic, or one more extreme than it, from this null distribution?
+
+
+# Introduction to the randomisation approach
+
+\LARGE
+
+Null distribution makes several assumptions about the data:
+
+- Normal distribution
+- Equality of variances \pause
+
+When these assumptions are violated, we then need to apply a transformation of some sort to the data, or to use a different non-parametric approach to testing our null hypothesis.
+
+
+# Introduction to the randomisation approach
+
+\Large
+
+
+**If the ordering of the data we collected was actually random, then what is the probability of getting a test statistic as or more extreme than the one that we actually did?** \pause
+
+- Build the null distribution by randomising our data in some useful way
+- Conceptually, most students actually find randomisation methods easier to understand 
+- More challenging to implement in practice
+
+
+# An instructive example
+
+\Large
+
+![](img/fig_wasps.jpg)
+
+Two fig wasps with (relatively) short ovipositors
+
+
+# An instructive example
+
+\Large
+
+```{r, echo = FALSE}
+library(knitr);
+sp   <- c(rep("SO1", 17), rep("SO2", 15))
+eg   <- c(3.256, 3.133, 3.071, 2.299, 2.995, 2.929, 3.291, 2.658, 3.406, 
+          2.976, 2.817, 3.133, 3.000, 3.027, 3.178, 3.133, 3.210, 3.014, 
+          2.790, 2.985, 2.911, 2.914, 2.724, 2.967, 2.745, 2.973, 2.560, 
+          2.837, 2.883, 2.668, 3.063, 2.639);
+wp   <- as.data.frame(cbind(sp, eg));
+colnames(wp) <- c("Species", "Ovipositor length (mm)");
+sp1 <- as.numeric(as.character(wp[wp[,1]=="SO1",2]));
+sp2 <- as.numeric(as.character(wp[wp[,1]=="SO2",2]));
+tmo <- t.test(sp1, sp2, var.equal = TRUE);
+kable(wp[1:9,]);
+```
+
+
+# An instructive example
+
+\Large
+
+Standard approach would be to use a two sample t-test:
+
+- **Null hypothesis:** the two means are the same
+- **Alternative hypothesis:** the two means are not the same (two-sided) \pause
+
+Check t-test assumptions:
+
+- Data are normally distributed
+- Both samples have similar variances
+
+If data are not normally distributed, use a Mann Whitney test instead
+
+
+# An instructive example
+
+Calculate the t-statistic:
+
+
+$$t = \frac{mean(SO1) - mean(SO2)}{s_{p}}.$$ \pause
+
+The $s_{p}$ is just being used as a short-hand to indicate the pooled standard deviation,
+
+$$s_{p} = \sqrt{ \left(\frac{(n_{1} - 1)s^{2}_{1} + (n_{2} - 1)s^{2}_{2}}{n_{1} + n_{2} - 2} \right)  \left(\frac{n_{1} + n_{2}}{n_{1}n_{2}} \right)}.$$
+
+Values of n1 and n2 are the sample sizes for SO1 (17) and SO2 (15), respectively, and $s^{2}_{1}$ and $s^{2}_{2}$ are the sample variances for SO1 and SO2, respectively.
+
+
+# An instructive example
+
+\Large
+
+Mean ovipositor lengths:
+
+- SO1: 3.0301176 mm
+- SO2: 2.8448667 mm \pause
+
+Calculate our t-statistic, then get p-value with jamovi:
+
+- t-statistic (30 df): 2.4190497
+- p-value: 0.0218352 \pause
+
+
+Hence, we would reject our null hypothesis and conclude that the difference between the group means is statistically significant.
+
+
+# An instructive example
+
+\Large
+
+**Randomisation approach**: If there really is no difference between group means, then we should be able to randomly shuffle group identities (species) and get a difference between means that is not far off the one we actually get from the data. 
+
+1. Shuffle the identities all of the species  \pause
+2. Calculate the mean between shuffled groups  \pause
+3. Repeat steps 1 and 2 many times  \pause
+4. Compare the shuffled mean differences to the actual one \pause
+
+[This app](https://bradduthie.shinyapps.io/randomisation/) illustrates how the process works.
+
+
+# An instructive example
+
+![](img/random_hist.png)
+
+# An instructive example
+
+\large
+
+Comparing the observed distance to the random mean differences:
+
+- Observed difference was 0.185251
+- 213 random differences were more extreme (above 0.185251 or below -0.185251) \pause
+- Probability of value as or more extreme
+
+$$P = \frac{213 + 1}{9999 + 1}$$ \pause
+
+Compare the randomisation and traditional approaches:
+
+- Randomisation P value: 0.0214
+- Traditional t-test p-value: 0.0218
+
+
+# Randomisation is a general tool
+
+\Large
+
+```{r, echo = FALSE}
+library(knitr);
+sp   <- c(rep("SO1", 17), rep("SO2", 15))
+eg   <- c(3.256, 3.133, 3.071, 2.299, 2.995, 2.929, 3.291, 2.658, 3.406, 
+          2.976, 2.817, 3.133, 3.000, 3.027, 3.178, 3.133, 3.210, 3.014, 
+          2.790, 2.985, 2.911, 2.914, 2.724, 2.967, 2.745, 2.973, 2.560, 
+          2.837, 2.883, 2.668, 3.063, 2.639);
+wp   <- as.data.frame(cbind(sp, eg));
+colnames(wp) <- c("Species", "Ovipositor length (mm)");
+sp1 <- as.numeric(as.character(wp[wp[,1]=="SO1",2]));
+sp2 <- as.numeric(as.character(wp[wp[,1]=="SO2",2]));
+tmo <- t.test(sp1, sp2, var.equal = TRUE);
+kable(wp[1:9,]);
+```
+
+
+# Randomisation is a general tool
+
+\Large
+
+
+```{r, echo = FALSE}
+library(knitr);
+sp   <- c(rep("SO1", 17), rep("SO2", 15))
+eg   <- c(3.256, 3.133, 3.071, 2.299, 2.995, 2.929, 3.291, 2.658, 3.406, 
+          2.976, 2.817, 3.133, 3.000, 3.027, 3.178, 3.133, 3.210);
+hl   <- c(3.823, 2.948, 2.641, 2.346, 2.406, 2.928, 3.128, 2.187, 4.017, 
+          3.495, 3.338, 3.176, 2.863, 2.405, 3.646, 3.064, 3.510);
+wp   <- as.data.frame(cbind(hl, eg));
+colnames(wp) <- c("Head length (mm)", "Ovipositor length (mm)");
+kable(wp[1:9,]);
+```
+
+
+
+# Randomisation is a general tool
+
+```{r}
+plot(x = hl, y = eg, xlab = "Head length (mm)", ylab = "Ovipositor length (mm)",
+     pch = 20, cex = 1.5, cex.lab = 1.25, cex.axis = 1.25);
+corv <- round(cor(hl, eg), digits = 3);
+text(x = 3.8, y = 2.6, labels = paste("r = ", corv, sep = ""), cex = 2);
+```
+
+
+# Randomisation is a general tool
+
+```{r}
+plot(x = hl, y = eg, xlab = "Head length (mm)", ylab = "Ovipositor length (mm)",
+     pch = 20, cex = 1.5, cex.lab = 1.25, cex.axis = 1.25, col = "grey80");
+corv <- round(cor(hl, eg), digits = 3);
+text(x = 3.8, y = 2.6, labels = paste("r = ", corv, sep = ""), cex = 2, 
+     col = "grey80");
+rop <- sample(x = eg, size = length(eg), replace = FALSE);
+points(x = hl, y = rop, pch = 20, cex = 1.5, col = "red");
+corv <- round(cor(hl, rop), digits = 3);
+text(x = 3.8, y = 2.5, labels = paste("r = ", corv, sep = ""), cex = 2, 
+     col = "red");
+points(x = hl, y = rop, cex = 1.5);
+```
+
+
+# Randomisation is a general tool
+
+```{r, echo = FALSE}
+iter    <- 9999;          
+rval    <- NULL;          
+for(i in 1:iter){   
+    ora     <- sample(x = eg, size = length(eg), replace = FALSE);
+    rval[i] <- cor(hl, ora);
+}
+hist(rval, xlab = "Randomised correlation coefficient", col = "grey", 
+     main = "", cex.lab = 1.5, cex.axis = 1.5, breaks = 20);
+truecor <- cor(hl, eg);
+corv <- round(cor(hl, eg), digits = 3);
+arrows(x0 = truecor, x1 = truecor, y0 = 500, y1 = 10, lwd = 3, length = 0.1,
+       col = "red");
+text(x = truecor, y = 550, cex = 1.5, labels = "Observed", col = "red");
+extrcor <- sum(abs(rval) >= abs(truecor));
+Pval    <- (1 + extrcor) / (9999 + 1);
+pvalue  <- cor.test(eg, hl)$p.value;
+```
+
+
+
+# Randomisation is a general tool
+
+\Large
+
+After randomising ovipositor length values 9999 times, `r extrcor` values more extreme than observed correlation (i.e., > `r corv` or < `r -corv`) \pause
+
+$$P = \frac{`r extrcor` + 1}{9999 + 1} = `r Pval`.$$ \pause
+
+Traditional Pearson product moment p-value:
+
+$$P = `r pvalue`.$$
+
+
+
+# Assumptions of randomisation tests
+
+\LARGE
+
+Assumptions of two sample t-test:
+    
+1. Data from independent groups
+2. The data are normally distributed
+3. Observations independent of each other
+4. Both samples have similar variances \pause
+
+With randomisation, we do not need to assume 2-4. 
+
+# Assumptions of randomisation tests
+
+\LARGE
+
+The downsides of randomisation
+
+- Statistical inferences are limited to the sample (not the population) 
+- This is because no formal assumption of random sample from populations \pause
+- Can still make the verbal argument generalising from sample to populations [1, 2]
+
+
+\footnotetext[1]{Ernst, M D. 2004. \textit{Stat. Sci.} \href{https://doi.org/10.1214/088342304000000396}{19:676-685}.}
+\footnotetext[2]{Ludbrook, J, \& H Dudley. 1998. \textit{Am. Stat.}, \href{https://www.jstor.org/stable/2685470}{52:127-132}.}
+
+
+# Bootstrapping confidence intervals
+
+\Large
+
+```{r, echo = FALSE}
+library(knitr);
+sp   <- c(rep("SO1", 17), rep("SO2", 15))
+eg   <- c(3.256, 3.133, 3.071, 2.299, 2.995, 2.929, 3.291, 2.658, 3.406, 
+          2.976, 2.817, 3.133, 3.000, 3.027, 3.178, 3.133, 3.210, 3.014, 
+          2.790, 2.985, 2.911, 2.914, 2.724, 2.967, 2.745, 2.973, 2.560, 
+          2.837, 2.883, 2.668, 3.063, 2.639);
+wp   <- as.data.frame(cbind(sp, eg));
+colnames(wp) <- c("Species", "Ovipositor length (mm)");
+sp1 <- as.numeric(as.character(wp[wp[,1]=="SO1",2]));
+sp2 <- as.numeric(as.character(wp[wp[,1]=="SO2",2]));
+tmo <- t.test(sp1, sp2, var.equal = TRUE);
+```
+
+**We can use randomisation to calculate confidence intervals (CIs)**
+
+Recall the traditional approach to calculating CIs:
+
+
+- Upper CI: mean + constant * standard error
+- Lower CI: mean - constant * standard error \pause
+
+Calculating standard error:
+
+$$SE = \frac{s}{\sqrt{n}}.$$
+
+Above, s is the standard deviation and n is the sample size.
+
+
+# Bootstrapping confidence intervals
+
+\Large
+
+**We can use randomisation to calculate confidence intervals (CIs)**
+
+Recall the traditional approach to calculating CIs:
+
+
+- Upper CI: mean + constant * standard error
+- Lower CI: mean - constant * standard error
+
+Finding the right constant
+
+- Appropriate z score or t score 
+- Encompasses correct probability density
+
+E.g., 95 per cent of standard normal distribution between z = -1.96 and 1.96
+
+
+# Bootstrapping confidence intervals
+
+\Large
+
+Values of SO1 ovipositor length: 
+
+`r sp1` \pause
+
+- Mean: `r round(mean(sp1), digits = 4)`
+- Standard error: `r round(sd(sp1)/sqrt(length(sp1)), digits = 4)`
+- t-score for df = 17 - 1: 2.120
+
+```{r, echo = FALSE}
+UCI <- round(mean(sp1) + 2.12*sd(sp1)/sqrt(length(sp1)), digits = 3);
+LCI <- round(mean(sp1) - 2.12*sd(sp1)/sqrt(length(sp1)), digits = 3);
+```
+
+\pause
+
+**Upper CI:** `r round(mean(sp1), digits = 4)` + 2.120(`r round(sd(sp1)/sqrt(length(sp1)), digits = 4)`) = `r UCI`
+
+**Lower CI:** `r round(mean(sp1), digits = 4)` - 2.120(`r round(sd(sp1)/sqrt(length(sp1)), digits = 4)`) = `r LCI`
+
+
+# Bootstrapping confidence intervals
+
+\Large
+
+**Randomisation approach**: 
+
+- Resample the data *with replacement* many times \pause
+- Approximate what would happen if we went out and collected more data from the population \pause
+- Get the distribution of means from hypothetical resampling [1] \pause
+- Rank random means, get lower 2.5\% and upper 97.5\% of ranked values
+
+\footnotetext[1]{Manly, B F J. 2007. \textit{Randomization, Bootstrap and Monte Carlo Methods in Biology} (3rd ed.). Chapman \& Hall/CRC.}
+
+
+# Bootstrapping confidence intervals
+
+Original SO1 ovipositor length values:
+
+3.256, 3.133, 3.071, 2.299, 2.995, 2.929, 3.291, 2.658, 3.406, 2.976, 2.817, 3.133, 3, 3.027, 3.178, 3.133, 3.21 \pause
+
+SO1 ovipositor values resampled *with replacement*
+
+3, **3.027**, 2.929, **3.291**, **3.291**, 2.976, **2.299**, **2.299**, **3.027**, **3.027**, **3.133**, **3.027**, **2.299**, **3.133**, **2.299**, 3.178, **3.133**
+
+- Bold values appear multiple times in resampling
+- Original values 3.256, 3.071, 2.995, 2.658, 3.406, 2.817, and 3.21 do not appear at all in resampling \pause
+
+Now we calculate the mean of our values resampled with replacement 10000 times.
+
+
+# Bootstrapping confidence intervals
+
+
+![](img/boot_hist.png)
+
+
+# Monte Carlo on spatial data
+
+We can also use randomisation when a null distribution cannot be derived from the data.
+
+
+![](img/fig_tree.jpg)
+
+
+**Are fig trees are randomly distributed across a sampling area?**
+
+
+# Monte Carlo on spatial data
+
+
+\Large
+
+```{r, echo = FALSE}
+fpet <- read.csv("data/FpetTrees.csv");
+lat1 <-  28.289;
+lat2 <-  28.2918;
+lon1 <- -113.1145;
+lon2 <- -113.1095;
+kable(head(fpet));
+```
+
+
+# Monte Carlo on spatial data
+
+![](img/tree_locs.png)
+
+
+# Monte Carlo on spatial data
+
+\Large
+
+**Are the trees randomly distributed in the brown box?**
+
+- Cannot randomise latitude and longitude coordinates
+- Want to compare actual tree distribution with randomly placed trees
+- Monte Carlo compares observed test statistic with one derived from theoretical null [1]
+- Use mean distance to nearest neighbour as a test statistic
+
+\footnotetext[1]{Manly, B F J. 2007. \textit{Randomization, Bootstrap and Monte Carlo Methods in Biology} (3rd ed.). Chapman \& Hall/CRC.}
+
+
+# Monte Carlo on spatial data
+
+\Large
+
+**Null Hypothesis:** Mean nearest neighbour distance for a focal tree in the observed data will not differ significantly from the mean nearest neighour distance obtained from the same number of trees randomly distributed within the sampling area.
+
+1. Randomly place 59 trees in the sampling area
+2. Calculate mean nearest neighbour distance of random trees \pause
+3. Repeat steps 1 and 2 many times
+4. Generate a null distribution of nearest neighbor distances \pause
+5. Compare actual mean nearest neighbour distance will null distribution
+
+
+# Monte Carlo on spatial data
+
+![](img/random_trees.png){width=80%}
+
+# Monte Carlo on spatial data
+
+![](img/monte_hist.png)
+

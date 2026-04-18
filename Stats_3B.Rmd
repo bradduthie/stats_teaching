@@ -1,0 +1,903 @@
+---
+title: "Central tendency and measures of spread"
+output:
+  beamer_presentation:
+    theme: "default"
+    colortheme: "default"
+    fonttheme: "default"
+  ioslides_presentation: default
+  slidy_presentation: default
+header-includes:
+- \usepackage{enumerate}
+- \usepackage{hyperref}
+- \usepackage{caption}
+- \usepackage[normalem]{ulem}
+- \definecolor{links}{HTML}{2A1B81}
+- \hypersetup{colorlinks,linkcolor=,urlcolor=links}
+colorlinks: true
+linkcolor: blue
+urlcolor: blue
+---
+
+```{r, echo = FALSE}
+library(knitr);
+opts_chunk$set(echo = FALSE);
+```
+
+
+
+## Descriptive versus inferential statistics
+
+\LARGE
+
+**Descriptive Statistics**
+
+- Summarise observations
+- E.g., average monthly temperature
+
+\vspace{4mm}
+
+**Inferential Statistics**
+
+- Make estimates or predictions
+- E.g., predict temperature from latitude
+
+
+## Descriptive statistics in jamovi
+
+```{r, echo = FALSE, fig.alt = "Screenshot of jamovi interface for descriptive statistics with options on the left panel and output on the right panel", fig.cap = "", out.width="100%"}
+knitr::include_graphics("img/jamovi_descriptives.png")
+```
+
+
+
+## Descriptive statistics
+
+\Huge
+
+**Properties of distributions**
+
+- Central tendency
+- Spread
+- Skew \& Kurtosis
+
+**Will focus on *samples* rather than populations**
+
+## Descriptive statistics: Central tendency
+
+\Huge
+
+
+
+```{r, echo = FALSE, fig.alt = "Screenshot of jamovi interface for descriptive statistics with options on the left panel and output on the right panel", fig.cap = "", out.width="80%"}
+knitr::include_graphics("img/jamovi_descriptives_ct.png")
+```
+
+Mean, median, and mode
+
+## Arithmetic mean
+
+\LARGE
+
+Add values, divide by number ($N$)
+
+\vspace{2mm}
+
+\textbf{For example, $N = 3$ temperatures:}
+
+\begin{itemize}\LARGE
+\item 12.5 $^{\circ} C$
+\item 13.4 $^{\circ} C$
+\item 14.0 $^{\circ} C$
+\end{itemize}
+
+\vspace{3mm}
+
+$$\bar{x} = \frac{12.5+13.4+14.0}{3} = 13.3$$
+
+
+## Calculating the mean of 7 temperatures ($^{\circ} C$) {.t}
+
+\LARGE
+
+| $x_{1}$ | $x_{2}$ | $x_{3}$ | $x_{4}$ | $x_{5}$ | $x_{6}$ | $x_{7}$ |
+|---------|---------|---------|---------|---------|---------|---------|
+| 17.1    | 15.2    |  14.9   | 12.6    | 15.2    |  10.3   | 12.7    |
+
+Table: Seven values ($x$) of soil temperature ($^{\circ} C$) at a site
+
+\Large \pause
+
+$$\bar{x} = \frac{17.1 + 15.2 + 14.9 + 12.6 + 15.2 + 10.3 + 12.7}{7}$$
+
+\Huge
+
+$$\bar{x} = 14$$
+
+
+
+## Arithmetic mean visualisation (histogram)
+
+```{r, echo = FALSE}
+dat <- c(17.1, 15.2, 14.9, 12.6, 15.2, 10.3, 12.7);
+mnd <- mean(dat);
+```
+
+```{r, echo = FALSE, fig.alt = "An example histogram is shown with a somewhat normal shape. The mean of the distribution is indicated with an arrow.", fig.cap = "", out.width="100%"}
+fig_fruits  <- read.csv(file = "data/fig_fruits.csv");
+par(mar = c(6, 6, 1, 1));
+hist(x = dat, xlab = "Temperature (degrees C)", 
+     ylab = "Frequency", cex.lab = 2, col = "blue", main = "", cex.axis = 2,
+     breaks = 10, ylim = c(0, 2.5));
+mean_fig_fruit_width <- mean(dat, na.rm = TRUE);
+arrows(x0 = mean_fig_fruit_width, x1 = mean_fig_fruit_width,
+       y0 = 1.8, y1 = 0, lwd = 3);
+mbox <- function(x0, x1, y0, y1){
+    xx <- seq(from=x0, to=x1, length.out = 100);
+    yy <- seq(from=y0, to=y1, length.out = 100);
+    xd <- c(rep(x0, 100), xx, rep(x1,100), rev(xx));
+    yd <- c(yy, rep(y1,100), rev(yy), rep(y0, 100));
+    return(list(x=xd, y=yd));
+}
+tbox <- mbox(x0 = mean_fig_fruit_width - 0.6, 
+             x1 = mean_fig_fruit_width + 0.6, y0 = 1.8, y1 = 2.2);
+polygon(x=tbox$x, y=tbox$y, lwd=3, border="black", col="white");
+text(x = mean_fig_fruit_width, y = 2, cex = 2, labels = "Mean");
+```
+
+
+
+## General formula for arithmetic mean
+
+\Huge
+
+- Sample mean: $\bar{x}$ (or $\hat{\mu}_{x}$)
+- Sample size: $N$
+
+\vspace{4mm}
+
+
+$$\bar{x} = \frac{x_{1} + x_{2} + ... + x_{N-1} + x_{N} }{N}$$
+
+
+## General formula for arithmetic mean
+
+\LARGE
+
+$$\bar{x} = \frac{x_{1} + x_{2} + ... + x_{N-1} + x_{N} }{N}$$
+
+\vspace{3mm}
+
+$$\sum_{i = 1}^{N}x_{i} = x_{1} + x_{2} + ... + x_{N-1} + x_{N}$$
+
+\pause
+\vspace{3mm}
+
+$$\bar{x} = \frac{1}{N}\sum_{i = 1}^{N}x_{i}$$
+
+
+## The mode
+
+\LARGE
+
+Most frequently occurring observation
+
+| $x_{1}$ | $x_{2}$   | $x_{3}$ | $x_{4}$ | $x_{5}$   | $x_{6}$ | $x_{7}$ |
+|---------|-----------|---------|---------|-----------|---------|---------|
+| 17.1    | **15.2**  |  14.9   | 12.6    | **15.2**  |  10.3   | 12.7    |
+
+
+\pause
+
+Also applies to categorical data
+
+
+| $x_{1}$ | $x_{2}$   | $x_{3}$ | $x_{4}$ | $x_{5}$   | $x_{6}$ |
+|---------|-----------|---------|---------|-----------|---------|
+| dog     | **cat**   |  bird   | **cat** | **cat**   |  dog    |
+
+
+## Visualising the mode
+
+```{r, echo = FALSE, fig.alt = "An example histogram is shown with a bimodal shape.", fig.cap = "Hypothetical dataset that has a bimodal distribution.", out.width="100%"}
+bimodal_data <- c(rnorm(n = 200, mean = 10), rnorm(n = 150, mean = 14));
+par(mar = c(6, 6, 1, 1));
+hist(bimodal_data, cex.axis = 2, cex.lab = 2, col = "blue",
+     xlab = "Simulated bimodal dataset value", main = "");
+```
+
+
+## The median
+
+\Huge
+
+- Observation in the middle when the observations are arranged in ascending order
+- There are an equal number of observations lower and higher than the median
+
+
+## The median
+
+\LARGE
+
+
+| $x_{1}$ | $x_{2}$   | $x_{3}$ | $x_{4}$ | $x_{5}$   | $x_{6}$ | $x_{7}$ |
+|---------|-----------|---------|---------|-----------|---------|---------|
+| 17.1    |   15.2    |  14.9   | 12.6    |  15.2     |  10.3   | 12.7    |
+
+\pause
+
+Sorting the data:
+
+| $x_{6}$ | $x_{4}$   | $x_{7}$ | $x_{3}$  | $x_{2}$   | $x_{5}$ | $x_{1}$ |
+|---------|-----------|---------|----------|-----------|---------|---------|
+| 10.3    |  12.6     |  12.7   | **14.9** |  15.2     |  15.2   | 17.1    |
+
+
+## The median
+
+\LARGE
+
+Median is a type of \textbf{quantile} (50\%)
+\vspace{3mm}
+\begin{itemize}
+\item Can break distribution into other quantiles
+\begin{itemize} \LARGE
+\item First \textbf{quartile} (25\% quantile)
+\item Third \textbf{quartile} (75\% quantile)
+\end{itemize}
+\item Quantiles also called `percentiles'
+\end{itemize}
+
+
+| $x_{1}$ | $x_{2}$   | $x_{3}$ | $x_{4}$ | $x_{5}$   |
+|---------|-----------|---------|---------|-----------|
+| 2       | 4         |  5      | 6       |  8        |
+
+
+## The median
+
+\LARGE
+
+If there is no middle value
+
+| $x_{1}$ | $x_{2}$   | $x_{3}$ | $x_{4}$ | $x_{5}$   | $x_{6}$ |
+|---------|-----------|---------|---------|-----------|---------|
+| 3.1     |   3.5     |  3.8    | 4.0     |  4.2      |  4.2    |
+
+Take mean of middle values:
+
+$$\frac{3.8 + 4.0}{2} = 3.9$$
+
+## The median
+
+\Huge
+
+- Multiple valid ways to calculate quantiles$^{1}$
+- No one 'right' way
+- Jamovi's approach might differ from other software
+
+\footnotetext[1]{Hyndman, RJ, \& Y Fan. 1996. American Statistician \href{https://doi.org/10.1080/00031305.1996.10473566}{50:361–65}.}
+
+
+## Median more robust to outliers
+
+```{r, echo = FALSE}
+skw <- rexp(n = 10000, rate = 1/1000); # rbeta(10000, 3, 20)*100;
+par(mar = c(6, 6, 1, 1));
+hist(skw, col = "blue", main = "", breaks = 40, xlab = "Skewed values",
+     cex.lab = 2, cex.axis = 2);
+smn <- round(mean(skw), digits = 2);
+smd <- round(median(skw), digits = 2);
+arrows(x0 = smn, x1 = smn, y0 = -200, y1 = 0, lwd = 3, len = 0.1);
+arrows(x0 = smd, x1 = smd, y0 = -200, y1 = 0, lwd = 3, len = 0.1);
+text(x = 5350, y = 1400, cex = 3, labels = paste("Mean = ", smn));
+text(x = 5000, y = 1200, cex = 3, labels = paste("Median = ", smd));
+```
+
+
+## Measures of spread
+
+\Huge
+
+- Range
+- Interquartile range (IQR)
+- Variance ($s^2$)
+- Standard deviation ($s$)
+- Coefficient of variation ($CV$)
+
+
+## Measures of spread
+
+\Huge
+
+```{r, echo = FALSE, fig.alt = "Screenshot of jamovi interface for descriptive statistics with options on the left panel and output on the right panel", fig.cap = "", out.width="80%"}
+knitr::include_graphics("img/jamovi_descriptives_spread.png")
+```
+
+Range, IQR, $s^{2}$, $s$, $CV$
+
+
+
+## Measures of spread
+
+```{r, echo = FALSE}
+x1 <- rnorm(n = 1000, mean = 100, sd = 10);
+x2 <- rnorm(n = 1000, mean = 100, sd = 30);
+par(mfrow = c(1, 2), mar = c(5, 5, 1, 1));
+hist(x = x1, breaks = 20, xlim = c(0, 200), ylim = c(0, 200), col = "blue",
+     cex.lab = 2, cex.axis = 2, xlab = "Low spread variable", main = "");
+hist(x = x2, breaks = 20, xlim = c(0, 200), ylim = c(0, 200), col = "blue",
+     cex.lab = 2, cex.axis = 2, xlab = "High spread variable", main = "");
+```
+
+
+## Measures of spread: Range
+
+\LARGE
+
+$$Range(X) = Maximum(X) - Minimum(X)$$
+
+
+| $x_{1}$   | $x_{2}$   | $x_{3}$ | $x_{4}$ | $x_{5}$   | $x_{6}$   | $x_{7}$ |
+|-----------|-----------|---------|---------|-----------|-----------|---------|
+| **17.1**  |   15.2    |  14.9   | 12.6    |  15.2     | **10.3**  | 12.7    |
+
+
+$$Range(X) = 17.1 - 10.3 = 6.8$$
+
+
+## Measures of spread: Interquartile Range
+
+\Huge
+
+$$IQR(X) = Q_{3}(X) - Q_{1}(X)$$
+
+\vspace{2mm}
+
+| $x_{1}$ | $x_{2}$   | $x_{3}$ | $x_{4}$ | $x_{5}$   |
+|---------|-----------|---------|---------|-----------|
+| 2       | **4**     |  5      | **6**   |  8        |
+
+
+\pause
+
+$$IQR(X) = 6 - 4 = 2$$
+
+## Measures of spread: Variance ($s^{2}$)
+
+\LARGE
+
+- Expected squared deviation from mean
+- More useful than range or IQR
+- Less intuitive than range or IQR$^{1}$
+- Jamovi will calculate this for us
+
+
+$$s^{2} = \frac{1}{N - 1}\sum_{i = 1}^{N}\left(x_{i} - \bar{x} \right)^{2}.$$
+
+\vspace{6mm}
+
+We can break this down step by step!
+
+
+\footnotetext[1]{\href{https://bradduthie.github.io/stats/app/forest/}{https://bradduthie.github.io/stats/app/forest/}}
+
+
+
+## Measures of spread: Variance ($s^{2}$)
+
+$$s^{2} = \frac{1}{N - 1}\sum_{i = 1}^{N}\left(x_{i} - \bar{x} \right)^{2}.$$
+
+| $x_{1}$   | $x_{2}$   | $x_{3}$ | $x_{4}$ | $x_{5}$   | $x_{6}$   | $x_{7}$ |
+|-----------|-----------|---------|---------|-----------|-----------|---------|
+|   17.1    |   15.2    |  14.9   | 12.6    |  15.2     | 10.3      | 12.7    |
+
+\Large
+
+1. Take $x_{1}$ minus mean, squared $(17.1 - 14)^2 = 9.61$
+2. Repeat step 1 for $x_{2}, x_{3}, ..., x_{N}$
+3. Sum up all these $(x_{i} - \bar{x})^2$ values
+4. Multiply the sum by $1/(N-1)$
+
+
+## Measures of spread: Variance ($s^{2}$)
+
+$$s^{2} = \frac{1}{N - 1}\sum_{i = 1}^{N}\left(x_{i} - \bar{x} \right)^{2}.$$
+
+| $x_{1}$   | $x_{2}$   | $x_{3}$ | $x_{4}$ | $x_{5}$   | $x_{6}$   | $x_{7}$ |
+|-----------|-----------|---------|---------|-----------|-----------|---------|
+|   17.1    |   15.2    |  14.9   | 12.6    |  15.2     | 10.3      | 12.7    |
+
+\Large
+\vspace{-6mm}
+
+\begin{align*}
+SS &= (17.1-14)^2 + (15.2-14)^2 + \cdots + (12.7-14)^2 \\
+   &= (3.1)^2 + (1.2)^2 + \cdots + (-1.3)^2 \\
+   &= 30.64
+\end{align*}
+
+\vspace{-4mm}
+\LARGE
+
+\pause
+
+$$s^{2} = \frac{1}{7 - 1} \times 30.64 = 5.1067 \:\: ^{\circ} C^2$$
+
+## Measures of spread: Standard deviation ($s$)
+
+\LARGE
+
+- Mean deviation from the mean
+- Square-root of the variance
+- Gets back to original units
+
+$$s^{2} = 5.1067 \:\: ^{\circ} C^2$$
+
+\pause
+
+$$s = \sqrt{5.1067} = 2.2598 \:\: ^{\circ} C$$
+
+
+\footnotetext[2]{\href{https://bradduthie.github.io/stats/app/normal_pos_neg/}{https://bradduthie.github.io/stats/app/normal\_pos\_neg/}}
+
+
+## Standard deviation of the mean: does it look right?
+
+```{r, echo = FALSE, fig.alt = "An example histogram is shown with a somewhat normal shape. The mean of the distribution is indicated with an arrow.", fig.cap = "", out.width="100%"}
+fig_fruits  <- read.csv(file = "data/fig_fruits.csv");
+par(mar = c(6, 6, 1, 1));
+hist(x = dat, xlab = "Temperature (degrees C)", 
+     ylab = "Frequency", cex.lab = 2, col = "blue", main = "", cex.axis = 2,
+     breaks = 10, ylim = c(0, 2.5));
+mean_fig_fruit_width <- mean(dat, na.rm = TRUE);
+arrows(x0 = mean_fig_fruit_width, x1 = mean_fig_fruit_width,
+       y0 = 1.8, y1 = 0, lwd = 3);
+mbox <- function(x0, x1, y0, y1){
+    xx <- seq(from=x0, to=x1, length.out = 100);
+    yy <- seq(from=y0, to=y1, length.out = 100);
+    xd <- c(rep(x0, 100), xx, rep(x1,100), rev(xx));
+    yd <- c(yy, rep(y1,100), rev(yy), rep(y0, 100));
+    return(list(x=xd, y=yd));
+}
+tbox <- mbox(x0 = mean_fig_fruit_width - 0.6, 
+             x1 = mean_fig_fruit_width + 0.6, y0 = 1.8, y1 = 2.2);
+polygon(x=tbox$x, y=tbox$y, lwd=3, border="black", col="white");
+text(x = mean_fig_fruit_width, y = 2, cex = 2, labels = "Mean");
+```
+
+
+
+## Standard deviation of the mean
+
+\Huge
+
+$$s = \sqrt{\frac{1}{N - 1}\sum_{i = 1}^{N}\left(x_{i} - \bar{x} \right)^{2}}.$$
+
+\vspace{8mm}
+
+- One checkbox in jamovi
+- Spread of a variable
+
+
+## Coefficient of variation (CV)
+
+\LARGE 
+
+Standard deviation divided by the mean
+
+| $x_{1}$   | $x_{2}$   | $x_{3}$ | $x_{4}$ | $x_{5}$   | $x_{6}$   | $x_{7}$ |
+|-----------|-----------|---------|---------|-----------|-----------|---------|
+|   17.1    |   15.2    |  14.9   | 12.6    |  15.2     | 10.3      | 12.7    |
+
+\vspace{-5mm}
+
+$$CV = \frac{s}{\bar{x}} = \frac{2.2598 \:^{\circ}C}{14\:^{\circ}C} = 0.1614$$
+
+\vspace{3mm}
+
+Note that the units cancel out.
+
+
+
+## Coefficient of variation (CV)
+
+\LARGE 
+
+Often expressed as a percentage
+
+| $x_{1}$   | $x_{2}$   | $x_{3}$ | $x_{4}$ | $x_{5}$   | $x_{6}$   | $x_{7}$ |
+|-----------|-----------|---------|---------|-----------|-----------|---------|
+|   17.1    |   15.2    |  14.9   | 12.6    |  15.2     | 10.3      | 12.7    |
+
+\vspace{-5mm}
+
+$$CV = \frac{2.2598 \:^{\circ}C}{14\:^{\circ}C} \times 100\% = 16.14 \%$$
+
+\vspace{3mm}
+
+Useful for comparing variation across categories (e.g., species)
+
+## Descriptive statistics: Skew and kurtosis
+
+
+
+```{r, echo = FALSE, fig.alt = "Screenshot of jamovi interface for descriptive statistics with options on the left panel and output on the right panel", fig.cap = "", out.width="90%"}
+knitr::include_graphics("img/jamovi_descriptives_sk.png")
+```
+
+
+
+## Skew is the asymmetry of a distribution
+
+
+```{r, echo = FALSE, fig.alt = "Two histograms are shown side by side. The histogram on the left looks normal, but with an extended tail on the left hand side. The histogram on the right also looks normal, but with an extend tail on the right hand side.", fig.cap = "Histograms showing a (A) distribution that has a negative (i.e., 'left') skew and (B) distribution that has a positive (i.e., 'right') skew.", out.width="90%"}
+left_skewed  <- rbeta(n = 100000, shape1 = 5, shape2 = 2);
+right_skewed <- rbeta(n = 100000, shape1 = 2, shape2 = 5);
+par(mfrow = c(1, 2), mar = c(2, 2, 1, 1));
+hist(x = left_skewed, xaxt = "n", yaxt = "n", main = "", xlim = c(0, 1),
+     col = "blue");
+text(x = 0.1, y = 11500, labels = "A", cex = 3);
+box();
+par(mar = c(2, 1, 1,1));
+hist(x = right_skewed, xaxt = "n", yaxt = "n", main = "", xlim = c(0, 1),
+     col = "blue");
+text(x = 0.9, y = 11500, labels = "B", cex = 3);
+box();
+```
+
+
+## Kurtosis is the flattness of a distribution
+
+```{r, echo = FALSE, fig.alt = "Two histograms are shown side by side. The histogram on the left looks normal, but with more values in the centre and toward the extreme sides. The histogram on the right also looks normal, but with relatively few values in the centre and at the extremes.", fig.cap = "Histograms showing a (A) leptokurtic distribution and (B) platykurtic distribution.", out.width="90%"}
+vals         <- seq(from = 0.1, to = 0.9, by = 0.1);
+plat_prob    <- c(0.05, 0.05, 0.16, 0.16, 0.16, 0.16, 0.16, 0.05, 0.05);
+lept_prob    <- c(0.05, 0.0, 0.05, 0.1, 0.7, 0.1, 0.05, 0.0, 0.05) / 1.1;
+leptokurtic  <- sample(vals, size = 100000, replace = TRUE, prob = lept_prob);
+platykurtic  <- sample(vals, size = 100000, replace = TRUE, prob = plat_prob);
+lept_noise   <- rnorm(n = 100000, sd = 0.08);
+plat_noise   <- rnorm(n = 100000, sd = 0.08);
+par(mfrow = c(1, 2), mar = c(2, 2, 1, 1));
+hist(x = leptokurtic + lept_noise, xaxt = "n", yaxt = "n", main = "", 
+     breaks = 40, col = "blue");
+text(x = -0.1, y = 16000, labels = "A", cex = 3);
+box();
+par(mar = c(2, 1, 1,1));
+hist(x = platykurtic + plat_noise, xaxt = "n", yaxt = "n", main = "",
+     breaks = 40, col = "blue");
+text(x = -0.1, y = 7500, labels = "B", cex = 3);
+box();
+```
+
+## Statistical moments
+
+\Huge
+
+1. Mean
+2. Variance
+3. Skew
+4. Kurtosis
+
+Mathematically, deviations from mean raised to some power give the shape of a distribution.
+
+## Descriptive statistics in jamovi
+
+```{r, echo = FALSE, fig.alt = "Screenshot of jamovi interface for descriptive statistics with options on the left panel and output on the right panel", fig.cap = "", out.width="100%"}
+knitr::include_graphics("img/jamovi_descriptives.png")
+```
+
+
+
+## The standard error: Sample means and population mean
+
+```{r, echo = FALSE, fig.alt = "30+ bird silhouettes in a dotted box called 'population'. Within this, four birds are in a grey box called 'sample'.", fig.cap = "", out.width="100%"}
+knitr::include_graphics("img/population_sample_1.png")
+```
+
+
+
+## The standard error: Sample means and population mean
+
+```{r, echo = FALSE, fig.alt = "Grey boxes each with 4 birds representing samples with different average heights.", fig.cap = "", out.width="100%"}
+knitr::include_graphics("img/samples.png")
+```
+
+
+
+## General idea of frequency statistics
+
+\Huge
+
+**Repeated re-sampling**
+
+- What is our expectation?
+- What is our uncertainty?
+
+\vspace{4mm}
+
+What is the **distribution** of the *sample mean* ($\bar{x}$) around the *population* mean ($\mu_{x}$)?
+
+
+
+## The standard error: Sample means and population mean
+
+```{r, echo = FALSE, fig.alt = "An example histogram is shown with a somewhat normal shape. The mean of the distribution is indicated with an arrow.", fig.cap = "", out.width="100%"}
+sim_sparrows  <- c(15.53, 16.21, 16.09, 14.88, 15.06);
+binbreaks     <- seq(from = 8, to = 22, by = 0.2);
+par(mar = c(6, 6, 1, 1));
+hist(x = sim_sparrows, xlab = "Sample mean height (cm)", 
+     ylab = "Frequency", cex.lab = 2, col = "blue", main = "", cex.axis = 2,
+     breaks = binbreaks, xlim = c(10.5, 20.5), ylim = c(0, 30));
+mean_height <- 15.75;
+arrows(x0 = mean_height, x1 = mean_height,
+       y0 = 6, y1 = 1, lwd = 3);
+mbox <- function(x0, x1, y0, y1){
+    xx <- seq(from=x0, to=x1, length.out = 100);
+    yy <- seq(from=y0, to=y1, length.out = 100);
+    xd <- c(rep(x0, 100), xx, rep(x1,100), rev(xx));
+    yd <- c(yy, rep(y1,100), rev(yy), rep(y0, 100));
+    return(list(x=xd, y=yd));
+}
+tbox <- mbox(x0 = mean_height - 1.2, 
+             x1 = mean_height + 1.2, y0 = 6, y1 = 13);
+polygon(x=tbox$x, y=tbox$y, lwd=3, border="black", col="white");
+text(x = mean_height, y = 11, cex = 2, labels = "Population");
+text(x = mean_height, y = 8, cex = 2, labels = "Mean");
+```
+
+
+
+## The standard error: Sample means and population mean
+
+```{r, echo = FALSE, fig.alt = "An example histogram is shown with a somewhat normal shape. The mean of the distribution is indicated with an arrow.", fig.cap = "", out.width="100%"}
+sim_sparrows  <- c(15.53, 16.21, 16.09, 14.88, 15.06);
+normsparrows  <- round(rnorm(n = 400, mean = 15.75, sd = 1.5), digits = 2);
+allsparrows   <- c(sim_sparrows, normsparrows);
+binbreaks     <- seq(from = 8, to = 22, by = 0.2);
+par(mar = c(6, 6, 1, 1));
+hist(x = allsparrows, xlab = "Sample mean height (cm)", 
+     ylab = "Frequency", cex.lab = 2, col = "skyblue", main = "", cex.axis = 2,
+     breaks = binbreaks, xlim = c(10.5, 20.5), ylim = c(0, 30));
+mean_height <- 15.75;
+arrows(x0 = mean_height, x1 = mean_height,
+       y0 = 6, y1 = 1, lwd = 3);
+mbox <- function(x0, x1, y0, y1){
+    xx <- seq(from=x0, to=x1, length.out = 100);
+    yy <- seq(from=y0, to=y1, length.out = 100);
+    xd <- c(rep(x0, 100), xx, rep(x1,100), rev(xx));
+    yd <- c(yy, rep(y1,100), rev(yy), rep(y0, 100));
+    return(list(x=xd, y=yd));
+}
+tbox <- mbox(x0 = mean_height - 1.2, 
+             x1 = mean_height + 1.2, y0 = 6, y1 = 13);
+polygon(x=tbox$x, y=tbox$y, lwd=3, border="black", col="white");
+text(x = mean_height, y = 11, cex = 2, labels = "Population");
+text(x = mean_height, y = 8, cex = 2, labels = "Mean");
+hist(x = sim_sparrows, xlab = "Sample mean height (cm)", 
+     ylab = "Frequency", cex.lab = 2, col = "blue", main = "", cex.axis = 2,
+     breaks = binbreaks, xlim = c(10.5, 20.5), add = TRUE);
+```
+
+
+
+
+## The standard error: Sample means and population mean
+
+\Huge
+
+- What is the **distribution** of the *sample mean* ($\bar{x}$) around the *population* mean ($\mu_{x}$)?
+- **Standard error**: The standard deviation of sample means around the population mean
+
+
+## The standard error: estimation
+
+\Huge
+
+$$SE = \frac{Sample\:standard\:deviation}{\sqrt{Sample\:size}}$$
+
+\vspace{6mm}\pause
+
+$$SE = \frac{s}{\sqrt{N}}$$
+
+
+
+## The standard error
+
+```{r, echo = FALSE, fig.alt = "An example histogram is shown with a somewhat normal shape. The mean of the distribution is indicated with an arrow.", fig.cap = "", out.width="100%"}
+sim_sparrows  <- c(15.53, 16.21, 16.09, 14.88, 15.06);
+normsparrows  <- round(rnorm(n = 400, mean = 15.75, sd = 1.5), digits = 2);
+allsparrows   <- c(sim_sparrows, normsparrows);
+binbreaks     <- seq(from = 8, to = 22, by = 0.2);
+par(mar = c(6, 6, 1, 1));
+hist(x = allsparrows, xlab = "Sample mean height (cm)", freq = FALSE,
+     ylab = "Frequency", cex.lab = 2, col = "skyblue", main = "", cex.axis = 2,
+     breaks = binbreaks, xlim = c(10.5, 20.5), ylim = c(0, 0.4));
+mean_height <- 15.75;
+
+mbox <- function(x0, x1, y0, y1){
+    xx <- seq(from=x0, to=x1, length.out = 100);
+    yy <- seq(from=y0, to=y1, length.out = 100);
+    xd <- c(rep(x0, 100), xx, rep(x1,100), rev(xx));
+    yd <- c(yy, rep(y1,100), rev(yy), rep(y0, 100));
+    return(list(x=xd, y=yd));
+}
+hist(x = allsparrows, xlab = "Sample mean height (cm)", freq = FALSE,
+     ylab = "Frequency", cex.lab = 2, col = "skyblue", main = "", cex.axis = 2,
+     breaks = binbreaks, xlim = c(10.5, 20.5), ylim = c(0, 0.4), add = TRUE);
+
+tbox <- mbox(x0 = mean_height - 1.2, 
+             x1 = mean_height + 1.2, y0 = 0.06, y1 = 0.13);
+polygon(x=tbox$x, y=tbox$y, lwd=3, border="black", col="white");
+text(x = mean_height, y = 0.11, cex = 2, labels = "Population");
+text(x = mean_height, y = 0.08, cex = 2, labels = "Mean");
+
+arrows(x0 = mean_height, x1 = mean_height,
+       y0 = 0.06, y1 = 0, lwd = 3);
+
+```
+
+
+
+
+## The standard error
+
+```{r, echo = FALSE, fig.alt = "An example histogram is shown with a somewhat normal shape. The mean of the distribution is indicated with an arrow.", fig.cap = "", out.width="100%"}
+sim_sparrows  <- c(15.53, 16.21, 16.09, 14.88, 15.06);
+normsparrows  <- round(rnorm(n = 400, mean = 15.75, sd = 1.5), digits = 2);
+allsparrows   <- c(sim_sparrows, normsparrows);
+binbreaks     <- seq(from = 8, to = 22, by = 0.2);
+par(mar = c(6, 6, 1, 1));
+hist(x = allsparrows, xlab = "Sample mean height (cm)", freq = FALSE,
+     ylab = "Frequency", cex.lab = 2, col = "skyblue", main = "", cex.axis = 2,
+     breaks = binbreaks, xlim = c(10.5, 20.5), ylim = c(0, 0.4));
+mean_height <- 15.75;
+
+mbox <- function(x0, x1, y0, y1){
+    xx <- seq(from=x0, to=x1, length.out = 100);
+    yy <- seq(from=y0, to=y1, length.out = 100);
+    xd <- c(rep(x0, 100), xx, rep(x1,100), rev(xx));
+    yd <- c(yy, rep(y1,100), rev(yy), rep(y0, 100));
+    return(list(x=xd, y=yd));
+}
+
+xx       <- seq(from = 8, to = 22, by = 0.001);
+pr_norm  <- dnorm(x = xx, mean = 15.75, sd = 1.5);
+points(x = xx, y = pr_norm, type = "l", lwd = 3);
+polygon(c(xx, max(xx)), c(pr_norm, 0), col="lightblue");
+
+hist(x = allsparrows, xlab = "Sample mean height (cm)", freq = FALSE,
+     ylab = "Frequency", cex.lab = 2, col = "skyblue", main = "", cex.axis = 2,
+     breaks = binbreaks, xlim = c(10.5, 20.5), ylim = c(0, 0.4), add = TRUE);
+
+points(x = xx, y = pr_norm, type = "l", lwd = 3);
+
+
+tbox <- mbox(x0 = mean_height - 1.2, 
+             x1 = mean_height + 1.2, y0 = 0.06, y1 = 0.13);
+polygon(x=tbox$x, y=tbox$y, lwd=3, border="black", col="white");
+text(x = mean_height, y = 0.11, cex = 2, labels = "Population");
+text(x = mean_height, y = 0.08, cex = 2, labels = "Mean");
+
+arrows(x0 = mean_height, x1 = mean_height,
+       y0 = 0.06, y1 = 0, lwd = 3);
+
+```
+
+
+
+
+## The standard error: Sample means and population mean
+
+\Huge
+
+- **Standard error**: The standard deviation of sample means around the population mean
+- Standard error measures the uncertainty of the sample mean
+
+
+
+
+## The standard error
+
+```{r, echo = FALSE, fig.alt = "An example histogram is shown with a somewhat normal shape. The mean of the distribution is indicated with an arrow.", fig.cap = "", out.width="100%"}
+sim_sparrows  <- c(15.53, 16.21, 16.09, 14.88, 15.06);
+normsparrows  <- round(rnorm(n = 400, mean = 15.75, sd = 1.5), digits = 2);
+allsparrows   <- c(sim_sparrows, normsparrows);
+binbreaks     <- seq(from = 8, to = 22, by = 0.2);
+par(mar = c(6, 6, 1, 1));
+hist(x = allsparrows, xlab = "Sample mean height (cm)", freq = FALSE,
+     ylab = "Frequency", cex.lab = 2, col = "skyblue", main = "", cex.axis = 2,
+     breaks = binbreaks, xlim = c(10.5, 20.5), ylim = c(0, 1));
+mean_height <- 15.75;
+
+mbox <- function(x0, x1, y0, y1){
+    xx <- seq(from=x0, to=x1, length.out = 100);
+    yy <- seq(from=y0, to=y1, length.out = 100);
+    xd <- c(rep(x0, 100), xx, rep(x1,100), rev(xx));
+    yd <- c(yy, rep(y1,100), rev(yy), rep(y0, 100));
+    return(list(x=xd, y=yd));
+}
+
+xx       <- seq(from = 8, to = 22, by = 0.001);
+pr_norm  <- dnorm(x = xx, mean = 15.75, sd = 1.5);
+points(x = xx, y = pr_norm, type = "l", lwd = 3);
+polygon(c(xx, max(xx)), c(pr_norm, 0), col="lightblue");
+
+hist(x = allsparrows, xlab = "Sample mean height (cm)", freq = FALSE,
+     ylab = "Frequency", cex.lab = 2, col = "skyblue", main = "", cex.axis = 2,
+     breaks = binbreaks, xlim = c(10.5, 20.5), ylim = c(0, 1), add = TRUE);
+
+points(x = xx, y = pr_norm, type = "l", lwd = 3);
+
+arrows(x0 = mean_height, x1 = mean_height,
+       y0 = 0.06, y1 = 0, lwd = 3);
+
+tbox <- mbox(x0 = mean_height - 1.2, 
+             x1 = mean_height + 1.2, y0 = 0.06, y1 = 0.13);
+polygon(x=tbox$x, y=tbox$y, lwd=3, border="black", col="white");
+text(x = mean_height, y = 0.11, cex = 1, labels = "Population");
+text(x = mean_height, y = 0.08, cex = 1, labels = "Mean");
+
+```
+
+
+
+
+## The standard error
+
+```{r, echo = FALSE, fig.alt = "An example histogram is shown with a somewhat normal shape. The mean of the distribution is indicated with an arrow.", fig.cap = "", out.width="100%"}
+sim_sparrows  <- c(15.53, 16.21, 16.09, 14.88, 15.06);
+normsparrows  <- round(rnorm(n = 400, mean = 15.75, sd = 1.5), digits = 2);
+allsparrows   <- c(sim_sparrows, normsparrows);
+binbreaks     <- seq(from = 8, to = 22, by = 0.2);
+par(mar = c(6, 6, 1, 1));
+hist(x = allsparrows, xlab = "Sample mean height (cm)", freq = FALSE,
+     ylab = "Frequency", cex.lab = 2, col = "skyblue", main = "", cex.axis = 2,
+     breaks = binbreaks, xlim = c(10.5, 20.5), ylim = c(0, 1));
+mean_height <- 15.75;
+
+mbox <- function(x0, x1, y0, y1){
+    xx <- seq(from=x0, to=x1, length.out = 100);
+    yy <- seq(from=y0, to=y1, length.out = 100);
+    xd <- c(rep(x0, 100), xx, rep(x1,100), rev(xx));
+    yd <- c(yy, rep(y1,100), rev(yy), rep(y0, 100));
+    return(list(x=xd, y=yd));
+}
+
+xx       <- seq(from = 8, to = 22, by = 0.001);
+pr_norm  <- dnorm(x = xx, mean = 15.75, sd = 1.5);
+points(x = xx, y = pr_norm, type = "l", lwd = 3);
+polygon(c(xx, max(xx)), c(pr_norm, 0), col="lightblue");
+points(x = xx, y = pr_norm, type = "l", lwd = 3);
+
+hist(x = allsparrows, xlab = "Sample mean height (cm)", freq = FALSE,
+     ylab = "Frequency", cex.lab = 2, col = "skyblue", main = "", cex.axis = 2,
+     breaks = binbreaks, xlim = c(10.5, 20.5), ylim = c(0, 1), add = TRUE);
+
+xx       <- seq(from = 8, to = 22, by = 0.001);
+pr_norm  <- dnorm(x = xx, mean = 15.75, sd = 0.5);
+points(x = xx, y = pr_norm, type = "l", lwd = 3);
+polygon(c(xx, max(xx)), c(pr_norm, 0), col="salmon");
+
+allsparrows  <- round(rnorm(n = 400, mean = 15.75, sd = 0.5), digits = 2);
+hist(x = allsparrows, xlab = "Sample mean height (cm)", freq = FALSE,
+     ylab = "Frequency", cex.lab = 2, col = "red", main = "", cex.axis = 2,
+     breaks = binbreaks, xlim = c(10.5, 20.5), ylim = c(0, 1), add = TRUE);
+
+xx       <- seq(from = 8, to = 22, by = 0.001);
+pr_norm  <- dnorm(x = xx, mean = 15.75, sd = 0.5);
+points(x = xx, y = pr_norm, type = "l", lwd = 3, lty = "solid", col = "black");
+
+```
+
+
+## The standard error in jamovi
+
+
+```{r, echo = FALSE, fig.alt = "Screenshot of jamovi interface for descriptive statistics with options on the left panel and output on the right panel. Standard error checkbox is highlighted in red.", fig.cap = "", out.width="80%"}
+knitr::include_graphics("img/jamovi_descriptives_ct.png")
+```
+
+
+
+
+

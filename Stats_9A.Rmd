@@ -1,0 +1,347 @@
+---
+title: "Regression"
+output:
+  beamer_presentation:
+    theme: "default"
+    colortheme: "default"
+    fonttheme: "default"
+  ioslides_presentation: default
+  slidy_presentation: default
+header-includes:
+- \usepackage{hyperref}
+- \usepackage{caption}
+- \definecolor{links}{HTML}{2A1B81}
+- \hypersetup{colorlinks,linkcolor=,urlcolor=links}
+colorlinks: true
+linkcolor: blue
+urlcolor: blue
+---
+
+```{r, echo = FALSE}
+library(knitr);
+opts_chunk$set(echo = FALSE);
+```
+
+
+# Introduction to regression
+
+\large
+
+In regression, our objective is to understand some dependent variable Y based on an independent variable X. Regression is a tool for predicting the value of Y as a function of X. We can use this tool to do the following,
+
+\pause
+\vspace{3mm}
+
+- Support hypotheses of causation of changes in y values due to changes in x values
+- Predict y values as a function of x values
+- To explain the variation of y values using x values
+
+\pause
+\vspace{3mm}
+
+Regression analysis can be used to support causal hypotheses, but it
+**cannot, by itself be used to determine causality.**
+
+
+
+# Visualising a regression of y values against x values
+
+![Regression of dependent variable y against independent x.](img/generic_regression.png){width=75%}
+
+
+# Regression includes independent and dependent variables
+
+\large
+
+**It is critical to correctly distinguish between the independent and dependent variables.**
+
+\pause
+\vspace{3mm}
+
+- Independent variable (X) is free to vary
+- Dependent variable (Y) is predicted to change given a change in the independent variable
+- Different results will be obtained if the two variables are confused
+
+\pause
+\vspace{3mm}
+
+In an experiment, the independent variable is something that we as researchers have control over (e.g., amount of fertiliser to put down on a field), whereas the dependent variable is something that we would measure when collecting our data (e.g., total crop yield of the field).
+
+
+# Regression line
+
+The line of best fit in a regression can be described mathematically with a simple equation,
+
+$$y = \beta_{0} + \beta_{1}x.$$
+
+This equation includes the variables x and y, and two coefficients
+
+\pause
+\vspace{3mm}
+
+- $\beta_{0}$ is the **intercept**; the value of y that is predicted when x = 0
+- $\beta_{1}$ is the **slope**; how much y changes for a change one unit of x
+
+\pause
+\vspace{3mm}
+
+Note that data points rarely will sit right on the regression line. The **residual** is defined by the difference between the measured value of y (i.e., the data point) and the y value predicted by the regression line (i.e., the vertical distance between the data point and the line).
+
+
+# Regression line
+
+![Regression of dependent variable y against independent x.](img/labelled_regression.png){width=75%}
+
+
+# How do we decide what is the best fit line?
+
+\large
+
+Now we can turn to how we calculate where the regression line should be through our data.
+
+\pause
+\vspace{3mm}
+
+- How do we know what our intercept ($\beta_{0}$) and slope ($\beta_{1}$) should be?
+- Use the method of **least squares regression**
+- Minimise the sum of squares of all the residual values
+
+\pause
+\vspace{3mm}
+
+To get an intuitive sense for how the regression line minimises the sum of squares, use **[[this interactive application](https://bradduthie.github.io/stats/app/regr_click/)]** to adjust the slope and intercept to try to find the line of best fit (it will turn blue when you succeed).
+
+
+# Assumptions of regression
+
+\large
+
+Regression is a widely used, but also often misused, statistical technique. It is important to be aware of the assumptions underlying linear regression.
+
+\pause
+\vspace{3mm}
+
+1. **The independent variable X is measured without error**
+2. **The relationship between X and Y is linear**
+3. **For any value of X, Y is normally distributed**
+4. **For all values of X, the variance of the residuals is identical**
+
+\pause
+\vspace{3mm}
+
+Note that even if our assumptions are not perfectly met (indeed, they rarely if ever will be), this does not completely invalidate the method of linear regression. But large violations of one or more of these assumptions might indeed be problematic.
+
+
+# Assumptions of regression
+
+![A regression of one dependent variable y against the independent variable x in which there is clear heteroscedasticity.](img/heteroscedasticity.png){width=75%}
+
+
+# How good is the fit of our model?
+
+\Large
+
+We often want to know how well a regression line fits to the data. 
+
+- **Coefficient of determination** ($R^{2}$)
+- $R^{2}$ tells us **how much of the variation in y is explained by the regression equation** \pause
+- E.g., if $R^{2} = 0.83$, then 83\% of the variation in y is accounted for by the fitted regression line
+- Visually, how tightly the data points in a scatterplot fit to the regression line
+
+\pause
+
+See the examples below of four different $R^{2}$ values to see what this looks like.
+
+
+# Scatterplots of different coefficients of determination
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Four different coefficients of determination"}
+par(mfrow = c(2, 2), mar = c(0, 0, 0, 0), oma = c(3, 3, 1, 1));
+X1 <- rnorm(n = 24, mean = 0, sd = 1);
+Y1 <- rnorm(n = 24, mean = 0, sd = 1);
+while(cor(X1, Y1) < 0.199 | cor(X1, Y1) > 0.201){
+  X1 <- rnorm(n = 24, mean = 0, sd = 1);
+  Y1 <- rnorm(n = 24, mean = 0, sd = 1);
+}
+plot(x = X1, y = Y1, pch = 20, xlab = "X value", cex = 1.5, xlim = c(-3, 3),
+     ylim = c(-3, 3), xaxt = "n", yaxt = "n", cex.lab = 1.25, ylab = "Y value",
+     line = 1);
+text(x = -1.8, y = 2.75, labels = "R^2 = 0.04", cex = 2, hjust = 0);
+B0 <- as.numeric(lm(Y1~X1)$coefficients[1]);
+B1 <- as.numeric(lm(Y1~X1)$coefficients[2]);
+abline(a = B0, b = B1, lwd = 2);
+## Row 2
+X1 <- rnorm(n = 24, mean = 0, sd = 1);
+Y1 <- rnorm(n = 24, mean = 0, sd = 1);
+while(cor(X1, Y1) > -0.399 | cor(X1, Y1) < -0.401){
+  X1 <- rnorm(n = 24, mean = 0, sd = 1);
+  Y1 <- rnorm(n = 24, mean = 0, sd = 1);
+}
+plot(x = X1, y = Y1, pch = 20, xlab = "X value", cex = 1.5, xlim = c(-3, 3),
+     ylim = c(-3, 3), xaxt = "n", yaxt = "n", cex.lab = 1.25, ylab = "Y value",
+     line = 1);
+text(x = -1.7, y = 2.75, labels = "R^2 = 0.16", cex = 2, hjust = 0);
+B0 <- as.numeric(lm(Y1~X1)$coefficients[1]);
+B1 <- as.numeric(lm(Y1~X1)$coefficients[2]);
+abline(a = B0, b = B1, lwd = 2);
+## Row 3
+X1 <- rnorm(n = 24, mean = 0, sd = 1);
+Y1 <- rnorm(n = 24, mean = 0, sd = 1);
+while(cor(X1, Y1) < 0.699 | cor(X1, Y1) > 0.701){
+  X1 <- rnorm(n = 24, mean = 0, sd = 1);
+  Y1 <- rnorm(n = 24, mean = 0, sd = 1);
+}
+plot(x = X1, y = Y1, pch = 20, xlab = "X value", cex = 1.5, xlim = c(-3, 3),
+     ylim = c(-3, 3), xaxt = "n", yaxt = "n", cex.lab = 1.25, ylab = "Y value",
+     line = 1);
+text(x = -1.8, y = 2.75, labels = "R^2 = 0.49", cex = 2, hjust = 0);
+B0 <- as.numeric(lm(Y1~X1)$coefficients[1]);
+B1 <- as.numeric(lm(Y1~X1)$coefficients[2]);
+abline(a = B0, b = B1, lwd = 2);
+## Row 2
+X1 <- rnorm(n = 24, mean = 0, sd = 1);
+Y1 <- X1;
+plot(x = X1, y = Y1, pch = 20, xlab = "X value", cex = 1.5, xlim = c(-3, 3),
+     ylim = c(-3, 3), xaxt = "n", yaxt = "n", cex.lab = 1.25, ylab = "Y value",
+     line = 1);
+text(x = -1.9, y = 2.75, labels = "R^2 = 1", cex = 2, hjust = 0);
+mtext(text="X value",side=1,line=1,outer=TRUE, cex = 1.5);
+mtext(text="Y value",side=2,line=1,outer=TRUE, cex = 1.5);
+B0 <- as.numeric(lm(Y1~X1)$coefficients[1]);
+B1 <- as.numeric(lm(Y1~X1)$coefficients[2]);
+abline(a = B0, b = B1, lwd = 2);
+```
+
+
+
+# More understand of the coefficient of determination
+
+\large
+
+Understanding  that **the coefficient of determination tells us how much variation in y is explained by the regression equation** is the important point. 
+
+$$R^{2} = 1- \frac{SS_{res}}{SS_{tot}}.$$
+
+
+- Coefficient of determination compares the sum of squared residuals from the linear model ($SS_{res}$) to what the sum of squared residuals would be if we had just use the mean value of y ($SS_{tot}$). \pause
+
+- Conveniently, $R^{2}$ is also just the Pearson product moment correlation (*r*) squared.
+
+
+
+# Visualising the coefficient of determination
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "A regression of one dependent variable y against the independent variable x. Blue vertical lines show residuals of the linear model, while red dotted vertical lines show residual deviations of from the mean of y."}
+X1 <- c(2.02, 8.6, 4.9, 1.5, 2.8, 4.6, 7.5, 6.2, 3.3, 5.6);
+Y1 <- c(5, 3, 6, 1.3, 5.5, 3.1, 5.2, 6.8, 3.6, 6.6);
+B0 <- as.numeric(lm(Y1~X1)$coefficients[1]);
+B1 <- as.numeric(lm(Y1~X1)$coefficients[2]);
+resi <- lm(Y1~X1)$residuals;
+mxrs <- which(X1 == max(X1));
+plot(x = X1, y = Y1, pch = 20, xlab = "Independent Variable X", cex = 1.5, 
+     xlim = c(0, 10), ylim = c(0, 10), cex.lab = 1.25, cex.axis = 1.25,
+     ylab = "Dependent Variable Y", yaxs = "i", xaxs = "i");
+abline(a = B0, b = B1, lwd = 2, col = "blue");
+abline(h = mean(Y1), col = "red", lty = "dashed");
+for(i in 1:length(X1)){
+  points(x = c(X1[i] - 0.03, X1[i] - 0.03), y = c(Y1[i], B0 + X1[i]*B1), 
+         col = "blue", lwd = 1, type = "l");
+  points(x = c(X1[i] + 0.03, X1[i] + 0.03), y = c(Y1[i], mean(Y1)), col = "red",
+         lwd = 1, lty = "dotted", type = "l");
+}
+points(x = X1, y = Y1, pch = 20, xlab = "Independent Variable X", cex = 1.5, 
+     xlim = c(0, 10), ylim = c(0, 10), cex.lab = 1.25, cex.axis = 1.25,
+     ylab = "Dependent Variable Y", yaxs = "i", xaxs = "i");
+text(x = 2, hjust = 0, y = 9, labels = "SS_res = 26.73", cex = 1.5, 
+     col = "blue");
+text(x = 2, hjust = 0, y = 8, labels = "SS_tot = 28.82", cex = 1.5, 
+     col = "red");
+```
+
+
+# The F-test of overall significance
+
+
+- Test the significance of our overall regression model using an F-test of overall significance
+- Determines whether or not our linear regression provides a better fit to the data than a model that does not contain any independent variables 
+
+\pause
+\vspace{5mm}
+
+**Hypothesis for F-test of overall significance of a linear model**
+
+- **Null:** The model with no independent variables fits the data as well as the linear model
+- **Alternative:** The linear model fits the data better than the model with no independent variables
+
+Understand is how to interpret the F-test of overall significance (see below for doing this in practice).
+
+
+# Significance of equation parameters
+
+\Large
+
+- Test the significance of individual parameters in the linear model ($\beta_{0}$ and $\beta_{1}$; recall that $y = \beta_{0} + \beta_{1}x$).
+- For both coefficients $\beta_{0}$ and $\beta_{1}$, we can state the null and alternative hypotheses
+
+**Hypothesis for coefficient of a linear model**
+
+- **Null:** The value of the coefficient equals 0.
+- **Alternative:** The value of the coefficient does not equal 0.
+
+Statistical software such as jamovi will calculate p-values to test our null hypothesis for both $\beta_{0}$ and $\beta_{1}$ coefficients. 
+
+
+# Assessing the practical validity of regression
+
+\large
+
+The practical validity of the regression model is assessed by comparing the predicted values with the observed data. We can do this in several ways: \pause
+
+1. Plotting the fitted regression line and checking that the observed data lie close to the line (i.e., high coefficient of determination).  \pause
+2. Plotting observed versus predicted values and observing a linear relationship between the independent and dependent variable.  \pause
+3. Examining the data for large residuals (i.e., outliers), which might be distorting the regression line.  \pause
+4. Ideally, test the regression model on new observational data to examine how close the predicted values are to the observations
+
+
+# Prediction with linear regression
+
+\Large
+
+Regression equations can be used to calculate additional y values when values of x are substituted in a regression equation.
+
+\pause
+\vspace{3mm}
+
+- **Interpolation**: Predictions made within the measurement range of the data
+- **Extrapolation**: Predictions made outside the measurement range of the data
+
+\pause
+\vspace{3mm}
+
+**Care should be taken when extrapolating beyond the measured data because the relationship between the two variables might change.**
+
+
+
+
+
+# Predictions with linear regression
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "Regression of dependent variable y against independent x."}
+X1 <- c(2.02, 8.6, 4.9, 1.5, 2.8, 4.6, 7.5, 6.2, 3.3, 5.6);
+Y1 <- c(5, 3, 6, 1.3, 5.5, 3.1, 5.2, 6.8, 3.6, 6.6);
+B0 <- as.numeric(lm(Y1~X1)$coefficients[1]);
+B1 <- as.numeric(lm(Y1~X1)$coefficients[2]);
+resi <- lm(Y1~X1)$residuals;
+mxrs <- which(X1 == max(X1));
+plot(x = X1, y = Y1, pch = 20, xlab = "Independent Variable X", cex = 1.5, 
+     xlim = c(0, 10), ylim = c(0, 10), cex.lab = 1.25, cex.axis = 1.25,
+     ylab = "Dependent Variable Y", yaxs = "i", xaxs = "i");
+abline(a = B0, b = B1, lwd = 2);
+```
+
+
+
+
+
+
+

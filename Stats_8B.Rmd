@@ -1,0 +1,385 @@
+---
+title: "Introduction to correlation"
+output:
+  beamer_presentation:
+    theme: "default"
+    colortheme: "default"
+    fonttheme: "default"
+  ioslides_presentation: default
+  slidy_presentation: default
+header-includes:
+- \usepackage{hyperref}
+- \usepackage{caption}
+- \definecolor{links}{HTML}{2A1B81}
+- \hypersetup{colorlinks,linkcolor=,urlcolor=links}
+colorlinks: true
+linkcolor: blue
+urlcolor: blue
+---
+
+```{r, echo = FALSE}
+library(knitr);
+opts_chunk$set(echo = FALSE);
+```
+
+
+# Introduction to correlation
+
+\Large
+
+We often want to investigate the relationship between pairs of variables.
+
+- Vegetation height and mean annual temperature
+- Animal body size and metabolic rate
+- Number of automobiles in a location and carbon emissions
+
+\pause
+
+The **correlation** between pairs of variables, such as those listed above, describes how the variation of each variable is related to the other variable.
+
+# Visualising the correlation between two variables
+
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.cap= "Variables illustrating a positive (left) and negative correlation"}
+rho1 <- 0.9;
+Z1   <- rnorm(n = 16, mean = 0, sd = 1);
+Z2   <- rnorm(n = 16, mean = 0, sd = 1);
+X1   <- Z1 + 10;
+Y1   <- rho1 * Z1 + sqrt(1 - rho1*rho1) * Z2 + 10;
+par(mfrow = c(1, 2), mar = c(5, 2, 1, 0.5));
+plot(x = X1, y = Y1, pch = 20, xlab = "X value", ylab = "Y value", cex = 1.5,
+     xlim = c(7, 13), ylim = c(7, 13), xaxt = "n", yaxt = "n", cex.lab = 1.25,
+     line = 1);
+rho1 <- -0.9;
+Z1   <- rnorm(n = 16, mean = 0, sd = 1);
+Z2   <- rnorm(n = 16, mean = 0, sd = 1);
+X1   <- Z1 + 10;
+Y1   <- rho1 * Z1 + sqrt(1 - rho1*rho1) * Z2 + 10;
+plot(x = X1, y = Y1, pch = 20, xlab = "X value", cex = 1.5, line = 1, 
+     xlim = c(7, 13), ylim = c(7, 13), xaxt = "n", yaxt = "n", cex.lab = 1.25,
+     ylab = "Y value");
+```
+
+
+
+# Visualising two variables that are not correlated
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE, fig.cap = "A plot of two hypothetical variables that are not correlated."}
+X1 <- rnorm(n = 24, mean = 0, sd = 1);
+Y1 <- rnorm(n = 24, mean = 0, sd = 1);
+while(abs(cor(X1, Y1)) > 0.002){
+  X1 <- rnorm(n = 24, mean = 0, sd = 1);
+  Y1 <- rnorm(n = 24, mean = 0, sd = 1);
+}
+plot(x = X1, y = Y1, pch = 20, xlab = "X value", cex = 1.5, xlim = c(-3, 3),
+     ylim = c(-3, 3), xaxt = "n", yaxt = "n", cex.lab = 1.25, ylab = "Y value",
+     line = 1);
+```
+
+
+# Getting a more intuitive sense of correlation
+
+\Large
+
+Formalised with the **correlation coefficient** (*r*)
+
+- Provides a statistical measure of strength and direction of correlation
+- Only describes association between variables (**not** cause and effect)
+
+\pause
+
+The value *r* ranges between -1 and 1
+
+- Negative numbers indicate a negative correlation
+- Positive numbers indicate a positive correlation
+- Value of zero indicates no correlation
+
+\pause
+
+We can get a more intuitive understanding of the correlation coefficient with **[[this application](https://bradduthie.shinyapps.io/corr_click/)]**.
+
+
+
+
+
+
+# Introduction the correlation coefficient equation
+
+\Large
+
+Here we will consider the Pearson product-moment correlation coefficient
+
+- Several equations are to follow
+- Will walk through them step by step
+- Explain each step verbally
+- Relate the equation back to previous material
+
+\pause
+\vspace{3mm}
+
+You will not need to memorise any of the equations you see here, but you should be able to recognise and understand the equation for the correlation coefficient.
+
+
+# How is the correlation coefficient defined?
+
+\Large
+
+The covariance between two variables X and Y, Cov(X, Y), divided by the standard deviation of X times the standard deviation of Y,
+
+\vspace{-2mm}
+
+$$Correlation = \frac{Cov(X, Y)}{StDev(X) \times StDev(Y)}.$$
+
+\pause
+\vspace{2mm}
+
+But what is Cov(X, Y), exactly?
+
+$$Cov(x, y) = \frac{1}{n}\sum_{i = 1}^{n}\left(x_{i} - \bar{x}\right)\left(y_{i} - \bar{y}\right).$$
+
+\pause
+
+Let's break this down a bit further!
+
+
+# What is the covariance?
+
+\LARGE
+\vspace{-8mm}
+
+$$Cov(x, y) = \frac{1}{n}\sum_{i = 1}^{n}\left(x_{i} - \bar{x}\right)\left(y_{i} - \bar{y}\right).$$
+
+\Large
+
+Assume 'x' is bird length and 'y' is bird mass. How would we calculate this, explained verbally?
+
+\vspace{1mm}
+\pause
+\large
+
+1. For each bird, calculate its length minus mean bird length
+2. For each bird, calculate its mass minus mean bird mass
+3. Multiply the two steps above together
+4. Do the above for all birds, and add up all the values
+5. Divide what you added up by the total number of birds
+
+\vspace{1mm}
+\Large
+
+This is the numerator part of the correlation coefficient
+
+# Back to the definition of the correlation
+
+\Large
+
+$$Correlation = \frac{Cov(X, Y)}{StDev(X) \times StDev(Y)}$$
+
+\pause
+
+Now we can expand that covariance,
+
+$$r = \frac{\frac{1}{n}\sum_{i = 1}^{n}\left(x_{i} - \bar{x}\right)\left(y_{i} - \bar{y}\right)}{StDev(X) \times StDev(Y)}.$$
+
+\pause
+
+We already know the formula for standard deviation
+
+$$r = \frac{\frac{1}{n}\sum_{i = 1}^{n}\left(x_{i} - \bar{x}\right)\left(y_{i} - \bar{y}\right)}{\sqrt{\frac{1}{n}\sum_{i = 1}^{n}\left(x_{i} - \bar{x}\right)^2} \times \sqrt{\frac{1}{n}\sum_{i = 1}^{n}\left(y_{i} - \bar{y}\right)^2}}.$$
+
+
+
+# The Pearson's correlation coefficient,
+
+\LARGE
+
+$$r = \frac{\sum_{i = 1}^{n}\left(x_{i} - \bar{x}\right)\left(y_{i} - \bar{y}\right)}{\sqrt{\sum_{i = 1}^{n}\left(x_{i} - \bar{x}\right)^2} \sqrt{\sum_{i = 1}^{n}\left(y_{i} - \bar{y}\right)^2}}.$$
+
+
+# Testing whether or not a correlation is significant
+
+\Large
+
+**Null Hypothesis**: There is no correlation between two variables X and Y
+
+\pause
+
+**Alternative Hypothesis**: There is a correlation between two variables X and Y
+
+\pause
+
+**Degrees of Freedom**: Number of data points minus two (lose a degree of freedom for calculating each mean)
+
+To test whether or not to reject the null hypothesis, we can obtain a p-value in jamovi or use a table of critical values to look up the value of *r* for a specific degrees of freedom
+
+
+# Testing whether or not a correlation is significant
+
+\Large
+
+We often want to test whether or not the correlation between two variables is significant
+
+- Test of Pearson product moment correlation assumes variables are normally distributed
+- Test of Spearman's rank correlation coefficient (i.e., correlation of ranks) does not assume normality
+
+To test whether or not two variables are correlated, we first must test the null hypothesis that the two variables are normally distributed.
+
+
+# A data set of soil depths and root densities
+
+\large
+
+```{r, echo = FALSE}
+library(knitr);
+sample_n     <- 1:10;
+soil_depth   <- c(0.8, 2, 2.3, 2.7, 0.5, 1.8, 1.5, 2.1, 1.2, 1.1);
+root_density <- c(13, 8, 4, 6, 18, 7, 9, 3, 7, 10);
+dat_root     <- cbind(sample_n, soil_depth, root_density);
+colnames(dat_root) <- c("Sample number", "Soil depth (m)", 
+                        paste("Root density (g per m^3)"));
+kable(dat_root);
+```
+
+In the above table, soil depth is measured in metres and root density is measured in grams per cubic metre.
+
+
+# Testing for normality in jamovi
+
+Select 'Exploration > Descriptives', then move both variables to the Variables list. Select 'Shapiro-Wilk' from the statistics pulldown
+
+![Jamovi input for testing normality.](img/jamovi_normality.png){width=90%}
+
+
+# Testing for normality in jamovi
+
+Below shows the output of the tests for normality in jamovi.
+
+![Jamovi output for tests of normality on two variables.](img/jamovi_normality_out.png)
+
+
+# Plotting soil depth versus root density in jamovi
+
+\LARGE
+
+How to make a scatterplot in jamovi
+
+- Select 'Exploration > Scatterplot'
+- A panel will pop up with the dataset variables
+- Move 'Soil depth (m)' to 'X-Axis'
+- Move Root density (g per m^3) to 'Y-Axis'
+
+
+# Plotting soil depth versus root density in Jamovi
+
+
+![Jamovi output of a scatterplot for Soil Depth vs Root Density](img/jamovi_scatterplot.png){width=90%}
+
+
+# Testing whether soil depth and root density are correlated
+
+\Large
+
+Test whether or not our variables 'soil_depth' and 'root_density' are correlated.
+
+**Hypothesis for Pearson's correlation coefficient**
+
+\pause
+
+- **Null:** There is no correlation between root density and soil depth
+- **Alternative:** There is a significant correlation between root density and soil depth
+
+\pause
+
+We will reject the null hypothesis if, assuming that the null hypothesis is true, the probability of getting an *r* value as or more extreme than the one we obtained from our sample (i.e., the p-value) is less than or equal to 0.05.
+
+# Testing whether soil depth and root density are correlated
+
+\Large
+
+Test the null hypothesis that this correlation is not significant
+
+- Selecting 'Regression > Correlation Matrix'
+- Move both variables into the box to the right
+- Make sure 'Pearson' selected for Correlation Coefficients
+- Test 'Correlation' (two-tailed test for statistical significance
+
+
+# Testing whether soil depth and root density are correlated
+
+
+![Jamovi box on how to run a test of the correlation coefficient.](img/jamovi_correlation.png){width=95%}
+
+
+# Testing whether soil depth and root density are correlated
+
+\Large
+
+A table of output that looks like the one below.
+
+
+![Jamovi table showing output of a parameteric test of the significance of a correlation coefficient.](img/jamovi_correlation_output.png)
+
+
+# Spearman rank correlation coefficient
+
+\Large
+
+If either variable is not normally distributed, we need a non-parametric test
+
+- The Spearman rank correlation coefficient is a non-parametric alternative. 
+- Calculate the correlation of the **ranks** of the values 
+- Test whether this Spearman rank correlation coefficient is significant
+
+Consider some measurements of per cent dissolved oxygen and ammonia concentration (in mg per litre) from eight locations in Scotland. 
+
+# Spearman rank correlation coefficient
+
+```{r, echo = FALSE, message = FALSE, warning = FALSE}
+samp_number  <- 1:8;
+percent_O2   <- c(95.9, 81.9, 80.9, 77.9, 90.7, 88.2, 93.6, 89.1);
+ammonia      <- c(0.08, 0.10, 0.21, 0.579, 0.25, 0.13, 0.07, 0.121);
+rank_pct_O2  <- rank(percent_O2);
+rank_ammonia <- rank(ammonia);
+dat_spear    <- data.frame(samp_number, percent_O2, rank_pct_O2, ammonia,
+                           rank_ammonia);
+colnames(dat_spear) <- c("Sample", "%O2", "Rank %O2", "NH3 Conc.", "Rank NH3 Conc.");
+kable(dat_spear);
+```
+
+
+# Testing whether per cent O_2 and Ammonia are correlated
+
+\large
+
+Test whether or not our variables per cent $O_2$ and Ammonia concentration are correlated.
+
+\vspace{4mm}
+\pause
+
+**Hypothesis for Spearman's correlation coefficient**
+
+- **Null:** There is no correlation between per cent dissolved oxygen and ammonia concentration
+- **Alternative:** There is a significant correlation between per cent dissolved oxygen and ammonia concentration
+
+\vspace{4mm}
+\pause
+
+We will reject the null hypothesis if, assuming that the null hypothesis is true, the probability of getting an *r* value as or more extreme than the one we obtained from our sample (i.e., the p-value) is less than or equal to 0.05.
+
+# Testing whether per cent O_2 and Ammonia are correlated
+
+![Jamovi box showing how to run a test of the Spearman rank correlation coefficient.](img/jamovi_correlation_spearman.png){width=95%}
+
+
+# Testing whether per cent O2 and Ammonia are correlated
+
+
+Spearman rank correlation coefficient between the variables per cent dissolved oxygen and ammonia concentration is -0.667, and the p-value for this test is 0.083, meaning that we cannot reject our null hypothesis that the two variables are uncorrelated.
+
+
+![Jamovi output table showing output of a test of the significance of a Spearman rank correlation coefficient.](img/jamovi_correlation_spearman_output.png)
+
+
+
+
+
+

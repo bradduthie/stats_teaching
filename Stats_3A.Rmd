@@ -1,0 +1,574 @@
+---
+title: "Decimals, significant figures, and plots"
+output:
+  beamer_presentation:
+    theme: "default"
+    colortheme: "default"
+    fonttheme: "default"
+  ioslides_presentation: default
+  slidy_presentation: default
+header-includes:
+- \usepackage{enumerate}
+- \usepackage{hyperref}
+- \usepackage{caption}
+- \usepackage[normalem]{ulem}
+- \definecolor{links}{HTML}{2A1B81}
+- \hypersetup{colorlinks,linkcolor=,urlcolor=links}
+colorlinks: true
+linkcolor: blue
+urlcolor: blue
+---
+
+```{r, echo = FALSE}
+library(knitr);
+opts_chunk$set(echo = FALSE);
+```
+
+
+## Decimal places
+
+\LARGE
+
+Digits after the decimal point (including 0s)
+
+Value: **1.23041**
+
+\begin{itemize}
+\item 5 Decimals: 1.23041
+\item 4 Decimals: 1.2304
+\item 3 Decimals: 1.230
+\item 2 Decimals: 1.23
+\item 1 Decimals: 1.2
+\end{itemize}
+
+
+## Decimal places
+
+\LARGE
+
+Digits after the decimal point (including 0s)
+
+Value: **1430.02021**
+
+\begin{itemize}
+\item 5 Decimals: 1430.02021
+\item 4 Decimals: 1430.0202
+\item 3 Decimals: 1430.020
+\item 2 Decimals: 1430.02
+\item 1 Decimals: 1430.0
+\end{itemize}
+
+
+## Significant figures
+
+\Huge
+
+- **All** digits of a number
+- Initial 0s don't count
+- Other 0s do count
+
+\vspace{-3mm}
+\begin{center}
+\rule{\textwidth}{1mm}
+\end{center}
+\vspace{-1mm}
+
+- 21.341
+- 0.032
+- 0.010230
+
+## Significant figures
+
+\Huge
+
+Digits needed to infer the accuracy of a value$^{1}$
+
+- 240.23432 implies more accuracy than 240
+- 1.324 implies more accuracy than 1.3
+
+\footnotetext[1]{Rahman, N A. 1968. A Course in Theoretical Statistics. Charles Griffin \& Company, London.}
+
+
+## Significant figures
+
+\Huge
+
+- **All** digits of a number
+- Initial 0s don't count
+- Other 0s do count
+
+\vspace{-3mm}
+\begin{center}
+\rule{\textwidth}{1mm}
+\end{center}
+\vspace{-1mm}
+
+- 0.32400
+- 0.00031
+- 2000
+
+
+
+## Rounding to specific digits or significant figures
+
+\LARGE
+
+**Rules for rounding:**
+
+- Round based on digit to the right
+- If digit is [0, 1, 2, 3, 4] round down
+- If digit is [5, 6, 7, 8, 9] round up
+- Round down keeps digit the same
+- Rounding up increases digit by 1
+
+\LARGE
+\vspace{2mm}
+
+**Round 0.1234 to 3 decimal places:**
+
+$$0.1234 \to 0.123$$
+
+
+
+
+
+
+
+
+
+
+
+## Rounding to specific digits or significant figures
+
+\LARGE
+
+**Rules for rounding:**
+
+- Round based on digit to the right
+- If digit is [0, 1, 2, 3, 4] round down
+- If digit is [5, 6, 7, 8, 9] round up
+- Round down keeps digit the same
+- Rounding up increases digit by 1
+
+\LARGE
+\vspace{2mm}
+
+**Round 0.1235 to 3 decimal places:**
+
+$$0.1235 \to 0.124$$
+
+
+
+## Rounding to specific digits or significant figures
+
+\LARGE
+
+**Rules for rounding:**
+
+- Round based on digit to the right
+- If digit is [0, 1, 2, 3, 4] round down
+- If digit is [5, 6, 7, 8, 9] round up
+- Round down keeps digit the same
+- Rounding up increases digit by 1
+
+\LARGE
+\vspace{2mm}
+
+**Round 3.184 to 3 significant figures:**
+
+$$3.184 \to 3.18$$
+
+
+## Rounding to specific digits or significant figures
+
+\LARGE
+
+**Rules for rounding:**
+
+- Round based on digit to the right
+- If digit is [0, 1, 2, 3, 4] round down
+- If digit is [5, 6, 7, 8, 9] round up
+- Round down keeps digit the same
+- Rounding up increases digit by 1
+
+\LARGE
+\vspace{2mm}
+
+**Round 3.185 to 3 significant figures:**
+
+$$3.185 \to 3.19$$
+
+
+
+## Rounding to specific digits or significant figures
+
+\LARGE
+
+**Rules for rounding:**
+
+- Round based on digit to the right
+- If digit is [0, 1, 2, 3, 4] round down
+- If digit is [5, 6, 7, 8, 9] round up
+- Round down keeps digit the same
+- Rounding up increases digit by 1
+
+\LARGE
+\vspace{2mm}
+
+**Round 3.195 to 3 significant figures:**
+
+$$3.195 \to 3.20$$
+
+
+
+## Rounding to specific digits or significant figures
+
+\LARGE
+
+**Rules for rounding:**
+
+- Round based on digit to the right
+- If digit is [0, 1, 2, 3, 4] round down
+- If digit is [5, 6, 7, 8, 9] round up
+- Round down keeps digit the same
+- Rounding up increases digit by 1
+
+\LARGE
+\vspace{2mm}
+
+**Round 12.9806 to 3 significant figures:**
+
+$$12.9806 \to 13.0$$
+
+
+## Rounding to specific digits or significant figures
+
+\LARGE
+
+**Rules for rounding:**
+
+- Round based on digit to the right
+- If digit is [0, 1, 2, 3, 4] round down
+- If digit is [5, 6, 7, 8, 9] round up
+- Round down keeps digit the same
+- Rounding up increases digit by 1
+
+\LARGE
+\vspace{2mm}
+
+**Round 12.9806 to 1 significant figure:**
+
+$$12.9806 \to 10$$
+
+
+## Rounding to specific digits or significant figures
+
+\LARGE
+
+**Rules for rounding:**
+
+- Round based on digit to the right
+- If digit is [0, 1, 2, 3, 4] round down
+- If digit is [5, 6, 7, 8, 9] round up
+- Round down keeps digit the same
+- Rounding up increases digit by 1
+
+\LARGE
+\vspace{2mm}
+
+**Round 10.023 to 2 significant figures:**
+
+$$10.023 \to 10.$$
+
+
+## Can indicate significant figures with scientific notation
+
+\Huge
+
+**2000 in significant figures:**
+
+\vspace{4mm}
+
+\begin{enumerate}
+\item $2 \times 10^{3}$ \vspace{-1mm}
+\item $2.0 \times 10^{3}$  \vspace{-1mm}
+\item $2.00 \times 10^{3}$  \vspace{-1mm}
+\item $2.000 \times 10^{3}$  \vspace{-1mm}
+\end{enumerate}
+
+
+## Data visualisation
+
+\Huge
+
+- Histograms
+- Barplots
+- Pie Charts
+- Box-whisker plots
+
+
+## Histogram
+
+\Huge
+
+- Important visualisation tool
+- Show **distribution** of *continuous* data
+- Need for statistical decision-making
+- How to [build a histogram](https://bradduthie.github.io/stats/app/build_histogram/)
+
+
+## Histogram
+
+
+```{r, echo = FALSE, fig.alt = "An example histogram is shown with a somewhat normal shape", fig.cap = "Fig fruit width (cm) using data from 78 fig fruits.", out.width="100%"}
+fig_fruits  <- read.csv(file = "data/fig_fruits.csv");
+par(mar = c(5, 5, 2, 1));
+hist(x = fig_fruits[["Width_cm"]], xlab = "Fig fruit width (cm)", 
+     ylab = "Frequency", cex.lab = 2, col = "blue", main = "", cex.axis = 2,
+     breaks = 5, xlim = c(0.8, 2.2));
+```
+
+
+## Histogram
+
+
+```{r, echo = FALSE, fig.alt = "An example histogram is shown with a somewhat normal shape", fig.cap = "Fig fruit width (cm) using data from 78 fig fruits.", out.width="100%"}
+par(mar = c(5, 5, 2, 1));
+new_breaks <- seq(from = 0.8, to = 2.2, by = 0.1);
+hist(x = fig_fruits[["Width_cm"]], xlab = "Fig fruit width (cm)", 
+     ylab = "Frequency", cex.lab = 2, col = "blue", main = "", cex.axis = 2,
+     breaks = new_breaks, xlim = c(0.8, 2.2));
+```
+
+
+
+## Histogram
+
+
+```{r, echo = FALSE, fig.alt = "An example histogram is shown with a somewhat normal shape", fig.cap = "Fig fruit width (cm) using data from 78 fig fruits.", out.width="100%"}
+new_breaks <- c(0.8, 0.9, 1, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 2.2);
+par(mar = c(5, 5, 2, 1));
+hist(x = fig_fruits[["Width_cm"]], xlab = "Fig fruit width (cm)", 
+     ylab = "Frequency", cex.lab = 2, col = "blue", main = "", cex.axis = 2,
+     breaks = new_breaks, xlim = c(0.8, 2.2));
+```
+
+
+## Barplots {.t}
+
+\Huge
+
+- Visualise *categorical* data
+- Categories separated in bars
+- Heights indicate magnitudes
+- Different from histograms
+
+## Barplots
+
+
+```{r, echo = FALSE, fig.alt = "An example barplot shows the total number of fruits collected from four trees labelled A, B, C, and D.", fig.cap = "Fruits from each of four trees (78 total).", out.width="100%"}
+fruits_per_tree <- table(fig_fruits[["Tree"]]);
+par(mar = c(5, 5, 2, 1));
+barplot(fruits_per_tree, xlab = "Tree", ylab = "Fruits sampled", cex.lab = 2, 
+        cex.axis = 2, col = "blue", cex.names = 3);
+```
+
+
+
+## Pie charts {.t}
+
+\Huge
+
+- Visualise *categorical* data
+- Show percentage of categories
+- Used less often than barplots
+- Do not show absolute magnitude
+
+
+## Pie charts 
+
+```{r, echo = FALSE, fig.alt = "An example pie chart shows the percentage of fruits collected from four trees labelled A, B, C, and D.", fig.cap = "Pie chart of fruits from 4 trees.", out.width="80%"}
+cbPalett <- c("#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", 
+                "#D55E00", "#CC79A7", "#cc0000", "#000066", "#FF6666", 
+                "#666633", "#b3b3b3");
+pie_fruits_labels <- c("Tree A", "Tree B", "Tree C", "Tree D");
+pie(x = fruits_per_tree, labels = pie_fruits_labels,
+    col = cbPalett[1:4], main = "");
+```
+
+
+## Barplot versus pie charts
+
+
+```{r, echo = FALSE, fig.alt = "An example pie chart shows the percentage of fruits collected from four trees labelled A, B, C, and D.", fig.cap = "Barplot and pie chart of fruits from 4 trees.", out.width="100%", out.height="80%"}
+par(mfrow = c(1, 2), mar = c(5, 5, 1, 1));
+barplot(fruits_per_tree, xlab = "Tree", ylab = "Fruits sampled", cex.lab = 2, 
+        cex.axis = 2, col = cbPalett[1:4], cex.names = 3);
+pie_fruits_labels <- c("Tree A", "Tree B", "Tree C", "Tree D");
+pie(x = fruits_per_tree, labels = pie_fruits_labels,
+    col = cbPalett[1:4], main = "");
+```
+
+
+## Box-whisker plots (boxplots)
+
+\Huge
+
+- Show distributions
+- Visualise summary statistics
+- Can compare distributions
+- More compact than a histogram (but a bit less information)
+
+
+## Box-whisker plots (boxplots)
+
+```{r, echo = FALSE, fig.alt = "Example of boxplot showing the distributions of fig fruit width for four different trees.", fig.cap = "Boxplot of fig fruit widths (cm) collected from 4 trees.", out.width="100%"}
+par(mar = c(5, 5, 1, 1));
+boxplot(formula = fig_fruits[["Width_cm"]]~fig_fruits[["Tree"]], ylab = "Fig fruit width (cm)", xlab = "Tree", cex.lab = 2, cex.axis = 2, col = "blue", lwd = 3);
+```
+
+## Boxplot versus histogram
+
+```{r, echo = FALSE, fig.alt = "Example of a simple boxplot shown to the left of a histogram, each showing the same information, with points showing how properties of the two panels match.", fig.cap = "Boxplot (A) vs Histogram (B) of fig fruit widths (cm)", out.width="100%"}
+par(mfrow = c(1, 2), mar = c(5, 5, 1, 1));
+boxplot(x = fig_fruits[["Width_cm"]], ylab = "Fig fruit width (cm)", xlab = "All trees", cex.lab = 2, cex.axis = 2, col = cbPalett[2]);
+text(x = 0.6, y = 2.066, labels = "A", cex = 2.5);
+sum_fig_fruits <- summary(fig_fruits[["Width_cm"]]);
+points(y = as.numeric(sum_fig_fruits[3]), x = 1, pch = 16, cex = 5, 
+       col = cbPalett[1]);
+points(y = as.numeric(sum_fig_fruits[2]), x = 1, pch = 15, cex = 4.5, 
+       col = cbPalett[3]);
+points(y = as.numeric(sum_fig_fruits[5]), x = 1, pch = 15, cex = 4.5, 
+       col = cbPalett[3]);
+points(y = as.numeric(sum_fig_fruits[1]), x = 1, pch = 17, cex = 4.5, 
+       col = cbPalett[4]);
+points(y = as.numeric(sum_fig_fruits[6]), x = 1, pch = 17, cex = 4.5, 
+       col = cbPalett[4]);
+hist(x = fig_fruits[["Width_cm"]], xlab = "Fig fruit width (cm)",
+     ylab = "Frequency", cex.lab = 2, col = cbPalett[2], main = "", 
+     breaks = 5, xlim = c(0.8, 2.2));
+sum_fig_fruits <- summary(fig_fruits[["Width_cm"]]);
+points(x = as.numeric(sum_fig_fruits[3]), y = 0, pch = 16, cex = 5, 
+       col = cbPalett[1]);
+points(x = as.numeric(sum_fig_fruits[2]), y = 0, pch = 15, cex = 4.5, 
+       col = cbPalett[3]);
+points(x = as.numeric(sum_fig_fruits[5]), y = 0, pch = 15, cex = 4.5, 
+       col = cbPalett[3]);
+points(x = as.numeric(sum_fig_fruits[1]), y = 0, pch = 17, cex = 4.5, 
+       col = cbPalett[4]);
+points(x = as.numeric(sum_fig_fruits[6]), y = 0, pch = 17, cex = 4.5, 
+       col = cbPalett[4]);
+text(x = 0.9, y = 27, labels = "B", cex = 2.5);
+par(mfrow = c(1, 1));
+```
+
+
+## Data visualisation principles
+
+\Huge
+
+1. Show the data
+2. Make the meaning clear
+3. Avoid distorting what the data have to say
+4. Make the data accessible
+5. Focus on the content
+
+\footnotetext[1]{David Sterratt. 2025. CC BY-SA 4.0 Source: https://github.com/Inf2-FDS/fds-visualisation}
+
+
+## Data visualisation principles: Show the data
+
+\Huge
+
+- Show as much as possible
+- Try to avoid a confusion
+- No one "right" visualisation
+- Help reader compare several pieces of data
+
+
+## Data visualisation principles: Show the data
+
+```{r, echo = FALSE, fig.alt = "Complex figure relating inbreeding adjustment, number of mates, and polyandry to the cost mating.", fig.cap = "", out.width="80%"}
+knitr::include_graphics("img/Nmin1_mn.png")
+```
+
+
+## Data visualisation principles: Show the data
+
+```{r, echo = FALSE, fig.alt = "Box plots shown on sparrow data with a box for alive and dead.", fig.cap = "Sparrow length (mm) for different survival outcomes following an unusually large storm at Brown University in 1898 (N = 136).", out.width="100%"}
+knitr::include_graphics("img/sparrows.png")
+```
+
+
+## Make the meaning clear
+
+\Huge
+
+- Informative captions
+- Meaningful axis labels
+- Relevant units
+- Describe error bars
+
+
+## Avoid distorting what the data have to say
+
+```{r, echo = FALSE, fig.alt = "Two bad pie charts that distort the data, one in 2D and the same information in 3D", fig.cap = "", out.width="100%"}
+knitr::include_graphics("img/badpie.png")
+```
+
+
+\LARGE 
+\vspace{3mm}
+
+- Need to clearly see patterns in data
+- Avoid the use of 3D if possible
+- Easier to compare lengths than areas$^{1}$
+- Easier to compare lengths than angles$^{1}$
+
+\footnotetext[1]{David Sterratt. 2025. CC BY-SA 4.0 Source: https://github.com/Inf2-FDS/fds-visualisation}
+\footnotetext[2]{\textbf{Image:} \href{https://commons.wikimedia.org/wiki/File:Misleading_Pie_Chart.png}{Public domain}.}
+
+
+## Avoid distorting what the data have to say
+
+```{r, echo = FALSE, fig.alt = "Two bar charts showing the same data but with different y-axes, with the smaller axis making the comparison look more extreme", fig.cap = "", out.width="80%"}
+knitr::include_graphics("img/badbar.png")
+```
+
+
+## Make the data accessible
+
+\LARGE
+
+- Ensure text is legible
+- Avoid unncessary colours
+- Select colours carefully$^{1}$
+
+\vspace{2mm}
+
+```{r, echo = FALSE, fig.alt = "An example pie chart shows the percentage of fruits collected from four trees labelled A, B, C, and D.", fig.cap = "", out.width="50%", out.height="50%"}
+par(mfrow = c(1, 2), mar = c(5, 5, 1, 1));
+barplot(fruits_per_tree, xlab = "Tree", ylab = "Fruits sampled", cex.lab = 2, 
+        cex.axis = 2, col = cbPalett[1:4], cex.names = 3);
+pie_fruits_labels <- c("Tree A", "Tree B", "Tree C", "Tree D");
+pie(x = fruits_per_tree, labels = pie_fruits_labels,
+    col = cbPalett[1:4], main = "");
+```
+
+\footnotetext[1]{David Sterratt. 2025. CC BY-SA 4.0 Source: https://github.com/Inf2-FDS/fds-visualisation}
+\footnotetext[2]{Wexler, S, et al. 2017. The Big Book of Dashboards: Visualizing Your Data Using Real-World Business Scenarios. Wiley.}
+
+
+## Focus on the content
+
+\LARGE
+
+- Avoid colours or 3D with no meaning$^{1}$
+- Avoid vertical grid lines
+- Use consistent colours across a report
+- Use an appropriate number of decimals
+- Check wording and spelling
+- Consider plotting modules in jamovi
+
+\footnotetext[1]{David Sterratt. 2025. CC BY-SA 4.0 Source: https://github.com/Inf2-FDS/fds-visualisation}
+

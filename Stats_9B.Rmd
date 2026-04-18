@@ -1,0 +1,200 @@
+---
+title: "Multiple regression"
+output:
+  beamer_presentation:
+    theme: "default"
+    colortheme: "default"
+    fonttheme: "default"
+  ioslides_presentation: default
+  slidy_presentation: default
+header-includes:
+- \usepackage{hyperref}
+- \usepackage{caption}
+- \definecolor{links}{HTML}{2A1B81}
+- \hypersetup{colorlinks,linkcolor=,urlcolor=links}
+colorlinks: true
+linkcolor: blue
+urlcolor: blue
+---
+
+```{r, echo = FALSE}
+library(knitr);
+opts_chunk$set(echo = FALSE);
+```
+
+
+
+
+# Introduction to multiple regression
+
+\Large
+
+Often more than one variable is required to explain variation in a dependent variable.
+
+- Soil infiltration rates depend on rainfall intensity and soil moisture content
+- Carbon emissions depend on the number of automobiles and the number of trees in a location \pause
+
+Multiple regression can be used to differentiate between the effects of variables and to ascertain which factors are most important.
+
+
+# Introduction to multiple regression
+
+\Large
+
+Multiple regression models the change in the dependent variable y when more than one independent variable has a significant influence.
+
+$$y = b_{0} + b_{1}x.$$ \pause
+
+In the simple linear regression above, 
+
+- Predict y from the intercept ($b_{0}$), one independent variable ($x$) and a slope ($b_{1}$). 
+- Change in x corresponds to a change of $b_{1}$ units in y.
+
+
+# Introduction to multiple regression
+
+\Large
+
+Multiple regression predicts y from the following:
+
+- Intercept ($b_0$) 
+- Multiple independent variables ($x_1$, $x_2$, etc.) and coefficients ($b_1$, $b_2$, etc.) 
+
+Multiple regression coefficients describe the effects of each of these independent variables on the depend variable, while holding the rest of the independent variables constant.
+
+
+# Introduction to multiple regression
+
+\Large
+
+Equation for multiple regression with two independent variables,
+
+$$y = b_{0} + b_{1}x_{1} + b_{2}x_{2}.$$ \pause
+
+Extended to any number of k independent variables,
+
+$$y = b_{0} + b_{1}x_{1} +b_{2}x_{2} +  ... + b_{k}x_{k}.$$
+
+
+# Adjusted coefficient of determination
+
+\Large
+
+The proportion of variation in y explained by a model can only increase with independent variables.
+
+- New independent variables cannot explain *negative* variation \pause
+- Random variables will explain some variation by chance \pause
+- Need to account for spurious improvement of fit \pause
+- Want to retain only relevant predictors in a model \pause
+
+To help account for spurious improvement of fit, we can use an adjusted R squared.
+
+
+
+# Adjusted coefficient of determination
+
+\LARGE
+
+An adjusted R squared value,
+
+$$R^{2}_{adj} = 1 - \left(1 - R^{2}\right)\left(\frac{n - 1}{n - k - 1}\right).$$ \pause
+
+
+- $R^{2}$ is the coefficient of determination
+- k is the number of independent variables in the model
+- n is the number of samples
+
+
+
+# Multiple regression in Jamovi
+
+In 1993, monthly amounts of nitrate (as tonnes of nitrogen) were measured in the River Thames, together with mean daily evaporation and rainfall (in mm) for 12 months of the year. 
+
+
+![](img/thames.jpg){width=70%}
+
+
+We wish to examine if evaporation and rainfall can be used to predict nitrate amounts in the river.
+
+
+\footnotetext[1]{\textbf{Image:} \href{https://www.publicdomainpictures.net/en/view-image.php?image=221094&picture=london-cityscape}{Public Domain}}
+
+
+# Multiple regression in Jamov
+
+```{r, echo = FALSE}
+library(knitr);
+nitrogen    <- c(22, 26, 27, 18, 12, 9, 7, 6, 7, 8, 12, 21);
+evaporation <- c(0.3, 0.4, 0.9, 1.9, 2.7, 3.3, 3.4, 3.4, 2.3, 1.2, 0.5, 0.3);
+rainfall    <- c(2.1, 1.5, 2.0, 1.5, 1.7, 1.9, 1.5, 1.4, 1.7, 1.9, 2.4, 2.2);
+thames      <- data.frame(nitrogen, evaporation, rainfall);
+rownames(thames) <- c("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug",
+                      "Sep", "Oct", "Nov", "Dec");
+colnames(thames) <- c("Nitrogen_(tonnes)", "Evaporation_(mm)", "Rainfall_(mm)");
+write.csv(x = thames, file = "thames.csv");
+kable(thames);
+```
+
+
+
+# Fitting the full model
+
+\LARGE
+
+Include both evaporation and rainfall as independent variables.
+
+$$Nitrogen = b_0 + b_{1}Evaporation + b_{2}Rainfall.$$
+
+\pause
+
+- Select 'Regress', then 'Linear regression' from pulldown menu.
+
+# Fitting the full model
+
+
+![](img/Jamovi_model.png)
+
+
+# Check model assumptions
+
+![](img/Jamovi_assumptions.png)
+
+
+# Check model assumptions
+
+![](img/Jamovi_residuals.png)
+
+# Model output
+
+![](img/Jamovi_adj_R.png)
+
+# Model output: Overall and adjusted R-squared
+
+![](img/Jamovi_Rsqr.png)
+
+
+# Model output: Omnibus
+
+![](img/Jamovi_Omnibus.png)
+
+
+# Model output: coefficients
+
+![](img/Jamovi_coefficients.png)
+
+
+# Conclusions from the multiple regression model
+
+\Large
+
+According to the multiple regression
+
+- Overall model is significant
+- High R-squared value
+- Evaporation has a significant effect
+- Rainfall does not have a significant effect
+
+There is a relationship between evaporation and nitrogen, but not rainfall and nitrogen.
+
+
+

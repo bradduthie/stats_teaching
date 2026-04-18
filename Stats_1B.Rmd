@@ -1,0 +1,334 @@
+---
+title: "Tidy data and data files"
+output:
+  beamer_presentation:
+    theme: "default"
+    colortheme: "default"
+    fonttheme: "default"
+  ioslides_presentation: default
+  slidy_presentation: default
+header-includes:
+- \usepackage{hyperref}
+- \usepackage{caption}
+- \usepackage[normalem]{ulem}
+- \definecolor{links}{HTML}{2A1B81}
+- \hypersetup{colorlinks,linkcolor=,urlcolor=links}
+colorlinks: true
+linkcolor: blue
+urlcolor: blue
+---
+
+```{r, echo = FALSE}
+library(knitr);
+opts_chunk$set(echo = FALSE);
+```
+
+
+
+
+## Background mathematics
+
+\Huge
+
+- Addition
+- Subtraction
+- Multiplication
+- Division
+- Exponents
+- Roots
+
+## Addition and Subtraction
+
+\Huge
+
+**Addition**
+
+- Natural numbers
+- 1, 2, 3, 4, ... \pause\vspace{2mm}
+
+**Subtraction**
+
+- Integers
+- ..., -2, -1, 0, 1, 2, ...
+
+
+## Inequalities
+
+\Huge
+
+**Greater than (>)**
+
+$$6 > 5$$ \pause\vspace{4mm}
+
+**Less than (<)**
+
+$$-4 < 2$$
+
+
+## Inequalities
+
+\LARGE
+
+**Greater than or equal to ($\geq$)**
+
+$$P \geq 0.1$$ 
+
+\pause\vspace{4mm}
+
+**Less than or equal to ($\leq$)**
+
+$$P \leq 0.05$$
+
+## Multiplication and Division
+
+\LARGE
+
+**Multiplication**
+
+- Add a number multiple times
+- 4 + 4 + 4 = 12
+- 4 $\times$ 3 = 12 
+- 4 * 3 = 12  \hspace{3mm}or\hspace{3mm} 4(3) = 12 \pause
+
+**Division**
+
+- 12 $\div$ 3 = 4
+- 12/3 = 4
+- *Rational* numbers
+
+
+## Exponents and roots
+
+\LARGE
+
+**Exponent**
+
+- Multiply a number multiple times
+- $4 \times 4 \times 4 = 64$
+- $4^{3} = 64$ \pause
+
+**Roots**
+
+- $\sqrt[3]{64} = 4$
+- $64^{\frac{1}{3}} = 4$
+- *Real* numbers ($\sqrt{2} \approx 1.414$)
+
+## Negative exponents
+
+\Huge
+
+$$4^{-1} = \frac{1}{4}$$
+
+$$4^{-2} = \frac{1}{16}$$
+
+**Applies to units**
+
+$6\:g\:l^{-1} = 6\:g/l$
+
+
+
+## Logarithms
+
+\LARGE
+
+Exponent to which a number needs to be raised to get another number,
+
+$$10^{3} = 1000.$$
+
+10 raised to the power of 3 equals 1000,
+
+$$\log_{10}\left(1000\right) = 3.$$
+
+
+
+## Logarithms in figures
+
+
+```{r, echo = FALSE, fig.alt = "A plot showing an exponential increase in global carbon dioxide emissions over time.", fig.cap = "Global carbon dioxide emissions 1750-2021.", out.width="100%"}
+CO2_emissions   <- read.csv(file = "data/CO2_emissions.csv");
+global_CO2      <- CO2_emissions[CO2_emissions[,1] == "World",];
+tonnes_billion  <- global_CO2[,4] / 1000000000;
+the_ylab        <- expression(Global~CO[2]~tonnes~(billions));
+par(mar = c(5, 5, 1, 1));
+plot(x = global_CO2[,3], y = tonnes_billion, type = "l", lwd = 4, 
+     xlab = "Year", ylab = the_ylab, cex.axis = 1.25, cex.lab = 1.25);
+```
+
+
+
+## Logarithms in figures
+
+
+```{r, echo = FALSE, fig.alt = "A plot showing linear increase in global carbon dioxide emissions over time, with emissions plotted on a natural log scale.", fig.cap = "Natural logarithm of global carbon dioxide emissions 1750-2021.", out.width="100%"}
+CO2_emissions   <- read.csv(file = "data/CO2_emissions.csv");
+global_CO2      <- CO2_emissions[CO2_emissions[,1] == "World",];
+tonnes_billion  <- global_CO2[,4] / 1000000000;
+the_ylab        <- expression(Log~Global~CO[2]~tonnes~(billions));
+par(mar = c(5, 5, 1, 1));
+plot(x = global_CO2[,3], y = log(tonnes_billion), type = "l", lwd = 4, 
+     xlab = "Year", ylab = the_ylab, cex.axis = 1.25, cex.lab = 1.25);
+```
+
+
+
+## Natural logarithms
+
+\LARGE
+
+Exponent to which a number needs to be raised to get another number,
+
+$$e^{1} \approx 2.718282.$$
+
+Sometimes log denoted 'ln',
+
+$$\ln(2.718282) = 1.$$
+
+
+## Order of operations
+
+\Huge
+
+
+
+$$x = 3^{2} + 2\left(1 + 3\right)^2 - 6 \times 0$$
+
+
+
+## Order of operations
+
+\Huge
+
+1. Brackets (parentheses)
+2. Exponents \& radicals
+3. Multiplication \& division
+4. Addition \& subtraction
+
+
+
+## Order of operations
+
+\LARGE
+
+Division bars imply parentheses,
+
+$$x = \frac{2^{2} + 1}{3^{2} +2}.$$
+\vspace{3mm}
+
+Above is $(2^{2}+1)/(3^{2} + 2)$,
+
+$$x = \frac{\left(2^{2} + 1\right)}{\left(3^{2} + 2\right)} = \frac{\left(4 + 1\right)}{\left(9 + 2\right)} = \frac{5}{11}.$$
+
+
+
+## Order of operations
+
+\Huge
+
+Radicals imply parentheses,
+
+$$x = \sqrt{3 + 4^{2}} = \sqrt{\left(3 + 4^{2} \right)} \approx 3.59.$$
+
+
+
+
+## Tidy data: Getting data in the right format
+
+```{r, echo = FALSE, fig.alt = "Two panels are shown, the first with a woman handling a bird nest in a field setting, and the second with the same woman handling nest components over a tray in the lab.", fig.cap = "Dr Becky Boulton collects data from nest boxes in the field (A), then processes nest material in the lab (B).", out.width="100%"}
+knitr::include_graphics("img/becky_field.png")
+```
+
+
+
+## Data collection is messy
+
+```{r, echo = FALSE, fig.alt = "A large tree is shown in the desert with a person dressed in tan clothes in the foreground", fig.cap = "Sonoran Desert Rock Fig in the desert of Baja, Mexico.", out.width="100%"}
+knitr::include_graphics("img/Ficus_petiolaris.jpg")
+```
+
+
+## Data collection is messy
+
+```{r, echo = FALSE, fig.alt = "A zoomed-in portion of a lab notebook is shown, which includes handwritten data in pencil observations of mature fig fruits, including date, species, site, tree, and fruit dimensions.", fig.cap = "A portion of a lab notebook used to record measurements of fig fruits from different trees in 2010.", out.width="100%"}
+knitr::include_graphics("img/handwritten_data.jpg")
+```
+
+
+## Observations and variables
+
+\Huge
+
+- **Observation:** Units of sample \vspace{2mm}
+- **Variable:** Unit measurement
+
+
+## Observations and variables
+
+\Huge
+
+- **Observation:** Fig trees  \vspace{2mm}
+- **Variable:** Tree height, location
+
+## Three characteristics of tidy data
+
+\LARGE
+
+Summarised by Wickham (2014)$^{1}$: \vspace{4mm}
+
+1. Each **variable** gets its own column.
+2. Each **observation** gets its own row.
+3. Different units of observation require different data files.
+
+
+\footnotetext[1]{Wickham, H. 2014. \textit{J. Stat. Softw.} \href{https://www.jstatsoft.org/article/view/v059i10}{59:1-23}.}
+
+## Three characteristics of tidy data
+
+\LARGE
+
+| Tree  |  Species     |  Height (m)  |  Leaf length (cm)   |
+|-------|--------------|--------------|---------------------|
+| 1     |  Oak         |  20.3        |  8.1                | 
+| 2     |  Oak         |  25.4        |  9.4                |
+| 3     |  Maple       |  18.2        |  12.5               |
+| 4     |  Maple       |  16.7        |  11.3               |
+
+
+
+## File extensions and types
+
+\Huge
+
+- **File extensions** (e.g., PDF, JPG, DOCX)
+- **Text files** (e.g., TXT, CSV, HTML)
+- **Binary files** (e.g., PNG, MP3, PDF)
+
+
+## File extensions and types
+
+\Huge
+
+- Text files can be opened by a plain text editor
+- Binary files require a specific program
+- Text files (e.g., CSV) are more secure long-term
+
+
+## Files stored in nested folders
+
+\Huge
+
+- Important to organise files in a project
+- One folder for a project, nested files
+- Recommend a folder for SCIU4T4
+
+
+## Files stored in nested folders
+
+```{r, echo = FALSE, fig.alt = "Screenshot showing a Windows directory with five folders of various modules names on the left panel.", fig.cap = "Windows file directory showing the file organisation of modules taken during spring 2006. In this case, the 'Spring\\_2006' folder is located on the desktop; the path to the folder is visible in the toolbar above the folders.", out.width="100%"}
+knitr::include_graphics("img/directory_windows.png")
+```
+
+
+
+
+
+

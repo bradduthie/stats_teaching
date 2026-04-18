@@ -1,0 +1,708 @@
+---
+title: "Confidence intervals"
+output:
+  beamer_presentation:
+    theme: "default"
+    colortheme: "default"
+    fonttheme: "default"
+  ioslides_presentation: default
+  slidy_presentation: default
+header-includes:
+- \usepackage{enumerate}
+- \usepackage{hyperref}
+- \usepackage{caption}
+- \usepackage[normalem]{ulem}
+- \definecolor{links}{HTML}{2A1B81}
+- \hypersetup{colorlinks,linkcolor=,urlcolor=links}
+colorlinks: true
+linkcolor: blue
+urlcolor: blue
+---
+
+```{r, echo = FALSE}
+library(knitr);
+opts_chunk$set(echo = FALSE);
+set.seed(20260226);
+```
+
+
+
+## Confidence in a sampled mean value
+
+\Huge 
+
+- How certain are we that our sample mean ($\bar{x}$) is close to the population mean ($\mu_{x}$)?
+- Should express our uncertainty clearly
+- **Confidence intervals** reflect uncertainty of $\mu_{x}$
+
+
+## Confidence in a sampled mean value
+
+\Huge 
+
+**Confidence in $\mathbf{\mu_{x}}$:**
+
+- **High**: Mean wing length was $\bar{x} = 7.2\:cm\:\pm0.1$
+- **Low**: Mean wing length was $\bar{x} = 7.2\:cm\:\pm2.0$
+
+Larger $\pm$ interval means *less* confidence in the true mean
+
+
+
+## Confidence in a sampled mean value
+
+\Huge 
+
+**Confidence in $\mathbf{\mu_{x}}$:**
+
+- **High**: Mean wing length was $\bar{x} = 7.2\:cm\:(7.1, 7.3)$
+- **Low**: Mean wing length was $\bar{x} = 7.2\:cm\:(5.2, 9.2)$
+
+
+Show the lower (7.1) and upper (7.3) confidence interval (CI)
+
+
+## Confidence in a sampled mean value
+
+\Huge 
+
+**The goal of CIs is to contain uncertainty:**
+
+- How frequently will the CIs that we draw *contain* the population mean ($\mu_{x}$)?
+- Logic is again based on repeated resampling
+
+
+
+## Sampling from a population (confidence intervals)
+
+```{r, echo = FALSE, fig.alt = "30+ bird silhouettes in a dotted box called 'population'. Within this, four birds are in a grey box called 'sample'.", fig.cap = "", out.width="100%"}
+knitr::include_graphics("img/population_sample_1.png")
+```
+
+
+
+## Consider the distribution of a sample of N = 40
+
+
+```{r, echo = FALSE, fig.alt = "40 bird silhouettes in a grey box called 'sample'.", fig.cap = "", out.width="100%"}
+knitr::include_graphics("img/just_sample.png")
+```
+
+
+## Sample means given true mean of 7.2 when N = 40
+
+```{r, echo = FALSE, fig.alt = "Grey boxes each with 4 birds representing samples with different average heights.", fig.cap = "", out.width="95%"}
+knitr::include_graphics("img/samples_wing_40.png")
+```
+
+
+## Confidence in a sampled mean value (80%)
+
+```{r, echo = FALSE}
+samps_mn <- rep(x = NA, times = 20);
+samp_mn  <- rep(x = NA, times = 20);
+samp_se  <- rep(x = NA, times = 20);
+for(i in 1:20){
+  the_samp    <- rnorm(n = 40, mean = 1, sd = 1);
+  std_err     <- sd(the_samp) / sqrt(40);
+  samp_mn[i]  <- mean(the_samp);
+  samp_se[i]  <- std_err;
+}
+samp_mn <- samp_mn + 6.2
+offset  <- c(rep(x = 0, times = 4), rep(x = -1000, times = 16))
+par(mar = c(6, 6, 2, 2));
+plot(x = 1:20, y = samp_mn + offset, ylim = c(6.3, 7.9), pch = 20, cex = 3, 
+     xaxt = "n",
+     xlab = "Sample from the population (N = 40)", ylab = "Mean of the sample",
+     cex.lab = 2, cex.axis = 2);
+axis(side = 1, at = 1:20, labels = 1:20, cex.lab = 1.75);
+abline(h = 7.2, lwd = 3, lty = "dashed", col = "blue");
+for(i in 1:4){
+  arrows(x0 = i, x1 = i, y0 = samp_mn[i], y1 = samp_mn[i] - (1.28 * samp_se[i]), 
+         lwd = 4, angle = 90, length = 0.1);
+  arrows(x0 = i, x1 = i, y0 = samp_mn[i], y1 = samp_mn[i] + (1.28 * samp_se[i]),
+         lwd = 4, angle = 90, length = 0.1);
+}
+text(x = 4, y = 7.88, labels = "Population mean = 7.2", cex = 1.75, 
+     col = "blue");
+```
+
+
+
+## Confidence in a sampled mean value (80%)
+
+```{r, echo = FALSE}
+samps_mn <- rep(x = NA, times = 20);
+samp_mn  <- rep(x = NA, times = 20);
+samp_se  <- rep(x = NA, times = 20);
+for(i in 1:20){
+  the_samp    <- rnorm(n = 40, mean = 1, sd = 1);
+  std_err     <- sd(the_samp) / sqrt(40);
+  samp_mn[i]  <- mean(the_samp);
+  samp_se[i]  <- std_err;
+}
+samp_mn <- samp_mn + 6.2
+par(mar = c(6, 6, 2, 2));
+plot(x = 1:20, y = samp_mn, ylim = c(6.3, 7.9), pch = 20, cex = 3, xaxt = "n",
+     xlab = "Sample from the population (N = 40)", ylab = "Mean of the sample",
+     cex.lab = 2, cex.axis = 2);
+axis(side = 1, at = 1:20, labels = 1:20, cex.lab = 1.75);
+abline(h = 7.2, lwd = 3, lty = "dashed", col = "blue");
+for(i in 1:20){
+  arrows(x0 = i, x1 = i, y0 = samp_mn[i], y1 = samp_mn[i] - (1.28 * samp_se[i]), 
+         lwd = 4, angle = 90, length = 0.1);
+  arrows(x0 = i, x1 = i, y0 = samp_mn[i], y1 = samp_mn[i] + (1.28 * samp_se[i]),
+         lwd = 4, angle = 90, length = 0.1);
+}
+text(x = 4, y = 7.88, labels = "Population mean = 7.2", cex = 1.75, 
+     col = "blue");
+```
+
+
+## Confidence in a sampled mean value
+
+\Huge 
+
+**The goal of CIs is to contain uncertainty:**
+
+- How frequently will the CIs that we draw *contain* the population mean ($\mu_{x}$)?
+- **Having higher confidence requires wider intervals**
+
+
+
+## Confidence in a sampled mean value (95%)
+
+```{r, echo = FALSE}
+par(mar = c(6, 6, 2, 2));
+plot(x = 1:20, y = samp_mn, ylim = c(6.3, 7.9), pch = 20, cex = 3, xaxt = "n",
+     xlab = "Sample from the population (N = 40)", ylab = "Mean of the sample",
+     cex.lab = 2, cex.axis = 2);
+axis(side = 1, at = 1:20, labels = 1:20, cex.lab = 1.75);
+abline(h = 7.2, lwd = 3, lty = "dashed", col = "blue");
+for(i in 1:20){
+  arrows(x0 = i, x1 = i, y0 = samp_mn[i], y1 = samp_mn[i] - (1.96 * samp_se[i]), 
+         lwd = 4, angle = 90, length = 0.1);
+  arrows(x0 = i, x1 = i, y0 = samp_mn[i], y1 = samp_mn[i] + (1.96 * samp_se[i]),
+         lwd = 4, angle = 90, length = 0.1);
+}
+text(x = 4, y = 7.88, labels = "Population mean = 7.2", cex = 1.75, 
+     col = "blue");
+```
+
+
+## Confidence in a sampled mean value (99%)
+
+```{r, echo = FALSE}
+par(mar = c(6, 6, 2, 2));
+plot(x = 1:20, y = samp_mn, ylim = c(6.3, 7.9), pch = 20, cex = 3, xaxt = "n",
+     xlab = "Sample from the population (N = 40)", ylab = "Mean of the sample",
+     cex.lab = 2, cex.axis = 2);
+axis(side = 1, at = 1:20, labels = 1:20, cex.lab = 1.75);
+abline(h = 7.2, lwd = 3, lty = "dashed", col = "blue");
+for(i in 1:20){
+  arrows(x0 = i, x1 = i, y0 = samp_mn[i], y1 = samp_mn[i] - (2.58 * samp_se[i]), 
+         lwd = 4, angle = 90, length = 0.1);
+  arrows(x0 = i, x1 = i, y0 = samp_mn[i], y1 = samp_mn[i] + (2.58 * samp_se[i]),
+         lwd = 4, angle = 90, length = 0.1);
+}
+text(x = 4, y = 7.88, labels = "Population mean = 7.2", cex = 1.75, 
+     col = "blue");
+```
+
+## Confidence in a sampled mean value
+
+
+\Huge 
+
+**Tools used to calculate CIs:**
+
+- Distribution probabilities (e.g., z-scores)
+- The standard error ($s/\sqrt{N}$)
+
+
+## Concrete example: mean of 7 temperatures ($^{\circ} C$) {.t}
+
+\LARGE
+
+| $x_{1}$ | $x_{2}$ | $x_{3}$ | $x_{4}$ | $x_{5}$ | $x_{6}$ | $x_{7}$ |
+|---------|---------|---------|---------|---------|---------|---------|
+| 17.1    | 15.2    |  14.9   | 12.6    | 15.2    |  10.3   | 12.7    |
+
+Table: Seven values ($x$) of soil temperature ($^{\circ} C$) at a site
+
+\Huge
+\vspace{-4mm}
+
+$$\bar{x} = 14$$
+
+\vspace{2mm}
+
+95\% Confidence in $\bar{x}$?
+
+
+## Sample mean could be far off the population mean
+
+```{r, echo = FALSE}
+dat <- c(17.1, 15.2, 14.9, 12.6, 15.2, 10.3, 12.7);
+mnd <- mean(dat);
+```
+
+```{r, echo = FALSE, fig.alt = "An example histogram is shown with a somewhat normal shape. The mean of the distribution is indicated with an arrow.", fig.cap = "", out.width="100%"}
+fig_fruits  <- read.csv(file = "data/fig_fruits.csv");
+par(mar = c(6, 6, 1, 1));
+hist(x = dat, xlab = "Temperature (degrees C)", 
+     ylab = "Frequency", cex.lab = 2, col = "blue", main = "", cex.axis = 2,
+     breaks = 10, ylim = c(0, 2.5));
+mean_fig_fruit_width <- mean(dat, na.rm = TRUE);
+arrows(x0 = mean_fig_fruit_width, x1 = mean_fig_fruit_width,
+       y0 = 1.8, y1 = 0, lwd = 3);
+mbox <- function(x0, x1, y0, y1){
+    xx <- seq(from=x0, to=x1, length.out = 100);
+    yy <- seq(from=y0, to=y1, length.out = 100);
+    xd <- c(rep(x0, 100), xx, rep(x1,100), rev(xx));
+    yd <- c(yy, rep(y1,100), rev(yy), rep(y0, 100));
+    return(list(x=xd, y=yd));
+}
+tbox <- mbox(x0 = mean_fig_fruit_width - 0.6, 
+             x1 = mean_fig_fruit_width + 0.6, y0 = 1.8, y1 = 2.2);
+polygon(x=tbox$x, y=tbox$y, lwd=3, border="black", col="white");
+text(x = mean_fig_fruit_width, y = 2, cex = 2, labels = "Mean");
+```
+
+
+
+## Concrete example: mean of 7 temperatures ($^{\circ} C$) {.t}
+
+\LARGE
+
+| $x_{1}$ | $x_{2}$ | $x_{3}$ | $x_{4}$ | $x_{5}$ | $x_{6}$ | $x_{7}$ |
+|---------|---------|---------|---------|---------|---------|---------|
+| 17.1    | 15.2    |  14.9   | 12.6    | 15.2    |  10.3   | 12.7    |
+
+
+\Huge
+\vspace{-4mm}
+
+$$\bar{x} = 14\:\pm1.6740$$
+
+\vspace{6mm}
+
+95\% CIs: (12.34, 15.67)
+
+
+
+## Confidence intervals (95% CIs) around mean of 14 cm
+
+```{r, echo = FALSE}
+dat <- c(17.1, 15.2, 14.9, 12.6, 15.2, 10.3, 12.7);
+mnd <- mean(dat);
+```
+
+```{r, echo = FALSE, fig.alt = "An example histogram is shown with a somewhat normal shape. The mean of the distribution is indicated with an arrow.", fig.cap = "", out.width="100%"}
+fig_fruits  <- read.csv(file = "data/fig_fruits.csv");
+par(mar = c(6, 6, 1, 1));
+hist(x = dat, xlab = "Temperature (degrees C)", 
+     ylab = "Frequency", cex.lab = 2, col = "blue", main = "", cex.axis = 2,
+     breaks = 10, ylim = c(0, 2.5));
+mean_fig_fruit_width <- mean(dat, na.rm = TRUE);
+arrows(x0 = mean_fig_fruit_width, x1 = mean_fig_fruit_width,
+       y0 = 1.8, y1 = 0, lwd = 3);
+mbox <- function(x0, x1, y0, y1){
+    xx <- seq(from=x0, to=x1, length.out = 100);
+    yy <- seq(from=y0, to=y1, length.out = 100);
+    xd <- c(rep(x0, 100), xx, rep(x1,100), rev(xx));
+    yd <- c(yy, rep(y1,100), rev(yy), rep(y0, 100));
+    return(list(x=xd, y=yd));
+}
+tbox <- mbox(x0 = mean_fig_fruit_width - 0.6, 
+             x1 = mean_fig_fruit_width + 0.6, y0 = 1.8, y1 = 2.2);
+polygon(x=tbox$x, y=tbox$y, lwd=3, border="black", col="white");
+text(x = mean_fig_fruit_width, y = 2, cex = 2, labels = "Mean");
+
+arrows(x0 = 12.32592, x1 = 12.32592, y0 = 0.4, y1 = 0, lwd = 3);
+tbox <- mbox(x0 = 12.32592 - 0.6, 
+             x1 = 12.32592 + 0.6, y0 = 0.4, y1 = 0.8);
+polygon(x=tbox$x, y=tbox$y, lwd=3, border="black", col="white");
+text(x = 12.32592, y = 0.6, cex = 2, labels = "LCI");
+
+arrows(x0 = 15.67408, x1 = 15.67408, y0 = 0.4, y1 = 0, lwd = 3);
+tbox <- mbox(x0 = 15.67408 - 0.6, 
+             x1 = 15.67408 + 0.6, y0 = 0.4, y1 = 0.8);
+polygon(x=tbox$x, y=tbox$y, lwd=3, border="black", col="white");
+text(x = 15.67408, y = 0.6, cex = 2, labels = "UCI");
+```
+
+
+## What do we actually mean by 95% confidence?
+
+\LARGE
+
+| $x_{1}$ | $x_{2}$ | $x_{3}$ | $x_{4}$ | $x_{5}$ | $x_{6}$ | $x_{7}$ |
+|---------|---------|---------|---------|---------|---------|---------|
+| 17.1    | 15.2    |  14.9   | 12.6    | 15.2    |  10.3   | 12.7    |
+
+- If we were to repeat our sample (N = 7) and calculate CIs over and over again, 95\% of the time our intervals would contain the population mean (which we cannot know)
+
+- Not (quite) the same as 95\% probability that the mean is between our CIs
+
+
+## But what are we actually calculating?
+
+```{r, echo = FALSE, fig.alt = "A plot of a bell curve, with a range of the curve shaded in grey between negative sigma and positive sigma, symmetrical around the peak of the curve", fig.cap = "", out.width="100%"}
+par(mar = c(6, 6, 2, 2));
+xx       <- seq(from = -5, to = 5, by = 0.0001);
+pr_norm  <- dnorm(x = xx, mean = 0, sd = 1);
+plot(x = xx, y = pr_norm, type = "l", ylim = c(0, 0.48), xaxt = "n",
+     ylab = "Probability density",  xlab = "x", lwd = 3, xlim = c(-3, 3),
+     cex.lab = 2, cex.axis = 2, yaxs = "i");
+xx_vals <- 40001:60001;
+polygon(c(xx[xx_vals], xx[60001], xx[40001]), 
+        c(pr_norm[xx_vals], 0, 0), col="blue");
+yy_mean1 <- seq(from = 0, to = 0.15, length = 1000);
+xx_mean1 <- rep(0, times = 1000);
+yy_mean2 <- seq(from = 0.25, to = max(pr_norm), length = 1000);
+xx_mean2 <- rep(0, times = 1000);
+points(x = xx_mean1, y = yy_mean1, type = "l", lwd = 2, lty = "dotted");
+points(x = xx_mean2, y = yy_mean2, type = "l", lwd = 2, lty = "dotted");
+distr_lab <- c(expression(mu-sigma), expression(mu), expression(mu+sigma));
+axis(side = 1, at = c(-1, 0, 1), labels = distr_lab, cex.axis = 2);
+text(x = 0,  y = 0.2, labels = "68.2%", cex = 3);
+```
+
+
+\footnotetext[1]{\href{https://bradduthie.github.io/stats/app/zandp/}{https://bradduthie.github.io/stats/app/zandp/}}
+
+
+
+## But what are we actually calculating?
+
+```{r, echo = FALSE, fig.alt = "A plot of a bell curve, with a range of the curve shaded in grey between negative sigma and positive sigma, symmetrical around the peak of the curve", fig.cap = "", out.width="100%"}
+par(mar = c(6, 6, 2, 2));
+xx       <- seq(from = -5, to = 5, by = 0.0001);
+pr_norm  <- dnorm(x = xx, mean = 0, sd = 1);
+plot(x = xx, y = pr_norm, type = "l", ylim = c(0, 0.48), xaxt = "n",
+     ylab = "Probability density",  xlab = "x", lwd = 3, xlim = c(-3, 3),
+     cex.lab = 2, cex.axis = 2, yaxs = "i");
+xx_vals <- 30001:70001;
+polygon(c(xx[xx_vals], xx[70001], xx[30001]), 
+        c(pr_norm[xx_vals], 0, 0), col="blue");
+yy_mean1 <- seq(from = 0, to = 0.15, length = 1000);
+xx_mean1 <- rep(0, times = 1000);
+yy_mean2 <- seq(from = 0.25, to = max(pr_norm), length = 1000);
+xx_mean2 <- rep(0, times = 1000);
+points(x = xx_mean1, y = yy_mean1, type = "l", lwd = 2, lty = "dotted");
+points(x = xx_mean2, y = yy_mean2, type = "l", lwd = 2, lty = "dotted");
+distr_lab <- c(expression(mu-1.96*sigma), expression(mu), expression(mu+1.96*sigma));
+axis(side = 1, at = c(-2, 0, 2), labels = distr_lab, cex.axis = 2);
+text(x = 0,  y = 0.2, labels = "95%", cex = 3);
+```
+
+
+\footnotetext[1]{\href{https://bradduthie.github.io/stats/app/zandp/}{https://bradduthie.github.io/stats/app/zandp/}}
+
+
+## How do we calculate confidence intervals?
+
+\LARGE
+
+**General idea: Lower (LCI) and upper (UCI) confidence interval**
+
+\vspace{4mm}
+
+**Verbally**
+
+- LCI = Mean -- (z-score $\times$ standard error)
+- UCI = Mean + (z-score $\times$ standard error)
+
+\vspace{2mm}
+
+**Mathematically**
+
+- LCI = $\bar{x} - z \left(\frac{s}{\sqrt{N}}\right)$
+- UCI = $\bar{x} + z \left(\frac{s}{\sqrt{N}}\right)$
+
+
+## How do we calculate confidence intervals? {.t}
+
+\LARGE
+
+| $x_{1}$ | $x_{2}$ | $x_{3}$ | $x_{4}$ | $x_{5}$ | $x_{6}$ | $x_{7}$ |
+|---------|---------|---------|---------|---------|---------|---------|
+| 17.1    | 15.2    |  14.9   | 12.6    | 15.2    |  10.3   | 12.7    |
+
+\vspace{-6mm}
+
+$N = 7$ \hspace{4mm} $\bar{x} = 14$ \hspace{4mm} $s = 2.26$ \hspace{4mm} $z = 1.96$
+
+\vspace{2mm}
+\hrule 
+\vspace{2mm}
+\Large
+\begin{align*}
+LCI &= \bar{x} - z\left(\frac{s}{\sqrt{N}}\right) &&&&&& \\ \\
+    &= 14 - 1.96\left(\frac{2.26}{\sqrt{7}} \right) &&&&&& \\  
+    &= 12.34 &&&&&&
+\end{align*}
+
+
+
+## How do we calculate confidence intervals? {.t}
+
+\LARGE
+
+| $x_{1}$ | $x_{2}$ | $x_{3}$ | $x_{4}$ | $x_{5}$ | $x_{6}$ | $x_{7}$ |
+|---------|---------|---------|---------|---------|---------|---------|
+| 17.1    | 15.2    |  14.9   | 12.6    | 15.2    |  10.3   | 12.7    |
+
+\vspace{-6mm}
+
+$N = 7$ \hspace{4mm} $\bar{x} = 14$ \hspace{4mm} $s = 2.26$ \hspace{4mm} $z = 1.96$
+
+\vspace{2mm}
+\hrule 
+\vspace{2mm}
+\Large
+\begin{align*}
+UCI &= \bar{x} + z\left(\frac{s}{\sqrt{N}}\right) &&&&&& \\ \\
+    &= 14 + 1.96\left(\frac{2.26}{\sqrt{7}} \right) &&&&&& \\  
+    &= 15.67 &&&&&&
+\end{align*}
+
+
+
+## How do we calculate confidence intervals? {.t}
+
+\LARGE
+
+| $x_{1}$ | $x_{2}$ | $x_{3}$ | $x_{4}$ | $x_{5}$ | $x_{6}$ | $x_{7}$ |
+|---------|---------|---------|---------|---------|---------|---------|
+| 17.1    | 15.2    |  14.9   | 12.6    | 15.2    |  10.3   | 12.7    |
+
+\vspace{-6mm}
+
+$N = 7$ \hspace{4mm} $\bar{x} = 14$ \hspace{4mm} $s = 2.26$ \hspace{4mm} $z = 1.96$
+
+\vspace{2mm}
+\hrule 
+\vspace{2mm}
+
+\Huge
+\vspace{10mm}
+
+$LCI = 12.34$ \hspace{10mm} $UCI = 15.67$
+
+
+
+## Visualising a confidence interval
+
+```{r, echo = FALSE}
+mean_temp <- c(mean(dat), 0, 0, 0, 0, 0);
+names(mean_temp) <- c("A", "", "", "", "", "");
+par(mar = c(6, 6, 2, 2));
+barplot(height = mean_temp, ylab = "Mean soil temperature (degrees C)", 
+        xlab = "Site",
+        col = "blue", cex.lab = 2, cex.axis = 2, ylim = c(0, 20),
+        cex.names = 2);
+arrows(x0 = 0.7, x1 = 0.7, y0 = mean_temp[1], y1 = 12.34, lwd = 4, angle = 90, 
+       length = 0.3);
+arrows(x0 = 0.7, x1 = 0.7, y0 = mean_temp[1], y1 = 15.67, lwd = 4, angle = 90, 
+       length = 0.3);
+```
+
+
+
+## Visualising a confidence interval
+
+```{r, echo = FALSE}
+rt <- runif(n = 5, min = 10, max = 17);
+ci <- runif(n = 5, min = 1, max = 2);
+mean_temp <- c(mean(dat), rt);
+names(mean_temp) <- c("A", "B", "C", "D", "E", "F");
+par(mar = c(6, 6, 2, 2));
+barplot(height = mean_temp, ylab = "Mean soil temperature (degrees C)", 
+        xlab = "Site",
+        col = "blue", cex.lab = 2, cex.axis = 2, ylim = c(0, 20),
+        cex.names = 2);
+arrows(x0 = 0.7, x1 = 0.7, y0 = mean_temp[1], y1 = 12.34, lwd = 4, angle = 90, 
+       length = 0.3);
+arrows(x0 = 0.7, x1 = 0.7, y0 = mean_temp[1], y1 = 15.67, lwd = 4, angle = 90, 
+       length = 0.3);
+for(i in 1:5){
+  pos <- 0.7 + (i*1.2);
+  arrows(x0 = pos, x1 = pos, y0 = rt[i], y1 = rt[i] - ci[i], 
+         lwd = 4, angle = 90, length = 0.3);
+  arrows(x0 = pos, x1 = pos, rt[i], y1 = rt[i] + ci[i], 
+         lwd = 4, angle = 90, length = 0.3);
+}
+```
+
+
+## Accuracy of confidence intervals
+
+\Huge
+
+- Assumes sample means are normally distributed around the population mean
+- Applies for high sample size due to central limit theorem
+- What if assumption is violated?
+
+
+## Confidence intervals of a proportion
+
+\Huge
+
+What about for proportions?
+
+\LARGE
+
+| Player ID	| OS      |  Dam size	 | Biodiversity	 |
+|-----------|---------|------------|---------------|
+| 1	        | Android |	small	     | 0	           |
+| 2         | Android	| large	     | 34            |
+| 3         | iPhone	| small      | 14            |
+| 4	        | Android	| large	     | 72            |
+| 5         | iPhone  | medium     | 3             |
+
+
+CIs around the proportion of Android users?
+
+## Confidence intervals of a proportion
+
+\Huge
+
+Total players: N = 74
+
+- 56 Android
+- 18 iPhone
+
+$$Pr(Android) = 56/74 = 0.757$$
+
+
+\vspace{4mm}
+
+CIs around this proportion?
+
+
+## Confidence intervals of a proportion: Wald interval
+
+\LARGE
+
+**Assume a normal distribution?**
+
+- LCI = $\bar{x} - z \left(\frac{s}{\sqrt{N}}\right)$
+- UCI = $\bar{x} + z \left(\frac{s}{\sqrt{N}}\right)$
+
+\vspace{6mm}
+
+
+
+**Standard deviation of a binomial:**
+
+\vspace{-3mm}
+
+$$s = \sqrt{p\left(1 - p\right)}$$
+
+$$p = 56/74 = 0.757$$
+
+
+## Confidence intervals of a proportion: Wald interval
+
+\LARGE
+
+**Assume a normal distribution?**
+
+- LCI = $p - z \times SE$
+- UCI = $p + z \times SE$
+
+\vspace{6mm}
+
+**Standard deviation of a binomial:**
+
+\vspace{-3mm}
+
+$$s = \sqrt{p\left(1 - p\right)}$$
+
+$$SE = \frac{s}{\sqrt{N}} = \frac{\sqrt{p\left(1 - p\right)}}{\sqrt{N}} = \sqrt{\frac{p\left(1 - p\right)}{N}}$$
+
+
+## Confidence intervals of a proportion: Wald interval
+
+\LARGE
+
+**Assume a normal distribution?**
+
+- LCI = $p - z \times SE$
+- UCI = $p + z \times SE$
+
+\vspace{6mm}
+
+**Standard deviation of a binomial:**
+
+- LCI = $p - z \times \sqrt{\frac{p\left(1 - p\right)}{N}}$ \vspace{4mm}
+- UCI = $p + z \times \sqrt{\frac{p\left(1 - p\right)}{N}}$
+
+
+
+## Confidence intervals of a proportion: Wald interval
+
+\LARGE
+
+**Assume a normal distribution?**
+
+- LCI = $p - z \times SE$
+- UCI = $p + z \times SE$
+
+\vspace{6mm}
+
+**Standard deviation of a binomial:**
+
+- LCI = $0.757 - 1.96 \sqrt{\frac{0.757\left(1 - 0.757\right)}{74}}$ \vspace{4mm}
+- UCI = $0.757 + 1.96 \sqrt{\frac{0.757\left(1 - 0.757\right)}{74}}$
+
+
+## Confidence intervals of a proportion: Wald interval
+
+\LARGE
+
+**Assume a normal distribution?**
+
+- LCI = $p - z \times SE$
+- UCI = $p + z \times SE$
+
+\vspace{6mm}
+
+**Standard deviation of a binomial:**
+
+- LCI = 0.659 \vspace{4mm}
+- UCI = 0.855
+
+## Confidence intervals of a proportion: Wald interval
+
+\LARGE
+
+**Problems with the Wald interval**
+
+- Wald interval is often inaccurate
+- Problematic when p near 0 or 1
+
+\pause
+\vspace{6mm}
+
+**Other ways to calculate proportion CIs**
+
+- Compare methods with simulated data
+- Clopper-Pearson method used by jamovi
+- Clopper-Pearson wider than necessary
+- Based on the binomial distribution
+
+
+## A bigger problem with the normal distribution and CIs
+
+\LARGE
+
+**Assuming we know population standard deviation ($\mathbf{\sigma}$)**
+
+- Only have *sample* estimate, s
+- Need to account for this uncertainty
+- Normal distribution will be biased
+- t-distribution will correct for bias
+

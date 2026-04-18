@@ -1,0 +1,436 @@
+---
+title: "Populations, variables, units, uncertainty"
+output:
+  beamer_presentation:
+    theme: "default"
+    colortheme: "default"
+    fonttheme: "default"
+  ioslides_presentation: default
+  slidy_presentation: default
+header-includes:
+- \usepackage{hyperref}
+- \usepackage{caption}
+- \usepackage[normalem]{ulem}
+- \definecolor{links}{HTML}{2A1B81}
+- \hypersetup{colorlinks,linkcolor=,urlcolor=links}
+colorlinks: true
+linkcolor: blue
+urlcolor: blue
+---
+
+```{r, echo = FALSE}
+library(knitr);
+opts_chunk$set(echo = FALSE);
+```
+
+
+
+## Populations and samples
+
+
+```{r, echo = FALSE, fig.alt = "30+ bird silhouettes in a dotted box called 'population'. Within this, four birds are in a grey box called 'sample'.", fig.cap = "", out.width="100%"}
+knitr::include_graphics("img/population_sample_1.png")
+```
+
+
+## Types of variables: definitions
+
+\LARGE
+\begin{itemize}
+\item \textbf{Categorical:} Fixed number of options
+\begin{itemize} \LARGE
+\item Nominal: No inherent order
+\item Ordinal: Inherent order
+\end{itemize} \vspace{6mm}
+\item \textbf{Quantitative:} Numbers meaningful
+\begin{itemize} \LARGE
+\item Discrete: Limited number of values
+\item Continuous: Any real number
+\end{itemize}
+\end{itemize}
+\vspace{3mm}
+All of these measurements have uncertainty
+
+
+
+## Metrology: The science of measurement
+
+\LARGE
+
+Metrology focuses on measurement accuracy, precision, and units$^{1}$
+
+- **Measurement**: Determination of the properties of a unit of observation \pause
+- **Measurand**: The unknown *true* value of what we want to measure \pause
+- **Measurement error**: Difference between the measurement and the measurand
+
+
+\footnotetext[1]{Rabinovich, SG. 2013. Evaluating Measurement Accuracy: A Practical Approach. Springer Science \& Business Media. \href{https://doi.org/10.1007/978-3-319-60125-0}{10.1007/978-3-319-60125-0}}
+
+
+## Metrology: The science of measurement
+
+\LARGE
+
+Metrology originally for economic activities$^{1}$
+
+\begin{itemize}
+\item Need standardised measurements for trade
+\item Standardised to a measurement \textbf{unit:}
+\begin{itemize} \LARGE
+\item Unit of length (e.g., cm)
+\item Unit of mass (e.g., mg)
+\item Unit of time (e.g., seconds)
+\end{itemize}
+\item The `unit' defines what is 1
+\end{itemize}
+\vspace{3mm}
+
+\footnotetext[1]{Fanton, JP. 2019. International Journal of Metrology and Quality Engineering. \href{https://www.metrology-journal.org/articles/ijmqe/pdf/2019/01/ijmqe180023.pdf}{10:5}.}
+
+
+## Metrology: The science of measurement
+
+\LARGE
+
+Measuring wing length in centimetres (cm)
+
+```{r, echo = FALSE, fig.alt = "Drawing of a bird wing being measured by a ruler.", fig.cap = "", out.width="90%"}
+knitr::include_graphics("img/measurement.jpg")
+```
+
+- Measure 7.28 *units* of length (cm)
+- Measurand is the *true* wing length
+- Repeated measures estimate *error*
+
+\footnotetext[1]{\textbf{Image:} Reichenow, A. 1913. (\href{https://commons.wikimedia.org/wiki/File:BirdMorphometrics_(wing_measurement).jpg}{Public domain}).}
+
+
+## Accuracy and precision
+
+\Huge
+
+- **Accuracy** is how close a measurement is to the *true* value we want to measure.$^{1}$ \pause
+- **Precision** is how consistent a measurement will be if replicated multiple times.$^{2}$
+
+\footnotetext[1]{Rabinovich, SG. 2013. Evaluating Measurement Accuracy: A Practical Approach. Springer Science \& Business Media. \href{https://doi.org/10.1007/978-3-319-60125-0}{10.1007/978-3-319-60125-0}}
+\footnotetext[2]{Wardlaw, AC. 1985. Practical Statistics for Experimental Biologists (p. 290). John Wiley \& Sons, Chichester, UK.}
+
+
+## Accuracy and precision
+
+```{r, echo = FALSE, fig.alt = "Four targets, A, B, C, and D, are shown side-by-side, wach with five points scatter on top of them. Points in A are close together and near the centre, points in B are far apart but around the center, points in C are close together but away from the centre, and points in D are far apart and away from the centre.", fig.cap = "", out.width="100%"}
+knitr::include_graphics("img/accuracy_vs_precision.png")
+```
+
+\LARGE
+
+Measurements can be as follows:
+
+- **A:** Accurate and precise
+- **B:** Accurate but not precise
+- **C:** Not accurate but precise
+- **D:** Not accurate nor precise
+
+
+\footnotetext[1]{\textbf{Image:} Willighagen, E. 2014. (\href{https://commons.wikimedia.org/wiki/File:Accuracy-vs-precision-nl.svg}{Public domain}).}
+
+## Units of measurement
+
+\Large
+
+Units of *measurement* different from units of *observation*
+
+- Measurement unit is a defined measurement quantity
+- Standardised units of measurement ensure accuracy$^{1}$
+- Ideally based on fundamental constants of nature$^{2}$
+- Measurement units can be base or derived
+- Seven standardised base units
+
+
+\footnotetext[1]{Quinn, TJ. 1995. Metrologia, 31:515–527. \href{https://doi.org/10.1088/0026-1394/31/6/011}{10.1088/0026-1394/31/6/011}}
+\footnotetext[2]{Stock, M, et al. 2019. Metrologia, 56:\href{https://iopscience.iop.org/article/10.1088/1681-7575/ab28a8}{022001}} 
+
+
+## Kilogram was *defined* by a mass of metal
+
+```{r, echo = FALSE, fig.alt = "A steel cylinder is shown enclosed in glass container that is enclosed by another glass container", fig.cap = "", out.width="100%"}
+knitr::include_graphics("img/kg.jpg")
+```
+
+
+\footnotetext[1]{\textbf{Image:} National Inst. of Standards \& Technology. 2021. (\href{https://commons.wikimedia.org/wiki/File:U.s.-kilogram-masses.jpg}{Public domain}).}
+
+
+## Kilogram was *defined* by a mass of metal
+
+\Large
+
+Standardising mass to a physical object problematic
+
+- If object changes, so does the unit of mass
+- Base unit affects all other measurements 
+
+\pause
+
+Kilogram redefined in 2019$^{1}$:
+
+- Atomic transition frequency ($\Delta v_{Cs}$)
+- Speed of light ($c$)
+- Planck constant ($h$)
+
+$$1\:kg = \left(1.4755213 \times 10^{40}\right)\frac{h \Delta v_{Cs}}{c^{2}}$$
+
+
+\footnotetext[1]{Stock, M et al. 2019. Metrologia \href{https://iopscience.iop.org/article/10.1088/1681-7575/ab0013}{56:022001.}}
+
+
+## Base units of SI measurements
+
+\Large
+
+| Measured Quantity           | Name of SI Unit     | Symbol       |
+|-----------------------------|---------------------|--------------|
+| Mass                        | kilogram            | kg           |
+| Length                      | metre               | m            |
+| Time                        | second              | s            |
+| Electric current            | ampere              | A            |
+| Temperature                 | kelvin              | K            |
+| Amount of a substance       | mole                | mol          |
+| Luminous intensity          | candela             | cd           |
+
+
+## Derived SI measurements
+
+| Measured Quantity     | Name of Unit            | Symbol     | Definition in SI Units     |
+|-----------------------|-------------------------|------------|----------------------------|
+| Area                  | square metre            | $A$        | m^2^                       |
+| Volume                | cubic metre             | $V$        | m^3^                       |
+| Speed                 | metre per second        | $v$        | m s^-1^                    |
+| Force                 | newton                  | $N$        | m kg s^-2^                 |
+| Pressure              | pascal                  | $Pa$       | m^-1^ kg s^-2^             |
+| Energy                | joule                   | $J$        | m^2^ kg s^-2^              |
+
+\Large
+
+Derived units of measurement built from base units
+
+
+## Units versus labels
+
+\LARGE
+
+
+\begin{itemize}
+\item \textbf{Unit} defines a magnitude of a quantity
+\begin{itemize} \LARGE 
+\vspace{-0.3cm}\item 1 kilogram
+\vspace{-0.3cm}\item 1 metre
+\end{itemize} \vspace{3mm}
+\item \textbf{Label} describes the data type
+\begin{itemize} \LARGE 
+\vspace{-0.3cm}\item soil mass
+\vspace{-0.3cm}\item flight distance
+\end{itemize} \vspace{3mm}
+\item \textbf{Counts} do not have units
+\begin{itemize} \LARGE 
+\vspace{-0.3cm}\item 20 glaciers
+\vspace{-0.3cm}\item 800 seeds
+\end{itemize}
+\end{itemize}
+
+
+## Measurement uncertainty propagation
+
+\LARGE
+
+Nothing measured with perfect accuracy
+
+- Noise in the measuring environment
+- Mistakes made in measurement
+- Limitations of measuring device
+
+Measurement errors accumulate!
+
+\vspace{2mm}
+
+```{r, echo = FALSE, fig.alt = "Close up of a tape measure.", fig.cap = "", out.width="100%"}
+knitr::include_graphics("img/tape_measure.jpg")
+```
+
+\footnotetext[1]{\textbf{Image:} Perkins, D. 2015.  (\href{https://commons.wikimedia.org/wiki/File:Tape_measure_end.jpg}{Public domain}).}
+
+
+
+## Measurement uncertainty propogation
+
+\LARGE
+
+Suppose we measured 2 stones separately
+
+```{r, echo = FALSE, fig.alt = "Close up of an old fashioned scale.", fig.cap = "", out.width="90%"}
+knitr::include_graphics("img/scale.jpg")
+```
+
+Each measurement has a $\pm$ error
+
+\footnotetext[1]{\textbf{Image:} Nijaki, N. 2011.  (\href{https://commons.wikimedia.org/wiki/File:Balance_scale_IMGP9755.jpg}{Public domain}).}
+
+
+## Measurement uncertainty propogation
+
+\Huge
+
+Combined measurement error
+
+- Stone 1: $40 \pm 1.2 \:kg$
+- Stone 2: $36 \pm 1.1 \:kg$
+
+Combined mass: $40\:kg + 36\:kg = 76\:kg$
+
+Combined measurement error?
+
+## Measurement uncertainty propogation
+
+\Large
+
+Stone example:
+
+$$Combined\:mass = Mass\:1 + Mass\:2$$
+
+\pause
+
+More generally:
+
+$$Z = X + Y$$
+
+\pause
+
+With error ($E$):
+
+$$(Z \pm E_Z) = (X  \pm E_X) + (Y \pm E_Y)$$
+
+## Measurement uncertainty propogation
+
+\Large
+
+$$(Z \pm E_Z) = (X  \pm E_X) + (Y \pm E_Y)$$
+
+
+If we solve for $E_{Z}$,
+
+$$E_Z = \sqrt{E_X^2 + E_Y^2}.$$
+
+For our two stones,
+
+$$E_Z = \sqrt{1.2^2 + 1.1^2} = 1.63.$$
+
+
+## Measurement uncertainty propogation {.t}
+
+\LARGE
+
+- Morning run: $4.5 \pm 0.3 \:km$
+- Evening run: $3.8 \pm 0.2 \:km$
+
+Combined error ($E_{Z}$) for total run length?
+
+$$E_Z = \sqrt{E_X^2 + E_Y^2}.$$
+
+
+## Measurement uncertainty propogation
+
+\Large
+
+$$Z = X \times Y$$
+
+Combining errors different for multiplication
+
+$$Z \pm E_Z = (X \pm E_X)(Y \pm E_Y).$$
+
+\pause
+
+If we isolate $E_{Z}$,
+
+$$E_Z = Z \sqrt{\left( \frac{E_X}{X}\right)^2 + \left(\frac{E_Y}{Y}\right)^2}.$$
+
+##  Measurement uncertainty propogation
+
+
+```{r, echo = FALSE, fig.alt = "Sketch of a plot of land length 432 plus or minus 12.3 and width 162.4 plus or minus 5.6.", fig.cap = "", out.width="100%"}
+knitr::include_graphics("img/transect_1.png")
+```
+
+
+
+## Calculating uncertainty {.t}
+
+\Large
+
+$$E_Z = Z \sqrt{\left( \frac{E_X}{X}\right)^2 + \left(\frac{E_Y}{Y}\right)^2}.$$
+
+\vspace{12mm}
+
+
+- $X = 432$
+- $Y = 162$
+- $E_{X} = 12.3$
+- $E_{Y} = 5.6$
+
+
+## Calculating uncertainty {.t}
+
+\Large
+
+$$E_Z = Z \sqrt{\left( \frac{E_X}{X}\right)^2 + \left(\frac{E_Y}{Y}\right)^2}.$$
+
+
+
+##  Measurement uncertainty propogation
+
+
+```{r, echo = FALSE, fig.alt = "Sketch of a plot of land length 621.0 plus or minus 24.4 and width 566.1 plus or minus 22.1.", fig.cap = "", out.width="90%"}
+knitr::include_graphics("img/transect_2.png")
+```
+
+
+## Calculating uncertainty {.t}
+
+\Large
+
+$$E_Z = Z \sqrt{\left( \frac{E_X}{X}\right)^2 + \left(\frac{E_Y}{Y}\right)^2}.$$
+
+
+
+
+
+## Working with jamovi
+
+
+```{r, echo = FALSE, fig.alt = "Screenshot of the full interface of jamovi with some data loaded", fig.cap = "", out.width="100%"}
+knitr::include_graphics("img/jamovi_1.png")
+```
+
+
+## Working with jamovi
+
+
+```{r, echo = FALSE, fig.alt = "Screenshot of the jamovi descriptives interface showing data summaries", fig.cap = "", out.width="100%"}
+knitr::include_graphics("img/jamovi_3.png")
+```
+
+
+
+## Working with jamovi
+
+
+```{r, echo = FALSE, fig.alt = "Screenshot of the module options for jamovi", fig.cap = "", out.width="100%"}
+knitr::include_graphics("img/jamovi_4.png")
+```
+
+
+
+
+
+
+
+

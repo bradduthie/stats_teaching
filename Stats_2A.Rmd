@@ -1,0 +1,383 @@
+---
+title: "Why study statistics?"
+output:
+  beamer_presentation:
+    theme: "default"
+    colortheme: "default"
+    fonttheme: "default"
+  ioslides_presentation: default
+  slidy_presentation: default
+header-includes:
+- \usepackage{hyperref}
+- \usepackage{caption}
+- \usepackage[normalem]{ulem}
+- \definecolor{links}{HTML}{2A1B81}
+- \hypersetup{colorlinks,linkcolor=,urlcolor=links}
+colorlinks: true
+linkcolor: blue
+urlcolor: blue
+---
+
+```{r, echo = FALSE}
+library(knitr);
+opts_chunk$set(echo = FALSE);
+```
+
+
+## Why study statistics?
+
+\Huge
+
+- Importance of good statistics
+- Statistical revolution
+- Populations and samples
+- Expectation and uncertainty
+- Types of variables
+
+
+## Importance of good statistics
+
+\LARGE
+
+**Florence Nightingale**
+
+- Pioneer of modern nursing and statistics
+- Founded first secular nursing school 1860
+
+\vspace{4mm} \pause
+
+**Nurse during Crimean war (1853-1856)**
+
+- 16k of 18k deaths due to sanitation
+- Fatalities plummeted after improvements
+- Persuaded parliament to reform hospitals
+
+
+## Importance of good statistics
+
+
+```{r, echo = FALSE, fig.alt = "Hand drawn figure showing causes of mortality during Crimean war, most of which due to bad sanitation.", fig.cap = "", out.width="100%"}
+knitr::include_graphics("img/rose_diagram.jpg")
+```
+\footnotetext[1]{\textbf{Image:} Notes on Matters Affecting the Health, Efficiency, and Hospital Administration of the British Army (\href{https://commons.wikimedia.org/wiki/File:Nightingale-mortality.jpg}{Public domain}).}
+
+## Importance of good statistics
+
+```{r, echo = FALSE, fig.alt = "Pie chart showing three candidate preferances that do not add up to 100 per cent.", fig.cap = "", out.width="100%"}
+piedat <- c(63, 70, 60);
+pie(x = piedat, labels = c("63% Back \n Candidate A", "70% Back \n Candidate B", "60% Back \n Candidate C"), cex = 1.5);
+```
+
+\footnotetext[1]{Source: A widely watched news channel}
+
+
+## Importance of good statistics
+
+```{r, echo = FALSE, fig.alt = "Two plots, one of which shows cost of education going up with earnings stagnant.", fig.cap = "", out.width="100%"}
+knitr::include_graphics("img/business_insider.png")
+```
+
+\vspace{2mm}
+
+\LARGE
+
+- Sometimes graphs do not tell the full story
+- What about the earnings for people without a degree over time?
+
+
+\footnotetext[1]{Blake, D. 2012. These Two Charts Prove A College Education Just Isn't Worth The Money Anymore \href{Business Insider}{https://www.businessinsider.com/these-two-charts-prove-a-college-education-just-isnt-worth-the-money-anymore-2012-6}.}
+
+
+## Statistical revolution: Old view of a clockwork universe
+
+```{r, echo = FALSE, fig.alt = "Close up of the inside of a pocket watch.", fig.cap = "", out.width="100%"}
+knitr::include_graphics("img/watch.png")
+```
+
+
+\footnotetext[1]{\textbf{Image:} Grobe, H. 2017. (\href{https://commons.wikimedia.org/wiki/File:Watch_with_no_background.png}{Public domain}).}
+
+
+
+## Statistical revolution: Old view of a clockwork universe
+
+\Huge
+
+- Newtonian physics success
+- Formulas for laws of motion
+- Precise measurement
+- Eliminate measurement errors
+- Apply to life sciences?
+
+\LARGE \pause
+
+This old view of eliminating uncertainty was challenged in the early 1900s.$^{1}$
+
+
+\footnotetext[1]{Salsburg, D. 2001. The lady tasting tea: How statistics revolutionized science in the twentieth century. Macmillan.}
+
+
+## Statistical revolution: A new perspective
+
+```{r, echo = FALSE, fig.alt = "30+ bird silhouettes in a dotted box called 'population'. Within this, four birds are in a grey box called 'sample'.", fig.cap = "Samples are taken from a subset of a population", out.width="100%"}
+knitr::include_graphics("img/population_sample_1.png")
+```
+
+
+## Statistical revolution: A new perspective
+
+\LARGE
+
+"In statistics, population always means the **totality of individual observations about which inferences are to be made, existing anywhere in the world or at least within a definitely specified sampling area limited in space and time**"$^{1}$
+
+
+\footnotetext[1]{Sokal, Robert R, and F James Rohlf. 1995. Biometry. 3rd ed. W H Freeman \& Company, New York, USA.}
+
+
+
+
+## Populations and samples
+
+\LARGE
+
+```{r, echo = FALSE, fig.alt = "Close up of a railing with a sign that says 'Polling station'.", fig.cap = "", out.width="100%"}
+knitr::include_graphics("img/polling.jpg")
+```
+
+
+**Statistical population:**
+
+- Not necessarily a *biological* population
+- Not necessarily an *actual* population
+- Might be theoretical, not concrete
+
+
+
+\footnotetext[1]{\textbf{Image:} Wilson, A. 2019. (\href{https://commons.wikimedia.org/wiki/File:Southwark_Polling_Station.jpg}{Public domain})}
+
+
+
+## Populations and samples
+
+```{r, echo = FALSE, fig.alt = "Drawing of a North Atlantic right whale.", fig.cap = "", out.width="75%"}
+knitr::include_graphics("img/Eubalaena_glacialis.jpg")
+```
+
+\Large
+
+North Atlantic right whale (*Eubalaena glacialis*) 
+
+- Estimated 338 left$^{1}$
+- Conservation requires estimating traits
+- Average value might not be *expected* value$^{2}$
+
+\footnotetext[1]{NOAA (2023). North Atlantic right whale (\textit{Eubalaena glacialis}): \href{https://www.fisheries.noaa.gov/s3/2023-08/North-Atlantic-Right-Whale-Western-Atlantic-2022.pdf}{Western Atlantic Stock}.}
+\footnotetext[2]{van Veelen, M. (2025). The general version of Hamilton's rule. Elife, 14, \href{https://elifesciences.org/articles/105065}{RP105065}.}
+\footnotetext[3]{\textbf{Image:} NOAA. 1987. (\href{https://commons.wikimedia.org/wiki/File:Eubalaena_glacialis_NOAA.jpg}{Public domain}).}
+
+
+## General idea of frequency statistics
+
+```{r, echo = FALSE, fig.alt = "30+ bird silhouettes in a dotted box called 'population'. Within this, four birds are in a grey box called 'sample'.", fig.cap = "", out.width="100%"}
+knitr::include_graphics("img/population_sample_1.png")
+```
+
+
+## General idea of frequency statistics
+
+```{r, echo = FALSE, fig.alt = "30+ bird silhouettes in a dotted box called 'population'. Within this, four birds are in a grey box called 'sample'.", fig.cap = "", out.width="100%"}
+knitr::include_graphics("img/population_sample_2.png")
+```
+
+
+## General idea of frequency statistics
+
+```{r, echo = FALSE, fig.alt = "30+ bird silhouettes in a dotted box called 'population'. Within this, four birds are in a grey box called 'sample'.", fig.cap = "", out.width="100%"}
+knitr::include_graphics("img/population_sample_3.png")
+```
+
+
+## General idea of frequency statistics
+
+```{r, echo = FALSE, fig.alt = "30+ bird silhouettes in a dotted box called 'population'. Within this, four birds are in a grey box called 'sample'.", fig.cap = "", out.width="100%"}
+knitr::include_graphics("img/population_sample_4.png")
+```
+
+
+## General idea of frequency statistics
+
+```{r, echo = FALSE, fig.alt = "30+ bird silhouettes in a dotted box called 'population'. Within this, four birds are in a grey box called 'sample'.", fig.cap = "", out.width="100%"}
+knitr::include_graphics("img/population_sample_5.png")
+```
+
+
+## General idea of frequency statistics
+
+```{r, echo = FALSE, fig.alt = "Grey boxes each with 4 birds representing samples with different average heights.", fig.cap = "", out.width="100%"}
+knitr::include_graphics("img/samples.png")
+```
+
+
+## General idea of frequency statistics
+
+\Huge
+
+**Repeated re-sampling**
+
+- What is our expectation?
+- What is our uncertainty?
+
+\vspace{4mm}\pause
+
+Want to get best estimate of *true* expected measurement and contain uncertainty.
+
+
+
+## Bias and unrepresentative sample
+
+
+```{r, echo = FALSE, fig.alt = "30+ bird silhouettes and the four largest are shown in a grey box.", fig.cap = "", out.width="100%"}
+knitr::include_graphics("img/population_sample_biased.png")
+```
+
+
+
+
+
+## Bias and unrepresentative sample
+
+\Large
+
+**Neuroscience: fMRI scans before \& after task**
+
+- What parts of brain most active during task?
+- Compare thousands of areas of the brain
+- Subject shown pictures of human social activity
+- Cluster of brain areas showed high activity
+- Typical analysis approach highly significant
+
+```{r, echo = FALSE, fig.alt = "An fMRI image of a human showing several areas of the brain active", fig.cap = "", out.width="50%"}
+knitr::include_graphics("img/fMRI.jpg")
+```
+
+\footnotetext[1]{Reinhart, A. 2015. Statistics done wrong: The woefully complete guide. No starch press.}
+\footnotetext[2]{\textbf{Image:} Graner, J. 2010. (\href{https://commons.wikimedia.org/wiki/File:FMRI_scan_during_working_memory_tasks.jpg}{Public domain}).}
+
+
+
+## Bias and unrepresentative sample
+
+
+
+```{r, echo = FALSE, fig.alt = "An fMRI image of an Atlantic salmon", fig.cap = "", out.width="90%"}
+knitr::include_graphics("img/salmon.png")
+```
+
+207 different analysis methods in 241 fMRI studies
+
+\footnotetext[1]{Reinhart, A. 2015. Statistics done wrong: The woefully complete guide. No starch press.}
+\footnotetext[2]{Bennett, CM, et al. 2010. J of Serendipitous and Unexpected Results. \href{https://teenspecies.github.io/pdfs/NeuralCorrelates.pdf}{1:1-5}.}
+\footnotetext[3]{Carp, J. 2012. The secret lives of experiments: methods reporting in the fMRI literature. Neuroimage, 63:289-300. \href{https://doi.org/10.1016/j.neuroimage.2012.07.004}{10.1016/j.neuroimage.2012.07.004}}
+
+
+## Predicting one variable from another
+
+\Huge
+\begin{itemize}
+\item \textbf{Dependent variable}
+\begin{itemize} \Huge
+\item Response variable
+\item Shown on Y axis
+\end{itemize} \vspace{6mm}
+\item \textbf{Independent variable}
+\begin{itemize} \Huge
+\item Explanatory variable
+\item Shown on X axis
+\end{itemize}
+\end{itemize}
+
+
+## Predicting one variable from another
+
+
+```{r, echo = FALSE, fig.alt = "Dependent variable on the vertical (Y) axis, and independent variable on the horizontal (X) axis.", fig.cap = "Dependent variable on the vertical (Y) axis, and independent variable on the horizontal (X) axis.", out.width="100%"}
+par(mar = c(7.1, 6.1, 6.1, 2.1));
+plot(x = 1:10, y = 1:10, type = "n", xlab = "Independent variable",
+     ylab = "Dependent variable", cex.lab = 2.5, cex.axis = 2.5,
+     xaxt = "n", yaxt = "n")
+```
+
+## Predicting one variable from another
+
+
+```{r, echo = FALSE, fig.alt = "A plot showing an exponential increase in global carbon dioxide emissions over time.", fig.cap = "", out.width="100%"}
+par(mar = c(5.1, 4.1, 4.1, 2.1));
+CO2_emissions   <- read.csv(file = "data/CO2_emissions.csv");
+global_CO2      <- CO2_emissions[CO2_emissions[,1] == "World",];
+tonnes_billion  <- global_CO2[,4] / 1000000000;
+the_ylab        <- expression(Global~CO[2]~tonnes~(billions));
+par(mar = c(5, 5, 1, 1));
+plot(x = global_CO2[,3], y = tonnes_billion, type = "l", lwd = 4, 
+     xlab = "Year", ylab = the_ylab, cex.axis = 1.75, cex.lab = 1.75);
+```
+
+
+## Types of variables: definitions
+
+\LARGE
+\begin{itemize}
+\item \textbf{Categorical:} Fixed number of options
+\begin{itemize} \LARGE
+\item Nominal: No inherent order
+\item Ordinal: Inherent order
+\end{itemize} \vspace{6mm}
+\item \textbf{Quantitative:} Numbers meaningful
+\begin{itemize} \LARGE
+\item Discrete: Limited number of values
+\item Continuous: Any real number
+\end{itemize}
+\end{itemize}
+
+
+
+## Types of variables: examples
+
+\LARGE
+\begin{itemize}
+\item \textbf{Categorical:} Fixed number of options
+\begin{itemize} \LARGE
+\item Nominal: Tundra, Boreal, Tropical
+\item Ordinal: Disagree, Neutral, Agree
+\end{itemize} \vspace{6mm}
+\item \textbf{Quantitative:} Numbers meaningful
+\begin{itemize} \LARGE
+\item Discrete: Number of offspring
+\item Continuous: Body mass
+\end{itemize}
+\end{itemize}
+
+
+## Types of variables: fig wasps collected from fruit
+
+\LARGE
+
+| Species  |  Fruit  |  Count  |  Fruit length (mm) |
+|----------|---------|---------|--------------------|
+| Het1     | F1      | 0       | 15                 |
+| Het1     | F2      | 0       | 14                 |
+| Het1     | F3      | 0       | 16                 |
+| Het1     | F4      | 1       | 15                 |
+| Het1     | F5      | 0       | 14                 |
+| Het2     | F1      | 0       | 15                 |
+| Het2     | F2      | 2       | 14                 |
+| Het2     | F3      | 3       | 16                 |
+
+
+## Types of variables: implications
+
+\Huge
+
+- Different variables handled in different ways
+- Need to use the right plot or test for a variable type
+
+
