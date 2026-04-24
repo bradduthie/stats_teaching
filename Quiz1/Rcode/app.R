@@ -157,8 +157,8 @@ ui <- fluidPage(
       fluidRow(column(12, wellPanel(
         tags$b("Dataset for Questions 6–10:"),
         tags$ul(
-          tags$li(tags$a(href = "http://bradduthie.github.io/stats_teaching/quiz1_data.xlsx", "Original Excel file (untidy)")),
-          tags$li(tags$a(href = "http://bradduthie.github.io/stats_teaching/quiz1_data.csv", "Pre‑tidy CSV (to check your work)"))
+          tags$li(tags$a(href = "http://bradduthie.github.io/stats_teaching/Quiz1/quiz1_data.xlsx", "Original Excel file (untidy)")),
+          tags$li(tags$a(href = "http://bradduthie.github.io/stats_teaching/Quiz1/quiz1_data.csv", "Pre‑tidy CSV (to check your work)"))
         ),
         tags$p("Download the Excel file, tidy it yourself, then answer Questions 6–10.")
       ))),
