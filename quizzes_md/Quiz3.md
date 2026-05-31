@@ -1,4 +1,4 @@
-Quiz 2
+Quiz 3
 =========================
 
 This is the practice quiz for [Chapter 9](https://bradduthie.github.io/stats/Chapter_9.html), [Chapter 10](https://bradduthie.github.io/stats/Chapter_10.html), [Chapter 11](https://bradduthie.github.io/stats/Chapter_11.html), and [Chapter 12](https://bradduthie.github.io/stats/Chapter_12.html). To answer the questions in this quiz, you will need to use the [student_data.csv](http://bradduthie.github.io/stats_teaching/Quiz3/student_data.csv) dataset. This dataset includes variables measured from a set of students.
