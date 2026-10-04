@@ -230,7 +230,7 @@ ui <- fluidPage(
     "))
   ),
   div(id = "quiz-container",
-      titlePanel("Quiz 2 (Chapters 4–7)"),
+      titlePanel("Statistics Quiz 5 (Week 5)"),
       div(style = "margin-bottom: 20px;",
           tags$p("This quiz uses two datasets: ",
                  tags$a(href = "http://bradduthie.github.io/stats_teaching/Quiz2/Quiz_2_subject_data.xlsx", "Quiz_2_subject_data.xlsx"),
