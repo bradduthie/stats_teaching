@@ -237,7 +237,7 @@ questions <- list(
 ,
          "Varied randomly" = "Incorrect."
        )
-  ),
+  )
 )
 
 ui <- fluidPage(

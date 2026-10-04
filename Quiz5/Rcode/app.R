@@ -195,7 +195,7 @@ questions <- list(
 ,
          "No variation in data" = "Incorrect."
        )
-  ),
+  )
 )
 
 ui <- fluidPage(

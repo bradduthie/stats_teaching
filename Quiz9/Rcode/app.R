@@ -222,7 +222,7 @@ questions <- list(
        text = "What is the intercept of the regression model? Report to 2 decimal places.",
        correct = 10.13,
        explanation = "Intercept is ~10.13."
-  ),
+  )
 )
 
 ui <- fluidPage(

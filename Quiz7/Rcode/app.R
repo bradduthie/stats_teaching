@@ -233,7 +233,7 @@ questions <- list(
 ,
          "Linear regression" = "Incorrect."
        )
-  ),
+  )
 )
 
 ui <- fluidPage(

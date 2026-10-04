@@ -231,7 +231,7 @@ questions <- list(
 ,
          "Variances equal" = "Incorrect."
        )
-  ),
+  )
 )
 
 ui <- fluidPage(

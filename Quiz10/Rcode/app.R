@@ -179,7 +179,7 @@ questions <- list(
 ,
          "t-statistic" = "Incorrect."
        )
-  ),
+  )
 )
 
 ui <- fluidPage(
